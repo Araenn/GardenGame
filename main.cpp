@@ -1,17 +1,13 @@
 #include "main.h"
 
 int main(int argc, char *argv[]) {
-	Plantes p(10);
-	Plantes r(30);
+	Jardiniers j1("jean");
+	Jardiniers j2("jacques", 3);
 
-	while(1) {
-		cout << "temps de pousse de p = " << p.get_dureePousse() << endl;
-		cout << "plante depuis : " << time(NULL) - p.get_datePlantation() << endl;
-		cout << "temps de pousse de r = " << r.get_dureePousse() << endl;
-		cout << "plante depuis : " << time(NULL) - r.get_datePlantation() << endl;
-		cout << p.etapes_pousse() << endl;
-		cout << r.etapes_pousse() << endl;
-		sleep(1);
-	}
+	cout << j1.get_name() << endl;
+	cout << j2.get_name() << endl;
+	cout << j2.get_mood() << endl;
+
+
 	return 0;
 }

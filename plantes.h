@@ -3,11 +3,11 @@
 
 
 #include <iostream>
-#include "CImg.h"
+//#include "CImg.h"
 #include <time.h>
 
 using namespace std;
-using namespace cimg_library;
+//using namespace cimg_library;
 
 
 class Plantes {
@@ -17,7 +17,7 @@ protected:
 	bool recoltable;
 	int etat;
 
-public: 
+public:
 	Plantes();
 	Plantes(int);
 	Plantes(int, int);
@@ -26,9 +26,10 @@ public:
 	int get_dureePousse();
 	int get_datePlantation();
 	bool is_recoltable();
+	int get_etat();
 	void set_durePousse(int);
 	void set_datePlantation(int);
-	int etapes_pousse();
+	void set_etat_pousse();
 };
 
 

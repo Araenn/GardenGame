@@ -1,10 +1,12 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
-
 #include "plantes.h"
-#include "CImg.h"
+#include "fleurs.h"
+#include "seed_plants.h"
+#include "legumes.h"
+#include "jardiniers.h"
+//#include "CImg.h"
 
 int main(int argc, char *argv[]);
 
