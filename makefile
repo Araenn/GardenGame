@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -g -Wall
-CLIBS = -lX11 -lpthread
+CLIBS = -lpthread
 
 
 main.o: main.cpp main.h
@@ -21,7 +21,10 @@ legumes.o: legumes.cpp legumes.h
 jardiniers.o: jardiniers.cpp jardiniers.h
 	$(CC) $(CFLAGS) -c $<
 
-prog.exe: main.o plantes.o fleurs.o seed_plants.o legumes.o jardiniers.o
+champs.o: champs.cpp champs.h
+	$(CC) $(CFLAGS) -c $<
+
+prog.exe: main.o plantes.o fleurs.o seed_plants.o legumes.o jardiniers.o champs.o
 	$(CC) $(CFLAGS) -o $@ $^ $(CLIBS)
 
 clean:

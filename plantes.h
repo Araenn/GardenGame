@@ -9,13 +9,14 @@
 using namespace std;
 //using namespace cimg_library;
 
-
 class Plantes {
 protected:
 	int duree_pousse;
 	int date_plantation;
 	bool recoltable;
 	int etat;
+
+	int id;
 
 public:
 	Plantes();
@@ -30,6 +31,8 @@ public:
 	void set_durePousse(int);
 	void set_datePlantation(int);
 	void set_etat_pousse();
+	int get_id();
+	friend ostream& operator<<(ostream&, Plantes);
 };
 
 

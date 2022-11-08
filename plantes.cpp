@@ -1,11 +1,14 @@
 #include "plantes.h"
 
+static int idGrow = 0; 
+
 Plantes::Plantes(int duree_p, int date_p, bool rec, int et) {
 	duree_pousse = duree_p;
 	et = 0;
 	date_plantation = date_p;
 	recoltable = rec;
 	etat = et;
+	id = idGrow++; 
 }
 
 Plantes::Plantes(int duree_p, int date_p, bool rec) :
@@ -77,4 +80,13 @@ void Plantes::set_etat_pousse() {
 	} else {
 		etat = 0;
 	}
+}
+
+ostream& operator<<(ostream& c, Plantes v) {
+	c << v.get_dureePousse() << "s, " << v.get_datePlantation() << "s, etape n " << v.get_etat() << ".";
+	return c;
+}
+
+int Plantes::get_id() {
+	return this->id;
 }

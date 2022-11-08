@@ -6,6 +6,7 @@
 #include "seed_plants.h"
 #include "legumes.h"
 #include "jardiniers.h"
+#include "champs.h"
 //#include "CImg.h"
 
 int main(int argc, char *argv[]);

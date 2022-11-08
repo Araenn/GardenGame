@@ -59,8 +59,8 @@ void Jardiniers::set_mood(int m) {
   date_mood_changed = time(NULL);
 }
 
-int Jardiniers::get_position() {
-  return position[2];
+int *Jardiniers::get_position() {
+  return position;
 }
 
 void Jardiniers::set_position(int p[2]) {
@@ -68,14 +68,15 @@ void Jardiniers::set_position(int p[2]) {
   position[1] = p[1];
 }
 
-int Jardiniers::choix_action() {
+void Jardiniers::action() {
   int action;
+	Seed_plants p;
   if (get_mood_name() == "Content") {
-    return action = 0; //recolte grains
+     recolter_grains(p); //recolte grains
   } else if (get_mood_name() == "Normal") {
-    return action = 1; //grains ou legums, le plus proche
+     action = 1; //grains ou legums, le plus proche
   } else {
-    return action = 2; //legume si proche, sinon fleur detruite
+     action = 2; //legume si proche, sinon fleur detruite
   }
 }
 
@@ -84,11 +85,25 @@ int Jardiniers::get_dateMoodChanged() {
 }
 
 void Jardiniers::mood_change() {
-  int t = time(NULL); //temps ecoule
   int d = get_dateMoodChanged(); //date dernier changement de mood
+	cout << d << endl;
   int seuil = 30; //30s par mood sans manger
 
-  if ((t - d > seuil) && (get_mood() != 3) ){
+  if ((d >= seuil) && (get_mood() != 3) ){
     set_mood(get_mood() + 1);
   }
 }
+
+void Jardiniers::recolter_grains(Seed_plants p) {
+	int grains;
+	grains = p.check_recolte_grains();
+}
+
+void Jardiniers::manger_legumes(Legumes l) {
+	if (get_mood() > 1) {
+		set_mood(get_mood() - 1);
+	} else {
+		set_mood(get_mood());
+	}
+}
+

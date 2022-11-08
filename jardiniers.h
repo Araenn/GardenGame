@@ -2,6 +2,9 @@
 #define JARDINIERS
 
 #include <iostream>
+#include <unistd.h>
+#include "seed_plants.h"
+#include "legumes.h"
 //#include "CImg.h"
 
 using namespace std;
@@ -23,11 +26,14 @@ public:
   int get_mood();
   string get_mood_name();
   void set_mood(int);
-  int get_position();
+  int* get_position();
   void set_position(int[2]);
-  int choix_action();
+  void action();
   int get_dateMoodChanged();
   void mood_change();
+	void recolter_grains(Seed_plants);
+	void manger_legumes(Legumes);
+  int calcul_distance(Plantes);
 };
 
 #endif
