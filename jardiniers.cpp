@@ -1,34 +1,30 @@
 #include "jardiniers.h"
 
-Jardiniers::Jardiniers(string n, int m, int p[2]) {
+Jardiniers::Jardiniers(string n, int m, Coordonnees p) {
   name = n;
   mood = m;
-  position[0] = p[0];
-  position[1] = p[1];
+  position = p;
   date_mood_changed = time(NULL);
 }
 
 Jardiniers::Jardiniers(string n, int m) {
   name = n;
   mood = m;
-  position[0] = 0;
-  position[1] = 0;
+  position = {0, 0};
   date_mood_changed = time(NULL);
 }
 
 Jardiniers::Jardiniers(string n) {
   name = n;
   mood = 1;
-  position[0] = 0;
-  position[1] = 0;
+  position = {0, 0};
   date_mood_changed = time(NULL);
 }
 
 Jardiniers::Jardiniers() {
   name = "Jardinier 1";
   mood = 1;
-  position[0] = 0;
-  position[1] = 0;
+  position = {0, 0};
   date_mood_changed = time(NULL);
 }
 
@@ -59,25 +55,12 @@ void Jardiniers::set_mood(int m) {
   date_mood_changed = time(NULL);
 }
 
-int *Jardiniers::get_position() {
+Coordonnees Jardiniers::get_position() {
   return position;
 }
 
-void Jardiniers::set_position(int p[2]) {
-  position[0] = p[0];
-  position[1] = p[1];
-}
-
-void Jardiniers::action() {
-  int action;
-	Seed_plants p;
-  if (get_mood_name() == "Content") {
-     recolter_grains(p); //recolte grains
-  } else if (get_mood_name() == "Normal") {
-     action = 1; //grains ou legums, le plus proche
-  } else {
-     action = 2; //legume si proche, sinon fleur detruite
-  }
+void Jardiniers::set_position(Coordonnees p) {
+  position = p;
 }
 
 int Jardiniers::get_dateMoodChanged() {
@@ -107,3 +90,14 @@ void Jardiniers::manger_legumes(Legumes l) {
 	}
 }
 
+void Jardiniers::action() {
+  int action;
+	Seed_plants p;
+  if (get_mood_name() == "Content") {
+     recolter_grains(p); //recolte grains
+  } else if (get_mood_name() == "Normal") {
+     action = 1; //grains ou legums, le plus proche
+  } else {
+     action = 2; //legume si proche, sinon fleur detruite
+  }
+}

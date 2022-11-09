@@ -33,6 +33,7 @@ public:
 	void set_etat_pousse();
 	int get_id();
 	friend ostream& operator<<(ostream&, Plantes);
+	friend bool operator!=(Plantes, Plantes);
 };
 
 

@@ -24,31 +24,42 @@ void Champs::placer_plante(int x, int y, Plantes p) {
     grille[x][y] = p;
 }
 
-int* Champs::get_coordonnees(Plantes p) {
+Coordonnees Champs::get_coordonnees(Plantes p) {
     for (int i = 0; i < this->size_grille; i++) {
         for (int j = 0; j < this->size_grille; j++) {
             if (grille[i][j].get_id() == p.get_id()) {
-                int* coordonnees = (int *) malloc(sizeof(int)*2);
-                coordonnees[0] = i;
-                coordonnees[1] = j;
+                Coordonnees coordonnees(i, j); 
                 return coordonnees;
             }
         }
     }
-    return NULL;
 }
 
 double Champs::calcul_distance(Plantes p, Jardiniers jardiniers) {
-    int *coordsPlante = get_coordonnees(p);
+    Coordonnees coordsPlante = get_coordonnees(p);
 
-    if (coordsPlante == NULL) { // la plante p n'a pas été trouvés
+    /*if (coordsPlante == {0, 0}) { // la plante p n'a pas été trouvée
         // print c'est bizarre;
         return -1;
-    }
+    }*/
 
-    int *coordsJardinier = jardiniers.get_position();
+    Coordonnees coordsJardinier = jardiniers.get_position();
 
-    double distance = sqrt(pow(coordsPlante[1] - coordsJardinier[1], 2) + pow(coordsPlante[0] - coordsJardinier[1], 2));
-    free(coordsPlante);
+    double distance = sqrt(pow(coordsPlante.y - coordsJardinier.y, 2) + pow(coordsPlante.x - coordsJardinier.x, 2));
     return distance;
+}
+
+Plantes Champs::plus_proche_plante(Jardiniers jardinier) {
+    Plantes plusProche;
+    Plantes par_defaut(0, 0, 0);
+    for (int i = 0; i < size_grille; i++) {
+        for (int j = 0; j < size_grille; j++) {
+            while (grille[i][j] != par_defaut) {
+                calcul_distance(grille[i][j], jardinier);
+                
+            }
+
+        }
+    }
+    return plusProche;
 }

@@ -5,6 +5,7 @@
 #include <vector>
 #include <math.h>
 #include "jardiniers.h"
+#include "coordonnees.h"
 
 class Champs {
 protected:
@@ -15,9 +16,9 @@ public:
 	Champs(int);
 	void afficher_champs();
 	void placer_plante(int, int, Plantes);
-	int* get_coordonnees(Plantes p);
+	Coordonnees get_coordonnees(Plantes p);
 	double calcul_distance(Plantes p, Jardiniers jardiniers);
-
+	Plantes plus_proche_plante(Jardiniers);
 };
 
 

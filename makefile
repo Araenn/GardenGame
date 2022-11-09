@@ -24,7 +24,10 @@ jardiniers.o: jardiniers.cpp jardiniers.h
 champs.o: champs.cpp champs.h
 	$(CC) $(CFLAGS) -c $<
 
-prog.exe: main.o plantes.o fleurs.o seed_plants.o legumes.o jardiniers.o champs.o
+coordonnees.o: coordonnees.cpp coordonnees.o
+	$(CC) $(CFLAGS) -c $<
+
+prog.exe: main.o plantes.o fleurs.o seed_plants.o legumes.o jardiniers.o champs.o coordonnees.o
 	$(CC) $(CFLAGS) -o $@ $^ $(CLIBS)
 
 clean:

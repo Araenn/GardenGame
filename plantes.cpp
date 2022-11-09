@@ -90,3 +90,11 @@ ostream& operator<<(ostream& c, Plantes v) {
 int Plantes::get_id() {
 	return this->id;
 }
+
+bool operator!=(Plantes a, Plantes b) {
+	if ( (a.get_datePlantation() != b.get_datePlantation()) && (a.get_dureePousse() != b.get_dureePousse()) && (a.get_etat() != b.get_etat())) {
+		return true;
+	} else {
+		return false;
+	}
+}
