@@ -11,6 +11,14 @@ Plantes::Plantes(int duree_p, int date_p, bool rec, int et) {
 	id = idGrow++; 
 }
 
+Plantes::Plantes(int duree_p, int date_p, bool rec, int et, int idd) {
+	duree_pousse = duree_p;
+	date_plantation = date_p;
+	recoltable = rec;
+	etat = et;
+	id = idd; 
+}
+
 Plantes::Plantes(int duree_p, int date_p, bool rec) :
 Plantes(duree_p, date_p, rec, 0) {}
 
@@ -22,6 +30,9 @@ Plantes(duree_p, time(NULL), true, 0) {}
 
 Plantes::Plantes() :
 Plantes(20, time(NULL), true, 0) {}
+
+Plantes::Plantes(const Plantes& p) :
+Plantes(p.duree_pousse, p.date_plantation, p.recoltable, p.etat, p.id) {}
 
 
 int Plantes::get_dureePousse() {
@@ -83,7 +94,7 @@ void Plantes::set_etat_pousse() {
 }
 
 ostream& operator<<(ostream& c, Plantes v) {
-	c << v.get_dureePousse() << "s, " << v.get_datePlantation() << "s, etape n " << v.get_etat() << ".";
+	c << v.get_dureePousse() << "s, id = " << v.get_id() << ".";
 	return c;
 }
 
@@ -92,7 +103,7 @@ int Plantes::get_id() {
 }
 
 bool operator!=(Plantes a, Plantes b) {
-	if ( (a.get_datePlantation() != b.get_datePlantation()) && (a.get_dureePousse() != b.get_dureePousse()) && (a.get_etat() != b.get_etat())) {
+	if ( (a.get_datePlantation() != b.get_datePlantation()) || (a.get_dureePousse() != b.get_dureePousse()) || (a.get_etat() != b.get_etat())) {
 		return true;
 	} else {
 		return false;

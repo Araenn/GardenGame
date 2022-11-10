@@ -1,7 +1,7 @@
 #include "coordonnees.h"
 
 Coordonnees::Coordonnees() :
-Coordonnees(0, 0){}
+Coordonnees(0, 0) {}
 
 Coordonnees::Coordonnees(int x, int y) {
     this->x = x;
@@ -19,4 +19,5 @@ void Coordonnees::afficher_coordonnees() {
 
 ostream& operator<<(ostream& c, Coordonnees coord) {
     c << "{" << coord.x << ", " << coord.y << "}" << endl;
+    return c;
 }

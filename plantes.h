@@ -24,6 +24,8 @@ public:
 	Plantes(int, int);
 	Plantes(int, int, bool);
 	Plantes(int, int, bool, int);
+	Plantes(int, int, bool, int, int);
+	Plantes(const Plantes& p);
 	int get_dureePousse();
 	int get_datePlantation();
 	bool is_recoltable();

@@ -33,6 +33,8 @@ Coordonnees Champs::get_coordonnees(Plantes p) {
             }
         }
     }
+    Coordonnees coordonnees(-1, -1); 
+    return coordonnees;
 }
 
 double Champs::calcul_distance(Plantes p, Jardiniers jardiniers) {
@@ -49,17 +51,42 @@ double Champs::calcul_distance(Plantes p, Jardiniers jardiniers) {
     return distance;
 }
 
-Plantes Champs::plus_proche_plante(Jardiniers jardinier) {
-    Plantes plusProche;
-    Plantes par_defaut(0, 0, 0);
-    for (int i = 0; i < size_grille; i++) {
-        for (int j = 0; j < size_grille; j++) {
-            while (grille[i][j] != par_defaut) {
-                calcul_distance(grille[i][j], jardinier);
-                
-            }
+Plantes &Champs::plus_proche_plante(Jardiniers jardinier) {
+    Plantes par_defaut(0);
 
+//calcul des distances entre jardinier et chaque plante non nulle
+    double minDistance = -1.0;
+    Plantes &minDistancePlante = grille[0][0];
+
+    int i = 0;
+    int j = 0;
+    for (; i < size_grille && minDistance == -1.0; i++) {
+        for (; j < size_grille && minDistance == -1.0; j++) {
+            if (grille[i][j] != par_defaut) {
+                minDistance = calcul_distance(grille[i][j], jardinier);
+                minDistancePlante = grille[i][j];
+            }
         }
+        j = 0;
     }
-    return plusProche;
+
+    if (j + 1 == size_grille) {
+        j = 0;
+        i++;
+    }
+
+    for (; i < size_grille; i++) {
+        for (; j < size_grille; j++) {
+            if (grille[i][j] != par_defaut) {
+                double actuellDistance = calcul_distance(grille[i][j], jardinier);
+                if (actuellDistance < minDistance) {
+                    minDistance = actuellDistance;
+                    minDistancePlante = grille[i][j];
+                }
+            }
+        }
+        j = 0;
+    }
+    
+    return minDistancePlante;
 }
