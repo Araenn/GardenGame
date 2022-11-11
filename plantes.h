@@ -15,7 +15,7 @@ protected:
 	int date_plantation;
 	bool recoltable;
 	int etat;
-
+	string type = "default";
 	int id;
 
 public:
@@ -30,12 +30,14 @@ public:
 	int get_datePlantation();
 	bool is_recoltable();
 	int get_etat();
+	string get_type();
 	void set_durePousse(int);
 	void set_datePlantation(int);
 	void set_etat_pousse();
 	int get_id();
 	friend ostream& operator<<(ostream&, Plantes);
 	friend bool operator!=(Plantes, Plantes);
+	Plantes& operator=(const Plantes& a);
 };
 
 

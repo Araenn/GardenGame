@@ -1,4 +1,4 @@
-#include "Seed_plants.h"
+#include "seed_plants.h"
 
 Seed_plants::Seed_plants(int duree_p, int date_p, int ngr) {
 	duree_pousse = duree_p;

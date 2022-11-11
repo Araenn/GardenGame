@@ -5,10 +5,14 @@
 
 class Fleurs : public Plantes {
 
+protected:
+	string type = "Fleurs";
+
 public:
-  Fleurs();
+  	Fleurs();
 	Fleurs(int);
 	Fleurs(int, int);
+	//~Fleurs();
 };
 
 #endif

@@ -78,8 +78,8 @@ void Jardiniers::mood_change() {
 }
 
 void Jardiniers::recolter_grains(Seed_plants p) {
-	int grains;
-	grains = p.check_recolte_grains();
+	int gr;
+	gr = p.check_recolte_grains();
 }
 
 void Jardiniers::manger_legumes(Legumes l) {
@@ -88,16 +88,4 @@ void Jardiniers::manger_legumes(Legumes l) {
 	} else {
 		set_mood(get_mood());
 	}
-}
-
-void Jardiniers::action() {
-  int action;
-	Seed_plants p;
-  if (get_mood_name() == "Content") {
-     recolter_grains(p); //recolte grains
-  } else if (get_mood_name() == "Normal") {
-     action = 1; //grains ou legums, le plus proche
-  } else {
-     action = 2; //legume si proche, sinon fleur detruite
-  }
 }

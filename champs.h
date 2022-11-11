@@ -2,8 +2,6 @@
 #define CHAMPS
 
 #include "plantes.h"
-#include <vector>
-#include <algorithm>
 #include <math.h>
 #include "jardiniers.h"
 #include "coordonnees.h"
@@ -16,10 +14,12 @@ protected:
 public:
 	Champs(int);
 	void afficher_champs();
-	void placer_plante(int, int, Plantes);
+	void placer_plante(Coordonnees, Plantes);
 	Coordonnees get_coordonnees(Plantes p);
 	double calcul_distance(Plantes p, Jardiniers jardiniers);
 	Plantes& plus_proche_plante(Jardiniers);
+	void detruire_fleurs(Fleurs);
+	void action(Jardiniers);
 };
 
 

@@ -6,6 +6,9 @@
 
 class Legumes : public Plantes {
 
+protected:
+  string type = "Legumes";
+  
 public:
   Legumes();
 	Legumes(int);

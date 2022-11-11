@@ -12,3 +12,5 @@ Fleurs(duree_p, time(NULL)) {}
 
 Fleurs::Fleurs() :
 Fleurs(50, time(NULL)) {}
+
+//Fleurs::~Fleurs() {}

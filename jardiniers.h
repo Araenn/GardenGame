@@ -6,6 +6,7 @@
 #include "seed_plants.h"
 #include "legumes.h"
 #include "coordonnees.h"
+#include "fleurs.h"
 //#include "CImg.h"
 
 using namespace std;
@@ -29,12 +30,10 @@ public:
   void set_mood(int);
   Coordonnees get_position();
   void set_position(Coordonnees);
-  void action();
   int get_dateMoodChanged();
   void mood_change();
 	void recolter_grains(Seed_plants);
 	void manger_legumes(Legumes);
-  int calcul_distance(Plantes);
 };
 
 #endif

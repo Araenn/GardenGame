@@ -20,8 +20,8 @@ void Champs::afficher_champs() {
 	}
 }
 
-void Champs::placer_plante(int x, int y, Plantes p) {
-    grille[x][y] = p;
+void Champs::placer_plante(Coordonnees coord, Plantes p) {
+    grille[coord.x][coord.y] = p;
 }
 
 Coordonnees Champs::get_coordonnees(Plantes p) {
@@ -58,25 +58,17 @@ Plantes &Champs::plus_proche_plante(Jardiniers jardinier) {
     double minDistance = -1.0;
     Plantes &minDistancePlante = grille[0][0];
 
-    int i = 0;
-    int j = 0;
-    for (; i < size_grille && minDistance == -1.0; i++) {
-        for (; j < size_grille && minDistance == -1.0; j++) {
+    for (int i = 0; i < size_grille && minDistance == -1.0; i++) {
+        for (int j = 0; j < size_grille && minDistance == -1.0; j++) {
             if (grille[i][j] != par_defaut) {
                 minDistance = calcul_distance(grille[i][j], jardinier);
                 minDistancePlante = grille[i][j];
             }
         }
-        j = 0;
     }
 
-    if (j + 1 == size_grille) {
-        j = 0;
-        i++;
-    }
-
-    for (; i < size_grille; i++) {
-        for (; j < size_grille; j++) {
+    for (int i = 0; i < size_grille; i++) {
+        for (int j = 0; j < size_grille; j++) {
             if (grille[i][j] != par_defaut) {
                 double actuellDistance = calcul_distance(grille[i][j], jardinier);
                 if (actuellDistance < minDistance) {
@@ -85,8 +77,38 @@ Plantes &Champs::plus_proche_plante(Jardiniers jardinier) {
                 }
             }
         }
-        j = 0;
     }
     
     return minDistancePlante;
+}
+
+void Champs::detruire_fleurs(Fleurs fleur) {
+  Coordonnees coordFleur = get_coordonnees(fleur);
+  Plantes par_defaut(0);
+  fleur.~Fleurs();
+  placer_plante(coordFleur, par_defaut);
+}
+
+void Champs::action(Jardiniers jardinier) {
+
+  if (jardinier.get_mood_name() == "Content") {
+    Seed_plants *peut_recolter = (Seed_plants *) &plus_proche_plante(jardinier);
+    jardinier.recolter_grains(*peut_recolter); //recolte grains
+  } else if (jardinier.get_mood_name() == "Normal") {
+      if ( plus_proche_plante(jardinier).get_type() == "Legumes" ) {
+        Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier);
+        jardinier.manger_legumes(*a_manger);
+      } else if (plus_proche_plante(jardinier).get_type() == "Seed_plants") {
+        Seed_plants *peut_recoler = (Seed_plants *) &plus_proche_plante(jardinier);
+        jardinier.recolter_grains(*peut_recoler);//grains ou legums, le plus proche
+  } else {
+     if (plus_proche_plante(jardinier).get_type() == "Legumes") {
+      Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier);
+      jardinier.manger_legumes(*a_manger);
+     } else {
+      Fleurs *a_detruire = (Fleurs *) &plus_proche_plante(jardinier);
+      detruire_fleurs(*a_detruire); //detruit fleur si pas de legume
+     }
+    }
+  }
 }

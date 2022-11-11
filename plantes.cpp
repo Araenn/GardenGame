@@ -64,6 +64,10 @@ int Plantes::get_etat() {
 	return etat;
 }
 
+string Plantes::get_type() {
+	return type;
+}
+
 void Plantes::set_etat_pousse() {
 	int d = duree_pousse/5;
 	int etapes[5];
@@ -108,4 +112,13 @@ bool operator!=(Plantes a, Plantes b) {
 	} else {
 		return false;
 	}
+}
+
+Plantes& Plantes::operator=(const Plantes& a) {
+	this->duree_pousse = a.duree_pousse;
+	this->date_plantation = a.date_plantation;
+	this->recoltable = a.recoltable;
+	this->etat = a.etat;
+	this->id = a.id;
+	return *this;
 }

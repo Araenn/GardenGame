@@ -6,6 +6,8 @@
 class Seed_plants : public Plantes {
 protected:
   int nb_grains_recoltables;
+  string type = "Seed_plants";
+  
 public:
   Seed_plants();
 	Seed_plants(int);
