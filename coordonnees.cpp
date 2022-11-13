@@ -9,12 +9,12 @@ Coordonnees::Coordonnees(int x, int y) {
 }
 
 void Coordonnees::set_coordonnees(int *coord) {
-    x = coord[0];
-    y = coord[1];
+    this->x = coord[0];
+    this->y = coord[1];
 }
 
 void Coordonnees::afficher_coordonnees() {
-    cout << "{" << x << ", " << y << "}" << endl;
+    cout << "{" << this->x << ", " << this->y << "}" << endl;
 }
 
 ostream& operator<<(ostream& c, Coordonnees coord) {

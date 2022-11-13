@@ -40,6 +40,7 @@ Plantes("DEFAULT") {}
 Plantes::Plantes(const Plantes& p) :
 Plantes(p.duree_pousse, p.date_plantation, p.recoltable, p.etat, p.id, p.typePlant) {}
 
+Plantes::~Plantes() {}
 
 int Plantes::get_dureePousse() {
 	return duree_pousse;
@@ -50,7 +51,7 @@ int Plantes::get_datePlantation() {
 }
 
 bool Plantes::is_recoltable() {
-	if (recoltable == true) {
+	if (this->recoltable == true) {
 		cout << "recoltable" << endl;
 	} else {
 		cout << "non recoltable" << endl;
@@ -104,7 +105,7 @@ void Plantes::set_etat_pousse() {
 }
 
 ostream& operator<<(ostream& c, Plantes v) {
-	c << v.get_dureePousse() << "s, id = " << v.get_id() << ", type = " << v.get_type() << ".";
+	c << "type = " << v.get_type() << ".";
 	return c;
 }
 
@@ -129,10 +130,6 @@ Plantes& Plantes::operator=(const Plantes& a) {
 	this->id = a.id;
 	this->coordonnees = a.coordonnees;
 	return *this;
-}
-
-Coordonnees Plantes::get_coordonnees() {
-	return this->coordonnees;
 }
 
 void Plantes::set_coordonnees(Coordonnees coord) {

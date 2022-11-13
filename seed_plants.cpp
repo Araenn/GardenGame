@@ -21,12 +21,13 @@ void Seed_plants::set_nb_grains_recoltables(int ngr) {
 }
 
 int Seed_plants::check_recolte_grains() {
-  int grains;
   if (get_datePlantation() >= get_dureePousse()) {
-    cout << "nbr de grains a recolter = " << nb_grains_recoltables << endl;
-    return grains = nb_grains_recoltables;
+    cout << "nbr de grains a recolter = " << this->nb_grains_recoltables << endl;
+    this->recoltable = true;
+    return this->nb_grains_recoltables;
   } else {
     cout << "pas encore recoltable" << endl;
-    return grains = 0;
+    this->recoltable = false;
+    return 0;
   }
 }

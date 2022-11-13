@@ -19,10 +19,10 @@ protected:
   int date_mood_changed;
 
 public:
-  Jardiniers();
-  Jardiniers(string);
+  Jardiniers(int);
   Jardiniers(string, int);
-  Jardiniers(string, int, Coordonnees);
+  Jardiniers(string, int, int);
+  Jardiniers(string, int, Coordonnees, int);
   string get_name();
   void set_name(string);
   int get_mood();
@@ -32,7 +32,7 @@ public:
   void set_position(Coordonnees);
   int get_dateMoodChanged();
   void mood_change();
-	void recolter_grains(Seed_plants*);
+	int recolter_grains(Seed_plants*);
 	void manger_legumes(Legumes*);
 };
 

@@ -29,6 +29,7 @@ public:
 	Plantes(int, int, bool, int, string plantType);
 	Plantes(int, int, bool, int, int, string plantType);
 	Plantes(const Plantes& p);
+	~Plantes();
 	int get_dureePousse();
 	int get_datePlantation();
 	bool is_recoltable();
@@ -41,7 +42,6 @@ public:
 	friend ostream& operator<<(ostream&, Plantes);
 	friend bool operator!=(Plantes, Plantes);
 	Plantes& operator=(const Plantes& a);
-	Coordonnees get_coordonnees();
 	void set_coordonnees(Coordonnees);
 };
 
