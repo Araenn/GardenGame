@@ -1,12 +1,7 @@
 #include "seed_plants.h"
 
-Seed_plants::Seed_plants(int duree_p, int date_p, int ngr) {
-	duree_pousse = duree_p;
-	date_plantation = date_p;
-	etat = 0;
-  recoltable = true;
-  nb_grains_recoltables = ngr;
-}
+Seed_plants::Seed_plants(int duree_p, int date_p, int ngr):
+Plantes(duree_p, date_p, 0, true, ngr, "Seed_plants") {}
 
 Seed_plants::Seed_plants(int duree_p, int date_p) :
 Seed_plants(duree_p, date_p, 10) {}

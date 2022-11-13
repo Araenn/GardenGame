@@ -5,6 +5,7 @@
 #include <iostream>
 //#include "CImg.h"
 #include <time.h>
+#include "coordonnees.h"
 
 using namespace std;
 //using namespace cimg_library;
@@ -15,16 +16,18 @@ protected:
 	int date_plantation;
 	bool recoltable;
 	int etat;
-	string type = "default";
+	string typePlant;
 	int id;
+	Coordonnees coordonnees;
 
 public:
 	Plantes();
-	Plantes(int);
-	Plantes(int, int);
-	Plantes(int, int, bool);
-	Plantes(int, int, bool, int);
-	Plantes(int, int, bool, int, int);
+	Plantes(string plantType);
+	Plantes(int, string plantType);
+	Plantes(int, int, string plantType);
+	Plantes(int, int, bool, string plantType);
+	Plantes(int, int, bool, int, string plantType);
+	Plantes(int, int, bool, int, int, string plantType);
 	Plantes(const Plantes& p);
 	int get_dureePousse();
 	int get_datePlantation();
@@ -38,7 +41,10 @@ public:
 	friend ostream& operator<<(ostream&, Plantes);
 	friend bool operator!=(Plantes, Plantes);
 	Plantes& operator=(const Plantes& a);
+	Coordonnees get_coordonnees();
+	void set_coordonnees(Coordonnees);
 };
 
+Plantes *getDefaultPlant();
 
 #endif

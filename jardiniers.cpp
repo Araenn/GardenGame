@@ -41,12 +41,12 @@ int Jardiniers::get_mood() {
 }
 
 string Jardiniers::get_mood_name() {
-  if (get_mood() == 1) {
-    return "Content";
-  } else if (get_mood() == 2) {
-    return "Normal";
-  } else {
-    return "Grincheux";
+  switch (get_mood())
+  {
+    case 1: return "Content";
+    case 2: return "Normal";
+    case 3: return "Grincheux";
+    default: return "Mood inconnu";
   }
 }
 
@@ -70,19 +70,19 @@ int Jardiniers::get_dateMoodChanged() {
 void Jardiniers::mood_change() {
   int d = get_dateMoodChanged(); //date dernier changement de mood
 	cout << d << endl;
-  int seuil = 30; //30s par mood sans manger
+  int seuil = 4; //30s par mood sans manger
 
   if ((d >= seuil) && (get_mood() != 3) ){
     set_mood(get_mood() + 1);
   }
 }
 
-void Jardiniers::recolter_grains(Seed_plants p) {
+void Jardiniers::recolter_grains(Seed_plants *p) {
 	int gr;
-	gr = p.check_recolte_grains();
+	gr = p->check_recolte_grains();
 }
 
-void Jardiniers::manger_legumes(Legumes l) {
+void Jardiniers::manger_legumes(Legumes *l) {
 	if (get_mood() > 1) {
 		set_mood(get_mood() - 1);
 	} else {

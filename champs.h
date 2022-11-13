@@ -8,18 +8,19 @@
 
 class Champs {
 protected:
-	Plantes** grille;
+	Plantes*** grille;
 	int size_grille;
 
 public:
 	Champs(int);
 	void afficher_champs();
-	void placer_plante(Coordonnees, Plantes);
-	Coordonnees get_coordonnees(Plantes p);
-	double calcul_distance(Plantes p, Jardiniers jardiniers);
-	Plantes& plus_proche_plante(Jardiniers);
-	void detruire_fleurs(Fleurs);
+	void placer_plante(Coordonnees, Plantes*);
+	Coordonnees get_coordonnees(Plantes *p);
+	double calcul_distance(Plantes *p, Jardiniers jardiniers);
+	Plantes *plus_proche_plante(Jardiniers, string);
+	void detruire_fleurs(Fleurs *);
 	void action(Jardiniers);
+	Plantes *chercher_plante(Jardiniers, string);
 };
 
 

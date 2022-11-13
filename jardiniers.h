@@ -32,8 +32,8 @@ public:
   void set_position(Coordonnees);
   int get_dateMoodChanged();
   void mood_change();
-	void recolter_grains(Seed_plants);
-	void manger_legumes(Legumes);
+	void recolter_grains(Seed_plants*);
+	void manger_legumes(Legumes*);
 };
 
 #endif

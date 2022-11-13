@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -g -Wall
-CLIBS = -lpthread
+CLIBS = -lX11 -lpthread
 
 
 main.o: main.cpp main.h

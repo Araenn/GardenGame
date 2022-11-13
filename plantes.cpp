@@ -1,38 +1,44 @@
 #include "plantes.h"
 
 static int idGrow = 0; 
+Plantes defaultPlant(0, 0, false, 0, "DEFAULT");
 
-Plantes::Plantes(int duree_p, int date_p, bool rec, int et) {
+Plantes::Plantes(int duree_p, int date_p, bool rec, int et, string plantType) {
 	duree_pousse = duree_p;
 	et = 0;
 	date_plantation = date_p;
 	recoltable = rec;
 	etat = et;
-	id = idGrow++; 
+	id = idGrow++;
+	this->typePlant = plantType;
 }
 
-Plantes::Plantes(int duree_p, int date_p, bool rec, int et, int idd) {
+Plantes::Plantes(int duree_p, int date_p, bool rec, int et, int idd, string plantType) {
 	duree_pousse = duree_p;
 	date_plantation = date_p;
 	recoltable = rec;
 	etat = et;
 	id = idd; 
+	this->typePlant = plantType;
 }
 
-Plantes::Plantes(int duree_p, int date_p, bool rec) :
-Plantes(duree_p, date_p, rec, 0) {}
+Plantes::Plantes(int duree_p, int date_p, bool rec, string plantType) :
+Plantes(duree_p, date_p, rec, 0, plantType) {}
 
-Plantes::Plantes(int duree_p, int date_p) :
-Plantes(duree_p, date_p, true, 0) {}
+Plantes::Plantes(int duree_p, int date_p, string plantType) :
+Plantes(duree_p, date_p, true, 0, plantType) {}
 
-Plantes::Plantes(int duree_p) :
-Plantes(duree_p, time(NULL), true, 0) {}
+Plantes::Plantes(int duree_p, string plantType) :
+Plantes(duree_p, time(NULL), true, 0, plantType) {}
 
-Plantes::Plantes() :
-Plantes(20, time(NULL), true, 0) {}
+Plantes::Plantes(string plantType) :
+Plantes(20, time(NULL), true, 0, plantType) {}
+
+Plantes::Plantes():
+Plantes("DEFAULT") {}
 
 Plantes::Plantes(const Plantes& p) :
-Plantes(p.duree_pousse, p.date_plantation, p.recoltable, p.etat, p.id) {}
+Plantes(p.duree_pousse, p.date_plantation, p.recoltable, p.etat, p.id, p.typePlant) {}
 
 
 int Plantes::get_dureePousse() {
@@ -65,7 +71,7 @@ int Plantes::get_etat() {
 }
 
 string Plantes::get_type() {
-	return type;
+	return this->typePlant;
 }
 
 void Plantes::set_etat_pousse() {
@@ -98,7 +104,7 @@ void Plantes::set_etat_pousse() {
 }
 
 ostream& operator<<(ostream& c, Plantes v) {
-	c << v.get_dureePousse() << "s, id = " << v.get_id() << ".";
+	c << v.get_dureePousse() << "s, id = " << v.get_id() << ", type = " << v.get_type() << ".";
 	return c;
 }
 
@@ -119,6 +125,20 @@ Plantes& Plantes::operator=(const Plantes& a) {
 	this->date_plantation = a.date_plantation;
 	this->recoltable = a.recoltable;
 	this->etat = a.etat;
+	this->typePlant = a.typePlant;
 	this->id = a.id;
+	this->coordonnees = a.coordonnees;
 	return *this;
+}
+
+Coordonnees Plantes::get_coordonnees() {
+	return this->coordonnees;
+}
+
+void Plantes::set_coordonnees(Coordonnees coord) {
+	this->coordonnees = coord;
+}
+
+Plantes *getDefaultPlant() {
+	return &defaultPlant;
 }
