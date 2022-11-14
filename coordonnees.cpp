@@ -1,7 +1,7 @@
 #include "coordonnees.h"
 
 Coordonnees::Coordonnees() :
-Coordonnees(0, 0) {}
+Coordonnees(-1, -1) {}
 
 Coordonnees::Coordonnees(int x, int y) {
     this->x = x;

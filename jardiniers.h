@@ -19,10 +19,10 @@ protected:
   int date_mood_changed;
 
 public:
-  Jardiniers(int);
+  Jardiniers();
+  Jardiniers(string);
   Jardiniers(string, int);
-  Jardiniers(string, int, int);
-  Jardiniers(string, int, Coordonnees, int);
+  Jardiniers(string, int, Coordonnees);
   string get_name();
   void set_name(string);
   int get_mood();

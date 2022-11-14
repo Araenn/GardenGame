@@ -13,17 +13,18 @@ protected:
 
 public:
 	Champs(int);
+	~Champs();
+
 	void afficher_champs();
 	void placer_plante(Coordonnees, Plantes*);
 	Coordonnees get_coordonnees(Plantes *p);
-	double calcul_distance(Plantes *p, Jardiniers jardiniers);
+	double calcul_distance(Plantes *p, Jardiniers *jardiniers);
 	Plantes *plus_proche_plante(Jardiniers*, string);
-	void detruire_fleurs(Fleurs *);
-	void detruire_legumes(Legumes *);
-	void detruire_seedplants(Seed_plants *);
+	void detruire_plante(Plantes *);
 	void action(Jardiniers*);
 	Plantes *chercher_plante(string);
 	Coordonnees *get_plante_coordonnees(Plantes *);
+	bool is_empty();
 };
 
 

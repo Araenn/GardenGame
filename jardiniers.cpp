@@ -1,27 +1,27 @@
 #include "jardiniers.h"
 
-Jardiniers::Jardiniers(string n, int m, Coordonnees p, int date) {
-  name = n;
-  mood = m;
-  position = p;
-  date_mood_changed = time(NULL);
+Jardiniers::Jardiniers(string name, int mood, Coordonnees position) {
+  this->name = name;
+  this->mood = mood;
+  this->position = position;
+  this->date_mood_changed = time(NULL);
 }
 
-Jardiniers::Jardiniers(string n, int m, int date) : 
-Jardiniers(n, m, {0, 0}, time(NULL)) {}
+Jardiniers::Jardiniers(string n, int m) : 
+Jardiniers(n, m, {0, 0}) {}
 
-Jardiniers::Jardiniers(string n, int date) :
-Jardiniers(n, 1, {0, 0}, time(NULL)) {}
+Jardiniers::Jardiniers(string n) :
+Jardiniers(n, 1, {0, 0}) {}
 
-Jardiniers::Jardiniers(int date) :
-Jardiniers("Jardinier 1", 1, {0, 0}, time(NULL)) {}
+Jardiniers::Jardiniers() :
+Jardiniers("Jardinier 1", 1, {0, 0}) {}
 
 string Jardiniers::get_name() {
   return this->name;
 }
 
-void Jardiniers::set_name(string n) {
-  this->name = n;
+void Jardiniers::set_name(string name) {
+  this->name = name;
 }
 
 int Jardiniers::get_mood() {
@@ -37,8 +37,8 @@ string Jardiniers::get_mood_name() {
   }
 }
 
-void Jardiniers::set_mood(int m) {
-  this->mood = m;
+void Jardiniers::set_mood(int mood) {
+  this->mood = mood;
   this->date_mood_changed = time(NULL);
 }
 
@@ -46,8 +46,8 @@ Coordonnees Jardiniers::get_position() {
   return this->position;
 }
 
-void Jardiniers::set_position(Coordonnees p) {
-  this->position = p;
+void Jardiniers::set_position(Coordonnees position) {
+  this->position = position;
 }
 
 int Jardiniers::get_dateMoodChanged() {
@@ -64,16 +64,12 @@ void Jardiniers::mood_change() {
 }
 
 int Jardiniers::recolter_grains(Seed_plants *p) {
-	int gr;
-	gr = p->check_recolte_grains();
-  return gr;
+	return p->check_recolte_grains();
 }
 
 void Jardiniers::manger_legumes(Legumes *l) {
 	if ((get_mood() > 1) && (l->is_eatable()) ) {
 		set_mood(get_mood() - 1);
     cout << "nouveau mood du jardinier :" << get_mood_name() << endl;
-	} else {
-		set_mood(get_mood());
 	}
 }

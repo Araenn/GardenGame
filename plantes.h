@@ -18,7 +18,6 @@ protected:
 	int etat;
 	string typePlant;
 	int id;
-	Coordonnees coordonnees;
 
 public:
 	Plantes();
@@ -27,9 +26,8 @@ public:
 	Plantes(int, int, string plantType);
 	Plantes(int, int, bool, string plantType);
 	Plantes(int, int, bool, int, string plantType);
-	Plantes(int, int, bool, int, int, string plantType);
 	Plantes(const Plantes& p);
-	~Plantes();
+
 	int get_dureePousse();
 	int get_datePlantation();
 	bool is_recoltable();
@@ -39,10 +37,12 @@ public:
 	void set_datePlantation(int);
 	void set_etat_pousse();
 	int get_id();
+
+	Plantes& operator=(const Plantes& a);
+	
 	friend ostream& operator<<(ostream&, Plantes);
 	friend bool operator!=(Plantes, Plantes);
-	Plantes& operator=(const Plantes& a);
-	void set_coordonnees(Coordonnees);
+	
 };
 
 Plantes *getDefaultPlant();

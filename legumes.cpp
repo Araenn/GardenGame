@@ -1,10 +1,10 @@
 #include "legumes.h"
 
-Legumes::Legumes(int duree_p, int date_p):
-Plantes(duree_p, date_p, 0, true, "Legumes") {}
+Legumes::Legumes(int duree_pousse, int date_plantation):
+Plantes(duree_pousse, date_plantation, 0, true, "Legumes") {}
 
-Legumes::Legumes(int duree_p) :
-Legumes(duree_p, time(NULL)) {}
+Legumes::Legumes(int duree_pousse) :
+Legumes(duree_pousse, time(NULL)) {}
 
 Legumes::Legumes() :
 Legumes(30, time(NULL)) {}

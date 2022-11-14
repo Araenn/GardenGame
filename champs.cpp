@@ -1,14 +1,21 @@
 #include "champs.h"
 
 Champs::Champs(int size_grille) {
-    this->grille = (Plantes***)malloc(sizeof(Plantes**)*size_grille);
+    this->grille = (Plantes***) malloc(sizeof(Plantes**) * size_grille);
     for (int i = 0; i < size_grille; i++) {
-        this->grille[i] = (Plantes**)malloc(sizeof(Plantes*)*size_grille);
+        this->grille[i] = (Plantes**) malloc(sizeof(Plantes*) * size_grille);
         for (int j = 0; j < size_grille; j++) {
             this->grille[i][j] = getDefaultPlant();
         }
     }
     this->size_grille = size_grille;
+}
+
+Champs::~Champs() {
+    for (int i = 0; i < size_grille; i++) {
+        free(this->grille[i]);
+    }
+    free(this->grille);
 }
 
 void Champs::afficher_champs() {
@@ -37,15 +44,9 @@ Coordonnees Champs::get_coordonnees(Plantes *p) {
     return coordonnees;
 }
 
-double Champs::calcul_distance(Plantes *p, Jardiniers jardiniers) {
+double Champs::calcul_distance(Plantes *p, Jardiniers *jardiniers) {
     Coordonnees coordsPlante = get_coordonnees(p);
-
-    /*if (coordsPlante == {0, 0}) { // la plante p n'a pas été trouvée
-        // print c'est bizarre;
-        return -1;
-    }*/
-
-    Coordonnees coordsJardinier = jardiniers.get_position();
+    Coordonnees coordsJardinier = jardiniers->get_position();
 
     double distance = sqrt(pow(coordsPlante.y - coordsJardinier.y, 2) + pow(coordsPlante.x - coordsJardinier.x, 2));
     return distance;
@@ -60,7 +61,7 @@ Plantes *Champs::plus_proche_plante(Jardiniers *jardinier, string planteType) {
     for (int i = 0; i < size_grille && minDistance == -1.0; i++) {
         for (int j = 0; j < size_grille && minDistance == -1.0; j++) {
             if (grille[i][j]->get_type().compare(planteType) == 0) {
-                minDistance = calcul_distance(grille[i][j], *jardinier);
+                minDistance = calcul_distance(grille[i][j], jardinier);
                 minDistancePlante = grille[i][j];
             }
         }
@@ -69,7 +70,7 @@ Plantes *Champs::plus_proche_plante(Jardiniers *jardinier, string planteType) {
     for (int i = 0; i < size_grille; i++) {
         for (int j = 0; j < size_grille; j++) {
             if (grille[i][j]->get_type() == planteType) {
-                double actuellDistance = calcul_distance(grille[i][j], *jardinier);
+                double actuellDistance = calcul_distance(grille[i][j], jardinier);
                 if (actuellDistance < minDistance) {
                     minDistance = actuellDistance;
                     minDistancePlante = grille[i][j];
@@ -81,28 +82,8 @@ Plantes *Champs::plus_proche_plante(Jardiniers *jardinier, string planteType) {
     return minDistancePlante;
 }
 
-void Champs::detruire_fleurs(Fleurs *fleur) {
-  Coordonnees coordFleur = get_coordonnees(fleur);
-  fleur->~Fleurs();
-  cout << "fleur detruite" << endl;
-  placer_plante(coordFleur, getDefaultPlant());
-  cout << "plante par defaut a la place !" << endl;
-}
-
-void Champs::detruire_legumes(Legumes *legume) {
-  Coordonnees coordLegume = get_coordonnees(legume);
-  legume->~Legumes();
-  cout << "legume mange" << endl;
-  placer_plante(coordLegume, getDefaultPlant());
-  cout << "plante par defaut a la place !" << endl;
-}
-
-void Champs::detruire_seedplants(Seed_plants *seedplants) {
-  Coordonnees coordSeedplants = get_coordonnees(seedplants);
-  seedplants->~Seed_plants();
-  cout << "seedplants detruit" << endl;
-  placer_plante(coordSeedplants, getDefaultPlant());
-  cout << "plante par defaut a la place !" << endl;
+void Champs::detruire_plante(Plantes *plante) {
+    placer_plante(get_coordonnees(plante), getDefaultPlant());
 }
 
 Plantes *Champs::chercher_plante(string planteType) {
@@ -110,11 +91,10 @@ Plantes *Champs::chercher_plante(string planteType) {
         for (int j = 0; j < size_grille; j++) {
             if (grille[i][j]->get_type() == planteType) {
                 return grille[i][j];
-            } else {
-                return getDefaultPlant();
             }
         }
     }
+    return getDefaultPlant();
 }
 
 void Champs::action(Jardiniers *jardinier) {
@@ -126,7 +106,7 @@ void Champs::action(Jardiniers *jardinier) {
         Coordonnees seedplantsCoord = get_coordonnees((Plantes *) a_recolter);
         jardinier->set_position(seedplantsCoord);
         jardinier->recolter_grains(a_recolter); //recolte grains
-        detruire_seedplants(a_recolter);
+        detruire_plante(a_recolter);
         cout << "debug : " << jardinier->get_mood_name() << endl;
         cout << "debug : " << jardinier->get_position() << endl;
 
@@ -143,7 +123,7 @@ void Champs::action(Jardiniers *jardinier) {
         cout << "coordplante : " << legumesCoord << endl;
         jardinier->set_position(legumesCoord);
         jardinier->manger_legumes(a_manger);
-        detruire_legumes(a_manger);
+        detruire_plante(a_manger);
         cout << "debug : " << jardinier->get_position() << endl;
 
       } else if (plus_proche_plante(jardinier, "Seed_plants")->get_type() == "Seed_plants") {
@@ -151,7 +131,7 @@ void Champs::action(Jardiniers *jardinier) {
         Coordonnees seedplantsCoord = get_coordonnees((Plantes *) a_recolter);
         jardinier->set_position(seedplantsCoord);
         jardinier->recolter_grains(a_recolter);//grains ou legums, le plus proche
-        detruire_seedplants(a_recolter);
+        detruire_plante(a_recolter);
         cout << "debug : " << jardinier->get_mood_name() << endl;
         cout << "debug : " << jardinier->get_position() << endl;
     } else {
@@ -165,7 +145,7 @@ void Champs::action(Jardiniers *jardinier) {
             cout << "coordplante : " << legumesCoord << endl;
             jardinier->set_position(legumesCoord);
             jardinier->manger_legumes(a_manger);
-            detruire_legumes(a_manger);
+            detruire_plante(a_manger);
             cout << "debug : " << jardinier->get_mood_name() << endl;
             cout << "debug : " << jardinier->get_position() << endl;
 
@@ -173,7 +153,7 @@ void Champs::action(Jardiniers *jardinier) {
             Fleurs *a_detruire = (Fleurs *) plus_proche_plante(jardinier, "Fleurs");
             Coordonnees fleursCoord = get_coordonnees((Plantes *)a_detruire);
             jardinier->set_position(fleursCoord);
-            detruire_fleurs(a_detruire); //detruit fleur si pas de legume
+            detruire_plante(a_detruire); //detruit fleur si pas de legume
             cout << "debug : " << jardinier->get_mood_name() << endl;
             cout << "debug : " << jardinier->get_position() << endl;
 
@@ -186,3 +166,14 @@ void Champs::action(Jardiniers *jardinier) {
         cout << "debug pb : " << jardinier->get_position() << endl;
     }
   }
+
+bool Champs::is_empty() {
+    for (int i = 0; i < size_grille; i++) {
+        for (int j = 0; j < size_grille; j++) {
+            if (grille[i][j] != getDefaultPlant()) {
+                return false;
+            }
+        }
+    }
+    return true;
+}

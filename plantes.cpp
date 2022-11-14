@@ -3,33 +3,23 @@
 static int idGrow = 0; 
 Plantes defaultPlant(0, 0, false, 0, "DEFAULT");
 
-Plantes::Plantes(int duree_p, int date_p, bool rec, int et, string plantType) {
-	duree_pousse = duree_p;
-	et = 0;
-	date_plantation = date_p;
-	recoltable = rec;
-	etat = et;
-	id = idGrow++;
+Plantes::Plantes(int duree_pousse, int date_plantation, bool recoltable, int etat, string plantType) {
+	this->duree_pousse = duree_pousse;
+	this->date_plantation = date_plantation;
+	this->recoltable = recoltable;
+	this->etat = 0;
+	this->id = idGrow++;
 	this->typePlant = plantType;
 }
 
-Plantes::Plantes(int duree_p, int date_p, bool rec, int et, int idd, string plantType) {
-	duree_pousse = duree_p;
-	date_plantation = date_p;
-	recoltable = rec;
-	etat = et;
-	id = idd; 
-	this->typePlant = plantType;
-}
+Plantes::Plantes(int duree_pousse, int date_plantation, bool recoltable, string plantType) :
+Plantes(duree_pousse, date_plantation, recoltable, 0, plantType) {}
 
-Plantes::Plantes(int duree_p, int date_p, bool rec, string plantType) :
-Plantes(duree_p, date_p, rec, 0, plantType) {}
+Plantes::Plantes(int duree_pousse, int date_plantation, string plantType) :
+Plantes(duree_pousse, date_plantation, true, 0, plantType) {}
 
-Plantes::Plantes(int duree_p, int date_p, string plantType) :
-Plantes(duree_p, date_p, true, 0, plantType) {}
-
-Plantes::Plantes(int duree_p, string plantType) :
-Plantes(duree_p, time(NULL), true, 0, plantType) {}
+Plantes::Plantes(int duree_pousse, string plantType) :
+Plantes(duree_pousse, time(NULL), true, 0, plantType) {}
 
 Plantes::Plantes(string plantType) :
 Plantes(20, time(NULL), true, 0, plantType) {}
@@ -38,12 +28,10 @@ Plantes::Plantes():
 Plantes("DEFAULT") {}
 
 Plantes::Plantes(const Plantes& p) :
-Plantes(p.duree_pousse, p.date_plantation, p.recoltable, p.etat, p.id, p.typePlant) {}
-
-Plantes::~Plantes() {}
+Plantes(p.duree_pousse, p.date_plantation, p.recoltable, p.etat, p.typePlant) {}
 
 int Plantes::get_dureePousse() {
-	return duree_pousse;
+	return this->duree_pousse;
 }
 
 int Plantes::get_datePlantation() {
@@ -56,29 +44,36 @@ bool Plantes::is_recoltable() {
 	} else {
 		cout << "non recoltable" << endl;
 	}
-	return recoltable;
+	return this->recoltable;
 }
 
-void Plantes::set_durePousse(int duree_p) {
-	duree_pousse = duree_p;
+void Plantes::set_durePousse(int duree_pousse) {
+	this->duree_pousse = duree_pousse;
 }
 
-void Plantes::set_datePlantation(int date_p) {
-	date_plantation = date_p;
+void Plantes::set_datePlantation(int date_plantation) {
+	this->date_plantation = date_plantation;
 }
 
 int Plantes::get_etat() {
-	return etat;
+	return this->etat;
 }
 
 string Plantes::get_type() {
 	return this->typePlant;
 }
 
+
 void Plantes::set_etat_pousse() {
-	int d = duree_pousse/5;
+	int nbrEtat = 5;
+	int duree_plantation = max(this->duree_pousse, get_datePlantation());
+	this->etat = (duree_plantation * (nbrEtat + 1)) / this->duree_pousse;
+}
+/*
+void Plantes::set_etat_pousse() {
+	int d = this->duree_pousse / 5;
 	int etapes[5];
-	int planteDepuis = time(NULL) - date_plantation;
+	int planteDepuis = get_datePlantation();
 	for (int i = 0; i <= 4; i++) {
 		etapes[i] = d*i;
 	}
@@ -103,6 +98,7 @@ void Plantes::set_etat_pousse() {
 		etat = 0;
 	}
 }
+*/
 
 ostream& operator<<(ostream& c, Plantes v) {
 	c << "type = " << v.get_type() << ".";
@@ -128,12 +124,7 @@ Plantes& Plantes::operator=(const Plantes& a) {
 	this->etat = a.etat;
 	this->typePlant = a.typePlant;
 	this->id = a.id;
-	this->coordonnees = a.coordonnees;
 	return *this;
-}
-
-void Plantes::set_coordonnees(Coordonnees coord) {
-	this->coordonnees = coord;
 }
 
 Plantes *getDefaultPlant() {
