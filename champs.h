@@ -25,6 +25,7 @@ public:
 	Plantes *chercher_plante(string);
 	Coordonnees *get_plante_coordonnees(Plantes *);
 	bool is_empty();
+	void dessiner_champs(CImg<unsigned char> *);
 };
 
 

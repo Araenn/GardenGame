@@ -3,7 +3,6 @@
 
 #include "plantes.h"
 
-
 class Legumes : public Plantes {
 
 public:

@@ -73,3 +73,20 @@ void Jardiniers::manger_legumes(Legumes *l) {
     cout << "nouveau mood du jardinier :" << get_mood_name() << endl;
 	}
 }
+
+CImg<unsigned char> Jardiniers::dessiner_jardiniers(CImg<unsigned char> *fenetre) {
+  CImg<unsigned char> jardinier_sheet_content("img_passbas.png");
+  CImg<unsigned char> jardinier_sheet_normal("Yellow-Cap-Character-16x18.png");
+  CImg<unsigned char> jardinier_sheet_grincheux("Red-Cap-Character-16x18.png");
+  switch (get_mood()) {
+  case 1:
+    return jardinier_sheet_content;
+  case 2:
+    return jardinier_sheet_normal;
+  case 3:
+    return jardinier_sheet_grincheux;  
+  default:
+    CImg<unsigned char> probleme("Crop_Spritesheet.png");
+    return probleme;
+  }
+}

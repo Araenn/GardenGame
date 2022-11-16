@@ -101,7 +101,7 @@ void Champs::action(Jardiniers *jardinier) {
 
   if (jardinier->get_mood_name() == "Content") {
 
-    if ((plus_proche_plante(jardinier, "Seed_plants")->get_type() == "Seed_plants") && (plus_proche_plante(jardinier, "Seed_plants")->is_recoltable() )) {
+    if (plus_proche_plante(jardinier, "Seed_plants")->is_recoltable()) {
         Seed_plants *a_recolter = (Seed_plants *) plus_proche_plante(jardinier, "Seed_plants");
         Coordonnees seedplantsCoord = get_coordonnees((Plantes *) a_recolter);
         jardinier->set_position(seedplantsCoord);
@@ -117,7 +117,7 @@ void Champs::action(Jardiniers *jardinier) {
     
   } else if (jardinier->get_mood_name() == "Normal") {
         cout << "debug : " << jardinier->get_mood_name() << endl;
-      if ( plus_proche_plante(jardinier, "Legumes")->get_type() == "Legumes") {
+      if ( plus_proche_plante(jardinier, "Legumes")->is_recoltable()) {
         Legumes *a_manger = (Legumes *) plus_proche_plante(jardinier, "Legumes");
         Coordonnees legumesCoord = get_coordonnees((Plantes *)a_manger);
         cout << "coordplante : " << legumesCoord << endl;
@@ -126,7 +126,7 @@ void Champs::action(Jardiniers *jardinier) {
         detruire_plante(a_manger);
         cout << "debug : " << jardinier->get_position() << endl;
 
-      } else if (plus_proche_plante(jardinier, "Seed_plants")->get_type() == "Seed_plants") {
+      } else if (plus_proche_plante(jardinier, "Seed_plants")->is_recoltable()) {
         Seed_plants *a_recolter = (Seed_plants *) plus_proche_plante(jardinier, "Seed_plants");
         Coordonnees seedplantsCoord = get_coordonnees((Plantes *) a_recolter);
         jardinier->set_position(seedplantsCoord);
@@ -139,7 +139,7 @@ void Champs::action(Jardiniers *jardinier) {
     }
   } else if (jardinier->get_mood_name() == "Grincheux") {
         cout << "debug : " << jardinier->get_mood_name() << endl;
-        if (plus_proche_plante(jardinier, "Legumes")->get_type() == "Legumes") {
+        if (plus_proche_plante(jardinier, "Legumes")->is_recoltable()) {
             Legumes *a_manger = (Legumes *) plus_proche_plante(jardinier, "Legumes");
             Coordonnees legumesCoord = get_coordonnees((Plantes *)a_manger);
             cout << "coordplante : " << legumesCoord << endl;
@@ -149,11 +149,12 @@ void Champs::action(Jardiniers *jardinier) {
             cout << "debug : " << jardinier->get_mood_name() << endl;
             cout << "debug : " << jardinier->get_position() << endl;
 
-        } else if (plus_proche_plante(jardinier, "Fleurs")->get_type() == "Fleurs") {
+        } else if (plus_proche_plante(jardinier, "Fleurs")->is_recoltable()) {
             Fleurs *a_detruire = (Fleurs *) plus_proche_plante(jardinier, "Fleurs");
             Coordonnees fleursCoord = get_coordonnees((Plantes *)a_detruire);
             jardinier->set_position(fleursCoord);
             detruire_plante(a_detruire); //detruit fleur si pas de legume
+            jardinier->set_mood(2);
             cout << "debug : " << jardinier->get_mood_name() << endl;
             cout << "debug : " << jardinier->get_position() << endl;
 
@@ -177,3 +178,10 @@ bool Champs::is_empty() {
     }
     return true;
 }
+
+void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
+    int longueur = 500;
+    int largeur = 500;
+    unsigned char vert[3] = {25, 255, 100};
+    fenetre->draw_rectangle(0, 0, longueur, largeur, vert);
+} 

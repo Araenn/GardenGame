@@ -39,7 +39,7 @@ int Plantes::get_datePlantation() {
 }
 
 bool Plantes::is_recoltable() {
-	if (this->recoltable == true) {
+	if ((this->recoltable == true) || (this->etat == 5) ){
 		cout << "recoltable" << endl;
 	} else {
 		cout << "non recoltable" << endl;

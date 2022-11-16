@@ -7,9 +7,10 @@
 #include "legumes.h"
 #include "coordonnees.h"
 #include "fleurs.h"
-//#include "CImg.h"
+#include "CImg.h"
 
 using namespace std;
+using namespace cimg_library;
 
 class Jardiniers {
 protected:
@@ -34,6 +35,7 @@ public:
   void mood_change();
 	int recolter_grains(Seed_plants*);
 	void manger_legumes(Legumes*);
+  CImg<unsigned char> dessiner_jardiniers(CImg<unsigned char> *);
 };
 
 #endif

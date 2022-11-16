@@ -3,12 +3,12 @@
 
 
 #include <iostream>
-//#include "CImg.h"
+#include "CImg.h"
 #include <time.h>
 #include "coordonnees.h"
 
 using namespace std;
-//using namespace cimg_library;
+using namespace cimg_library;
 
 class Plantes {
 protected:
