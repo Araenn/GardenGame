@@ -180,8 +180,7 @@ bool Champs::is_empty() {
 }
 
 void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
-    int longueur = 500;
-    int largeur = 500;
-    unsigned char vert[3] = {25, 255, 100};
-    fenetre->draw_rectangle(0, 0, longueur, largeur, vert);
+    CImg<unsigned char> grass("grass.bmp");
+    grass.resize(grass.width()*1.2, grass.height()*1.2);
+    fenetre->draw_image(0, 0, grass);
 } 

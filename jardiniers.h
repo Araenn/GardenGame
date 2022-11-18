@@ -35,7 +35,7 @@ public:
   void mood_change();
 	int recolter_grains(Seed_plants*);
 	void manger_legumes(Legumes*);
-  CImg<unsigned char> dessiner_jardiniers(CImg<unsigned char> *);
+  CImg<unsigned char> dessiner_jardiniers();
 };
 
 #endif

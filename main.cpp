@@ -1,5 +1,7 @@
 #include "main.h"
 
+CImg<float> make_transparent(CImg<unsigned char>&image);
+
 int main(int argc, char *argv[]) {
 	Champs champs(6);
 	//champs.afficher_champs();
@@ -21,15 +23,27 @@ int main(int argc, char *argv[]) {
 	
 	Jardiniers j("Jean", 1);
 	j.set_position(Coordonnees(5, 1));
-	CImg<unsigned char> jardinier_sheet_content("CMakeInstall.bmp");
 	
-	CImg<unsigned char> fenetre(500, 500, 1, 3, 0);
+	CImg<unsigned char> fenetre(1200, 1050, 1, 3, 0);
 	champs.dessiner_champs(&fenetre);
+
+	CImg<unsigned char> gardener = j.dessiner_jardiniers();
+	gardener = make_transparent(gardener);
+	CImgList<unsigned char> gard1, gard2;
+	gard1 = gardener.get_split('x', 3);
+	gard2 = gard1[0].get_split('y', 4);
+	gard2[0].display();
+	
+  	fenetre.draw_image(0, 350, 0, 0, j.dessiner_jardiniers(), gardener);
+	fenetre.draw_image(0, 100, 0, 0, gard2[0]);
+
+  	fenetre.display();
+
+	/*
 
 	while (!champs.is_empty()) {
 		j.mood_change();
-		jardinier_sheet_content.display();
-		//j.dessiner_jardiniers(&fenetre);
+		j.dessiner_jardiniers(&fenetre);
 		champs.action(&j);
 		cout << "main : " << j.get_mood_name() << endl;
 		cout << j.get_position() << endl;
@@ -37,7 +51,20 @@ int main(int argc, char *argv[]) {
 		fenetre.display();
 		sleep(1);
 	}
-	
+	*/
 	//champs.afficher_champs();
 	return 0;
+}
+
+CImg<float> make_transparent(CImg<unsigned char>&image) {
+	CImg<float> opacite(image.width(), image.height(), 1, 1, 0);
+	for (int x = 0; x < opacite.width(); x++)
+		for (int y = 0; y < opacite.height(); y++)
+			if (image(x, y, 0) == 0 && image(x, y, 1) == 0 && image(x, y, 2) == 0) {
+				opacite(x, y) = 0;
+			}
+			else {
+				opacite(x, y) = 1;
+			}
+	return opacite;
 }

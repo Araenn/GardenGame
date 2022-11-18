@@ -74,10 +74,13 @@ void Jardiniers::manger_legumes(Legumes *l) {
 	}
 }
 
-CImg<unsigned char> Jardiniers::dessiner_jardiniers(CImg<unsigned char> *fenetre) {
-  CImg<unsigned char> jardinier_sheet_content("img_passbas.png");
-  CImg<unsigned char> jardinier_sheet_normal("Yellow-Cap-Character-16x18.png");
-  CImg<unsigned char> jardinier_sheet_grincheux("Red-Cap-Character-16x18.png");
+CImg<unsigned char> Jardiniers::dessiner_jardiniers() {
+  CImg<unsigned char> jardinier_sheet_content("Green.bmp");
+  jardinier_sheet_content.resize(jardinier_sheet_content.height()*3, jardinier_sheet_content.width()*5);
+  CImg<unsigned char> jardinier_sheet_normal("Yellow-Cap-Character-16x18.bmp");
+  jardinier_sheet_normal.resize(jardinier_sheet_normal.height()*3, jardinier_sheet_normal.width()*5);
+  CImg<unsigned char> jardinier_sheet_grincheux("Red-Cap-Character-16x18.bmp");
+  jardinier_sheet_grincheux.resize(jardinier_sheet_grincheux.height()*3, jardinier_sheet_grincheux.width()*5);
   switch (get_mood()) {
   case 1:
     return jardinier_sheet_content;
@@ -86,7 +89,7 @@ CImg<unsigned char> Jardiniers::dessiner_jardiniers(CImg<unsigned char> *fenetre
   case 3:
     return jardinier_sheet_grincheux;  
   default:
-    CImg<unsigned char> probleme("Crop_Spritesheet.png");
+    CImg<unsigned char> probleme("Crop_Spritesheet.bmp");
     return probleme;
   }
 }
