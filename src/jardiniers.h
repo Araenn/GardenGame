@@ -10,6 +10,7 @@
 #include "orientation.h"
 #include "moodType.h"
 #include "lib/CImg.h"
+#include "CImgUtils.h"
 
 using namespace std;
 using namespace cimg_library;
