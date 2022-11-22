@@ -40,7 +40,7 @@ class Jardiniers {
     void manger_legumes(const Legumes &legume);
 
     CImg<unsigned char> dessiner_jardiniers();
-    void se_deplacer(Coordonnees);
+    void se_deplacer(const Coordonnees &, CImg<unsigned char> *fenetre);
 
     friend ostream &operator<<(ostream &stream, const Jardiniers &jardinier);
 };

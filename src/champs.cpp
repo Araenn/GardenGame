@@ -101,7 +101,7 @@ void Champs::detruire_plante(const Plantes &plante) {
     placer_plante(get_coordonnees(plante), Plantes::DEFAULT);
 }
 
-void Champs::action(Jardiniers &jardinier) {
+void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
 
     if (jardinier.get_mood() == MoodType::HAPPY) {
 
@@ -109,7 +109,7 @@ void Champs::action(Jardiniers &jardinier) {
             Seed_plants *a_recolter = (Seed_plants *) &plus_proche_plante(jardinier, Plants_types::SEED_PLANTS);
             cout << "plant id: " << a_recolter->get_id() << endl;
             if (a_recolter->isRecoltable()) {
-                jardinier.set_position(get_coordonnees(*a_recolter));
+                jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
                 jardinier.recolter_grains(*a_recolter);
                 detruire_plante(*a_recolter);
                 cout << "Le jardinier était content et a supprimé la plante à graine en " << jardinier.get_position() << "." << endl;
@@ -126,7 +126,7 @@ void Champs::action(Jardiniers &jardinier) {
             Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier, Plants_types::LEGUME);
             if (a_manger->is_eatable()) {
                 cout << "plante coordinates: " << get_coordonnees(*a_manger) << endl;
-                jardinier.set_position(get_coordonnees(*a_manger));
+                jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                 jardinier.manger_legumes(*a_manger);
                 detruire_plante(*a_manger);
                 cout << "Le jardinier était normal et a supprimé le légume en " << jardinier.get_position() << endl;
@@ -136,7 +136,7 @@ void Champs::action(Jardiniers &jardinier) {
         } else if (contains_plant_type(Plants_types::SEED_PLANTS)) {
             Seed_plants *a_recolter = (Seed_plants *) &plus_proche_plante(jardinier, Plants_types::SEED_PLANTS);
             if (a_recolter->isRecoltable()) {
-                jardinier.set_position(get_coordonnees(*a_recolter));
+                jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
                 jardinier.recolter_grains(*a_recolter);
                 detruire_plante(*a_recolter);
                 cout << "Le jardinier était normal et a supprimé la plante  à graine en " << jardinier.get_position() << endl;
@@ -152,7 +152,7 @@ void Champs::action(Jardiniers &jardinier) {
         if (contains_plant_type(Plants_types::LEGUME)) {
             Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier, Plants_types::LEGUME);
             if (a_manger->is_eatable()) {
-                jardinier.set_position(get_coordonnees(*a_manger));
+                jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                 jardinier.manger_legumes(*a_manger);
                 detruire_plante(*a_manger);
                 cout << "Le jardinier était pas content et a supprimé le légume en " << jardinier.get_position() << endl;
@@ -162,7 +162,7 @@ void Champs::action(Jardiniers &jardinier) {
 
         } else if (contains_plant_type(Plants_types::FLOWER)) {
             Fleurs *a_detruire = (Fleurs *) &plus_proche_plante(jardinier, Plants_types::FLOWER);
-            jardinier.set_position(get_coordonnees(*a_detruire));
+            jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
             detruire_plante(*a_detruire);
             cout << "Le jardinier était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
         } else {

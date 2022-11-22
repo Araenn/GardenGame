@@ -24,14 +24,14 @@ int main(int argc, char *argv[]) {
 	champs.placer_plante(Coordonnees(2, 1), marguerite);
 	champs.placer_plante(Coordonnees(3, 5), cafe);
 
-	champs.afficher_champs();
+	//champs.afficher_champs();
 	
 	Jardiniers j("Jean", Coordonnees(5, 1));
 	
-	/*CImg<unsigned char> fenetre(1200, 1050, 1, 3, 0);
+	CImg<unsigned char> fenetre(1200, 1050, 1, 3, 0);
 	champs.dessiner_champs(&fenetre);
 
-	CImg<unsigned char> gardener = j.dessiner_jardiniers();
+	/*CImg<unsigned char> gardener = j.dessiner_jardiniers();
 	gardener = make_transparent(gardener);
 	CImgList<unsigned char> gard1, gard2;
 	gard1 = gardener.get_split('x', 3);
@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
   	fenetre.display();
 	*/
 
+	CImgDisplay jeu(1200, 1050, "Garden Game");
 	
 
 	while (!champs.is_empty()) {
@@ -52,10 +53,10 @@ int main(int argc, char *argv[]) {
 		cout << j << endl;
 		champs.update_champs();
 		//j.dessiner_jardiniers();
-		champs.action(j);
+		champs.action(j, &fenetre);
 		champs.afficher_champs();
-		/*fenetre.display();
-		*/
+		fenetre.display(jeu);
+		
 		sleep(1);
 	}
 	

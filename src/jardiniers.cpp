@@ -86,19 +86,132 @@ void load_jardinier_images() {
   jardiniers_imgs_loaded = true;
 }
 
-/*
-void Jardiniers::se_deplacer(Coordonnees coordPlante) {
+void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char> *fenetre) {
   int dx, dy;
   int e;
-  e = coordPlante.getX() - get_position().getX();
+  int x1, x2, y1, y2;
+  x1 = this->get_position().getX();
+  y1 = this->get_position().getY();
+  x2 = coordPlante.getX();
+  y2 = coordPlante.getY();
+  e = x2 - x1;
   dx = e*2;
-  dy = (coordPlante.getY() - get_position().getY()) * 2;
-  while (get_position().getX() < coordPlante.getX()) {
-    set_position(get_position().getX() + 1, get_position().getY());
-    if (e - dy < 0) {
-      set_position(get_position().getX(), get_position().getY() + 1);
-      e = e + dx;
+  dy = (y2 - y1) * 2;
+
+  load_jardinier_images();
+
+  if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (x1 <= x2) {
+      x1 = x1 + 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+      if ( (e = e - dy ) <= 0) {
+        y1 = y1 + 1;
+        set_position({x1, y1});
+        fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+        cout << "nouvelle position : " << get_position() << endl;
+        e = e + dx;
+      }
     }
+
+  } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (y1 < y2) {
+      y1 = y1 + 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+    }
+
+  } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (x1 < x2) {
+      x1 = x1 + 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+    } 
+
+  } else if ((coordPlante.getX() > get_position().getX()) && (coordPlante.getY() < get_position().getY()) ){
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (x1 <= x2) {
+      x1 = x1 + 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+      if ( (e = e - dy ) <= 0) {
+        y1 = y1 - 1;
+        set_position({x1, y1});
+        fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+        cout << "nouvelle position : " << get_position() << endl;
+        e = e + dx;
+      }
+    }
+
+  } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() < get_position().getY())) {
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (y1 > y2) {
+      y1 = y1 - 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+    }
+    
+  } else if ((coordPlante.getX() < get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (x1 > x2) {
+      x1 = x1 - 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+    }
+    
+  } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (x1 < x2) {
+      x1 = x1 + 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+    }
+    
+  } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() > get_position().getY()) ) {
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (x1 <= x2) {
+      x1 = x1 - 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+      if ( (e = e - dy ) <= 0) {
+        y1 = y1 + 1;
+        set_position({x1, y1});
+        fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+        cout << "nouvelle position : " << get_position() << endl;
+        e = e + dx;
+      }
+      cout << "nouvelle position : " << get_position() << endl;
+    }
+    
+  } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() < get_position().getY()) ) {
+    cout << "position actuelle du jard : " << get_position() << endl;
+    while (x1 <= x2) {
+      x1 = x1 - 1;
+      set_position({x1, y1});
+      fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+      cout << "nouvelle position : " << get_position() << endl;
+      if ( (e = e - dy ) <= 0) {
+        y1 = y1 - 1;
+        set_position({x1, y1});
+        fenetre->draw_image(x1*18, y1*18, 0, 0, dessiner_jardiniers());
+        cout << "nouvelle position : " << get_position() << endl;
+        e = e + dx;
+      }
+    }
+    
+  } else {
+    cout << "probleme de position plante/jard" << endl;
   }
+
 }
-*/
