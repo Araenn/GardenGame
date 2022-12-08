@@ -21,8 +21,16 @@ void Champs::afficher_champs() const {
 	}
 }
 
-void Champs::placer_plante(const Coordonnees &coord, const Plantes &p) {
+void Champs::placer_plante(const Coordonnees &coord, const Plantes &p, CImg<unsigned char> *fenetre) {
     grille[coord.getX()][coord.getY()] = p;
+    CImg<unsigned char> img_plante = p.choix_img_plantes();
+    CImg<float> mask = make_transparent(img_plante);
+    fenetre->draw_image(coord.getX(), coord.getY(), 0, 0, img_plante, mask);
+}
+
+void Champs::dessiner_plantes(Plantes &plante, CImg<unsigned char> *fenetre) {
+    CImg<unsigned char> img_plante = plante.choix_img_plantes();
+	fenetre->draw_image(this->get_coordonnees(plante).getX(), this->get_coordonnees(plante).getY(), 0, 0, img_plante);
 }
 
 Coordonnees Champs::get_coordonnees(const Plantes &p) const {
@@ -97,8 +105,8 @@ bool Champs::contains_plant_type(const Plants_types &plant_type) {
     return false;
 }
 
-void Champs::detruire_plante(const Plantes &plante) {
-    placer_plante(get_coordonnees(plante), Plantes::DEFAULT);
+void Champs::detruire_plante(const Plantes &plante, CImg<unsigned char> *fenetre) {
+    placer_plante(get_coordonnees(plante), Plantes::DEFAULT, fenetre);
 }
 
 void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
@@ -112,11 +120,14 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
                 jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
                 jardinier.recolter_grains(*a_recolter);
                 detruire_plante(*a_recolter);
+                jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était content et a supprimé la plante à graine en " << jardinier.get_position() << "." << endl;
             } else {
+                jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était content mais la plante a graine la plus proche n'était pas récoltable." << endl;
             }
         } else {
+            jardinier.dessiner_jardiniers_champs(fenetre);
             cout << "Le jardinier était content, il voulait récolter du grain, mais il n'en a pas trouvé dans le champs." << endl;
         }
     
@@ -129,8 +140,10 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
                 jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                 jardinier.manger_legumes(*a_manger);
                 detruire_plante(*a_manger);
+                jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était normal et a supprimé le légume en " << jardinier.get_position() << endl;
             } else {
+                jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était normal mais le legume la plus proche n'était pas récoltable." << endl;
             }
         } else if (contains_plant_type(Plants_types::SEED_PLANTS)) {
@@ -139,11 +152,14 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
                 jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
                 jardinier.recolter_grains(*a_recolter);
                 detruire_plante(*a_recolter);
+                jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était normal et a supprimé la plante  à graine en " << jardinier.get_position() << endl;
             } else {
+                jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était normal mais la plante à graine la plus proche n'était pas récoltable." << endl;
             }
         } else {
+            jardinier.dessiner_jardiniers_champs(fenetre);
             cout << "Le jardinier était normal mais n'a pas trouvé de plante a graine et de legume." << endl;
         }
 
@@ -155,8 +171,10 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
                 jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                 jardinier.manger_legumes(*a_manger);
                 detruire_plante(*a_manger);
+                jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était pas content et a supprimé le légume en " << jardinier.get_position() << endl;
             } else {
+                jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était pas content mais le légume la plus proche n'était pas récoltable." << endl;
             }
 
@@ -164,12 +182,16 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             Fleurs *a_detruire = (Fleurs *) &plus_proche_plante(jardinier, Plants_types::FLOWER);
             jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
             detruire_plante(*a_detruire);
+            jardinier.set_mood(MoodType::NORMAL);
+            jardinier.dessiner_jardiniers_champs(fenetre);
             cout << "Le jardinier était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
         } else {
+            jardinier.dessiner_jardiniers_champs(fenetre);
             cout << "RIEN d'accessible" << endl;
         }
 
     } else {
+        jardinier.dessiner_jardiniers_champs(fenetre);
         cout << "oulala c'est bizarre" << endl;
         cout << "debug pb : " << jardinier.get_mood().get_name() << endl;
         cout << "debug pb : " << jardinier.get_position() << endl;
@@ -193,11 +215,12 @@ void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
     fenetre->draw_image(0, 0, grass);
 } 
 
-void Champs::update_champs() {
+void Champs::update_champs(CImg<unsigned char> *fenetre) {
     for (int i = 0; i < this->size_grille; i++) {
         for (int j = 0; j < this->size_grille; j++) {
             if (grille[i][j] != Plantes::DEFAULT) {
                 grille[i][j].update_plant();
+                this->dessiner_plante(grille[i][j], fenetre);
             }
         }
     }

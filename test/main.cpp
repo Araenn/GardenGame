@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
 	cout << "id: " << Plantes::DEFAULT.get_id() << endl;
 
 	Champs champs(6);
+	CImg<unsigned char> fenetre(1200, 1050, 1, 3, 0);
 	
 	Fleurs rose(Variete::ROSE);
 	Fleurs tulipe(Variete::TULIPE);
@@ -17,15 +18,9 @@ int main(int argc, char *argv[]) {
 	Seed_plants cafe(10, Variete::CAFE);
 	
 	
-	champs.placer_plante(Coordonnees(2, 0), rose);
-	champs.placer_plante(Coordonnees(4, 4), tulipe);
-	champs.placer_plante(Coordonnees(5, 0), tomate);
-	champs.placer_plante(Coordonnees(2, 1), marguerite);
-	champs.placer_plante(Coordonnees(3, 5), cafe);
+	
 	
 	Jardiniers j("Jean", Coordonnees(5, 1));
-	
-	CImg<unsigned char> fenetre(1200, 1050, 1, 3, 0);
 	champs.dessiner_champs(&fenetre);
 
 	/*CImg<unsigned char> gardener("./data/character/Content/Green.bmp");
@@ -42,16 +37,20 @@ int main(int argc, char *argv[]) {
 */
 
 	CImgDisplay jeu(1200, 1050, "Garden Game");
-
-	while (!champs.is_empty()) {
+	champs.placer_plante(Coordonnees(2, 0), rose, &fenetre);
+	champs.placer_plante(Coordonnees(4, 4), tulipe, &fenetre);
+	champs.placer_plante(Coordonnees(5, 0), tomate, &fenetre);
+	champs.placer_plante(Coordonnees(2, 1), marguerite, &fenetre);
+	champs.placer_plante(Coordonnees(3, 5), cafe, &fenetre);
+	
+	while (!jeu.is_closed()) {
 		j.update_mood();
+		
 		cout << j << endl;
 		champs.update_champs();
-		//j.dessiner_jardiniers();
+		//champs.dessiner_champs(&fenetre);
 		champs.action(j, &fenetre);
-		champs.afficher_champs();
 		fenetre.display(jeu);
-		
 		sleep(1);
 	}
 	//champs.afficher_champs();

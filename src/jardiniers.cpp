@@ -43,6 +43,9 @@ void Jardiniers::set_mood(const MoodType &moodType) {
   this->date_mood_changed = time(NULL);
 }
 
+void Jardiniers::set_orientation(const Orientation &orientation) {
+  this->orientation = orientation;
+}
 int Jardiniers::recolter_grains(const Seed_plants &p) const {
 	return p.check_recolte_grains();
 }
@@ -98,21 +101,19 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
   dx = e*2;
   dy = (y2 - y1) * 2;
 
-  load_jardinier_images();
-  CImg<unsigned char> jard = dessiner_jardiniers();
-  CImg<float> mask = make_transparent(jard);
-
   if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (x1 <= x2) {
+    if (x1 <= x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::EAST);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
       if ( (e = e - dy ) <= 0) {
         y1 = y1 + 1;
         set_position({x1, y1});
-        fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+        set_orientation(Orientation::NORTH);
+        dessiner_jardiniers_champs(fenetre);
         cout << "nouvelle position : " << get_position() << endl;
         e = e + dx;
       }
@@ -120,33 +121,37 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
 
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (y1 < y2) {
+    if (y1 < y2) {
       y1 = y1 + 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::NORTH);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
     }
 
   } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (x1 < x2) {
+    if (x1 < x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::EAST);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
     } 
 
   } else if ((coordPlante.getX() > get_position().getX()) && (coordPlante.getY() < get_position().getY()) ){
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (x1 <= x2) {
+    if (x1 <= x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::EAST);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
       if ( (e = e - dy ) <= 0) {
         y1 = y1 - 1;
         set_position({x1, y1});
-        fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+        set_orientation(Orientation::SOUTH);
+        dessiner_jardiniers_champs(fenetre);
         cout << "nouvelle position : " << get_position() << endl;
         e = e + dx;
       }
@@ -154,42 +159,47 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
 
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() < get_position().getY())) {
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (y1 > y2) {
+    if (y1 > y2) {
       y1 = y1 - 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::SOUTH);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
     }
     
   } else if ((coordPlante.getX() < get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (x1 > x2) {
+    if (x1 > x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::WEST);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
     }
     
   } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (x1 < x2) {
+    if (x1 < x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::EAST);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
     }
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() > get_position().getY()) ) {
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (x1 <= x2) {
+    if (x1 <= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::WEST);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
       if ( (e = e - dy ) <= 0) {
         y1 = y1 + 1;
         set_position({x1, y1});
-        fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+        set_orientation(Orientation::NORTH);
+        dessiner_jardiniers_champs(fenetre);
         cout << "nouvelle position : " << get_position() << endl;
         e = e + dx;
       }
@@ -198,15 +208,17 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() < get_position().getY()) ) {
     cout << "position actuelle du jard : " << get_position() << endl;
-    while (x1 <= x2) {
+    if (x1 <= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
-      fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+      set_orientation(Orientation::WEST);
+      dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
       if ( (e = e - dy ) <= 0) {
         y1 = y1 - 1;
         set_position({x1, y1});
-        fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+        set_orientation(Orientation::SOUTH);
+        dessiner_jardiniers_champs(fenetre);
         cout << "nouvelle position : " << get_position() << endl;
         e = e + dx;
       }
@@ -216,4 +228,16 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     cout << "probleme de position plante/jard" << endl;
   }
 
+}
+
+void Jardiniers::dessiner_jardiniers_champs(CImg<unsigned char> *fenetre) {
+  
+  int x1, y1;
+  x1 = this->get_position().getX();
+  y1 = this->get_position().getY();
+
+  load_jardinier_images();
+  CImg<unsigned char> jard = dessiner_jardiniers();
+  CImg<float> mask = make_transparent(jard);
+  fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
 }

@@ -2,6 +2,8 @@
 
 static int idGrow = 0; 
 const Plantes Plantes::DEFAULT = Plantes(Plants_types::UNKNOWN, Variete::UNKNOWN);
+static vector<vector<CImg<unsigned char>>> plants_imgs; // [state][variete]
+static bool plants_imgs_loaded = false;
 
 Plantes::Plantes(const Plants_types &plants_types, const Variete &variete) {
 	this->date_plantation = time(NULL);
@@ -60,4 +62,9 @@ Plantes& Plantes::operator=(const Plantes& a) {
 
 ostream& operator<<(ostream& c, const Plantes &v) {
 	return c << "{id:" << v.get_id() << ",type: " << v.get_type() << "}";
+}
+
+CImg<unsigned char> Plantes::choix_img_plantes() const {
+	CImg<unsigned char> img_plante = this->get_variete().getImage(get_etat());
+	return img_plante;
 }

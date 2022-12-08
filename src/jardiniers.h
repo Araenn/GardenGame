@@ -33,7 +33,8 @@ class Jardiniers {
     MoodType get_mood() const;
     Coordonnees get_position() const;
     void set_position(const Coordonnees &position);
-
+    void set_orientation(const Orientation &orientation);
+    
     void update_mood();
     void set_mood(const MoodType &moodType);
 
@@ -41,6 +42,7 @@ class Jardiniers {
     void manger_legumes(const Legumes &legume);
 
     CImg<unsigned char> dessiner_jardiniers();
+    void dessiner_jardiniers_champs(CImg<unsigned char> *fenetre);
     void se_deplacer(const Coordonnees &, CImg<unsigned char> *fenetre);
 
     friend ostream &operator<<(ostream &stream, const Jardiniers &jardinier);

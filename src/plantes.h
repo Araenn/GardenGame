@@ -6,6 +6,7 @@
 #include "coordonnees.h"
 #include "plants_types.h"
 #include "varietes.h"
+#include "CImgUtils.h"
 
 using namespace std;
 
@@ -35,6 +36,8 @@ class Plantes {
 		bool operator!=(const Plantes &) const ;
 		
 		friend ostream& operator<<(ostream&, const Plantes &v);
+
+		CImg<unsigned char> choix_img_plantes() const;
 		
 };
 
