@@ -8,6 +8,7 @@
 class Legumes : public Crops {
 
     public:
+        Legumes();
         Legumes(const Variete &variete);
       
         bool is_eatable() const;

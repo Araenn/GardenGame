@@ -23,14 +23,6 @@ void Champs::afficher_champs() const {
 
 void Champs::placer_plante(const Coordonnees &coord, const Plantes &p, CImg<unsigned char> *fenetre) {
     grille[coord.getX()][coord.getY()] = p;
-    CImg<unsigned char> img_plante = p.choix_img_plantes();
-    CImg<float> mask = make_transparent(img_plante);
-    fenetre->draw_image(coord.getX(), coord.getY(), 0, 0, img_plante, mask);
-}
-
-void Champs::dessiner_plantes(Plantes &plante, CImg<unsigned char> *fenetre) {
-    CImg<unsigned char> img_plante = plante.choix_img_plantes();
-	fenetre->draw_image(this->get_coordonnees(plante).getX(), this->get_coordonnees(plante).getY(), 0, 0, img_plante);
 }
 
 Coordonnees Champs::get_coordonnees(const Plantes &p) const {
@@ -119,7 +111,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             if (a_recolter->isRecoltable()) {
                 jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
                 jardinier.recolter_grains(*a_recolter);
-                detruire_plante(*a_recolter);
+                detruire_plante(*a_recolter, fenetre);
                 jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était content et a supprimé la plante à graine en " << jardinier.get_position() << "." << endl;
             } else {
@@ -139,7 +131,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
                 cout << "plante coordinates: " << get_coordonnees(*a_manger) << endl;
                 jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                 jardinier.manger_legumes(*a_manger);
-                detruire_plante(*a_manger);
+                detruire_plante(*a_manger, fenetre);
                 jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était normal et a supprimé le légume en " << jardinier.get_position() << endl;
             } else {
@@ -151,7 +143,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             if (a_recolter->isRecoltable()) {
                 jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
                 jardinier.recolter_grains(*a_recolter);
-                detruire_plante(*a_recolter);
+                detruire_plante(*a_recolter, fenetre);
                 jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était normal et a supprimé la plante  à graine en " << jardinier.get_position() << endl;
             } else {
@@ -170,7 +162,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             if (a_manger->is_eatable()) {
                 jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                 jardinier.manger_legumes(*a_manger);
-                detruire_plante(*a_manger);
+                detruire_plante(*a_manger, fenetre);
                 jardinier.dessiner_jardiniers_champs(fenetre);
                 cout << "Le jardinier était pas content et a supprimé le légume en " << jardinier.get_position() << endl;
             } else {
@@ -181,7 +173,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
         } else if (contains_plant_type(Plants_types::FLOWER)) {
             Fleurs *a_detruire = (Fleurs *) &plus_proche_plante(jardinier, Plants_types::FLOWER);
             jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
-            detruire_plante(*a_detruire);
+            detruire_plante(*a_detruire, fenetre);
             jardinier.set_mood(MoodType::NORMAL);
             jardinier.dessiner_jardiniers_champs(fenetre);
             cout << "Le jardinier était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
@@ -220,7 +212,9 @@ void Champs::update_champs(CImg<unsigned char> *fenetre) {
         for (int j = 0; j < this->size_grille; j++) {
             if (grille[i][j] != Plantes::DEFAULT) {
                 grille[i][j].update_plant();
-                this->dessiner_plante(grille[i][j], fenetre);
+                Coordonnees plantCoords = get_coordonnees(grille[i][j]);
+                cout << "plantCoords : " << plantCoords << endl;
+                grille[i][j].dessiner_plantes(fenetre, plantCoords.getX() * 80, plantCoords.getY() * 80);
             }
         }
     }

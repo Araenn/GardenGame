@@ -2,8 +2,6 @@
 
 static int idGrow = 0; 
 const Plantes Plantes::DEFAULT = Plantes(Plants_types::UNKNOWN, Variete::UNKNOWN);
-static vector<vector<CImg<unsigned char>>> plants_imgs; // [state][variete]
-static bool plants_imgs_loaded = false;
 
 Plantes::Plantes(const Plants_types &plants_types, const Variete &variete) {
 	this->date_plantation = time(NULL);
@@ -64,7 +62,22 @@ ostream& operator<<(ostream& c, const Plantes &v) {
 	return c << "{id:" << v.get_id() << ",type: " << v.get_type() << "}";
 }
 
+void Plantes::dessiner_plantes(CImg<unsigned char> *fenetre, int x, int y) {
+    CImg<unsigned char> img_plante = this->get_variete().getImage(this->get_etat());
+	CImg<float> mask = make_transparent(img_plante);
+
+	fenetre->draw_image(x, y, 0, 0, img_plante, mask);
+}
+
+
 CImg<unsigned char> Plantes::choix_img_plantes() const {
-	CImg<unsigned char> img_plante = this->get_variete().getImage(get_etat());
-	return img_plante;
+	loadImagesVariete();
+	return this->get_variete().getImage(get_etat());
+}
+
+Coordonnees get_spritesheet_plantes_coord(const Variete variete, int etat) {
+	int line = variete.get_posY() * 6 * PLANT_IMAGE_SIZE[1] + PLANT_IMAGE_SIZE[1] * (5 - etat);
+	int col = variete.get_posX() * PLANT_IMAGE_SIZE[0];
+	Coordonnees posVariete(line, col);
+	return posVariete;
 }

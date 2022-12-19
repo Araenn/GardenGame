@@ -3,6 +3,7 @@
 int main(int argc, char *argv[]) {
 
 	load_jardinier_images();
+	loadImagesVariete();
 
 
 	cout << "valeur du type par defaut: " << Plantes::DEFAULT.get_type().get_name() << endl;
@@ -16,6 +17,7 @@ int main(int argc, char *argv[]) {
 	Legumes tomate(Variete::TOMATE);
 	Fleurs marguerite(Variete::ROSE);
 	Seed_plants cafe(10, Variete::CAFE);
+	Seed_plants framboise(10, Variete::FRAMBOISE);
 	
 	
 	
@@ -23,31 +25,28 @@ int main(int argc, char *argv[]) {
 	Jardiniers j("Jean", Coordonnees(5, 1));
 	champs.dessiner_champs(&fenetre);
 
-	/*CImg<unsigned char> gardener("./data/character/Content/Green.bmp");
-	gardener = make_transparent(gardener);
-	CImgList<unsigned char> gard1, gard2;
-	gard1 = gardener.get_split('x', 3);
-	gard2 = gard1[0].get_split('y', 4);
-	
-	
-
-	
-  	//fenetre.draw_image(0, 350, 0, 0, j.dessiner_jardiniers(), gardener);
-	fenetre.draw_image(0, 100, 0, 0, gard2[0]);
-*/
-
 	CImgDisplay jeu(1200, 1050, "Garden Game");
 	champs.placer_plante(Coordonnees(2, 0), rose, &fenetre);
 	champs.placer_plante(Coordonnees(4, 4), tulipe, &fenetre);
 	champs.placer_plante(Coordonnees(5, 0), tomate, &fenetre);
 	champs.placer_plante(Coordonnees(2, 1), marguerite, &fenetre);
 	champs.placer_plante(Coordonnees(3, 5), cafe, &fenetre);
-	
+	champs.placer_plante(Coordonnees(5, 1), framboise, &fenetre);
+
+	/*
+	CImg <unsigned char> img("./data/Crop_Spritesheet.bmp");
+	Coordonnees pos = get_spritesheet_plantes_coord(Variete::MAIS, 5);
+	img = img.get_crop(pos.getX(), pos.getY(), pos.getX() + PLANT_IMAGE_SIZE[0], pos.getY() + PLANT_IMAGE_SIZE[1]);
+	img.resize(img.height() * 3.5, img.width() * 4.5);
+	CImg <float> mask_img = make_transparent(img);
+	cout << "coord : " << pos.getX() << ", " << pos.getY() << ", " << pos.getX() + PLANT_IMAGE_SIZE[0] << ", " << pos.getY() + PLANT_IMAGE_SIZE[1] << endl;
+	*/
+
 	while (!jeu.is_closed()) {
 		j.update_mood();
-		
-		cout << j << endl;
-		champs.update_champs();
+		champs.dessiner_champs(&fenetre);
+		//fenetre.draw_image(0, 300, 0, 0, img, mask_img);
+		champs.update_champs(&fenetre);
 		//champs.dessiner_champs(&fenetre);
 		champs.action(j, &fenetre);
 		fenetre.display(jeu);

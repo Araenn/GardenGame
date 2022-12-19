@@ -8,7 +8,12 @@
 #include "varietes.h"
 #include "CImgUtils.h"
 
+constexpr int PLANT_IMAGE_SIZE[] = {16, 16};
+
+
 using namespace std;
+
+Coordonnees get_spritesheet_plantes_coord(const Variete variete, int etat);
 
 class Plantes {
 
@@ -38,6 +43,9 @@ class Plantes {
 		friend ostream& operator<<(ostream&, const Plantes &v);
 
 		CImg<unsigned char> choix_img_plantes() const;
+
+		
+		void dessiner_plantes(CImg<unsigned char> *fenetre, int x, int y);
 		
 };
 

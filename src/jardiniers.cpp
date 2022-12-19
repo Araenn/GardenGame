@@ -124,7 +124,7 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     if (y1 < y2) {
       y1 = y1 + 1;
       set_position({x1, y1});
-      set_orientation(Orientation::NORTH);
+      set_orientation(Orientation::SOUTH);
       dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
     }
@@ -162,7 +162,7 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     if (y1 > y2) {
       y1 = y1 - 1;
       set_position({x1, y1});
-      set_orientation(Orientation::SOUTH);
+      set_orientation(Orientation::NORTH);
       dessiner_jardiniers_champs(fenetre);
       cout << "nouvelle position : " << get_position() << endl;
     }
@@ -239,5 +239,5 @@ void Jardiniers::dessiner_jardiniers_champs(CImg<unsigned char> *fenetre) {
   load_jardinier_images();
   CImg<unsigned char> jard = dessiner_jardiniers();
   CImg<float> mask = make_transparent(jard);
-  fenetre->draw_image(x1*18, y1*18, 0, 0, jard, mask);
+  fenetre->draw_image(x1*80, y1*80, 0, 0, jard, mask);
 }

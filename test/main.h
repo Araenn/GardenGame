@@ -10,6 +10,7 @@
 #include "../src/coordonnees.h"
 #include "../src/plants_types.h"
 #include "../src/moodType.h"
+#include "../src/varietes.h"
 #include "../src/lib/CImg.h"
 #include "../src/CImgUtils.h"
 
