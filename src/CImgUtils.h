@@ -6,5 +6,6 @@
 using namespace cimg_library;
 
 CImg<float> make_transparent(CImg<unsigned char> &image);
+void quadrillage(CImg<unsigned char> *fenetre);
 
 #endif

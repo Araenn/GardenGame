@@ -79,16 +79,11 @@ void loadImagesVariete() {
                 variete_imgs.push_back(newImage);
                 variete_imgs[variete_imgs.size() - 1].resize(newImage.height() * 3.5, newImage.width() * 4.5);
                 index++;
-                if (line < 0 || line + 16 > 160 || col < 0 || col + 16 > 160) {
-                    cout << "line : " << line << ", col : " << col << ", line+16 : " << (line + 16) << ", col+16 : " << (col + 16) << endl;
-                }
                 
             }
-        }//img.get_crop(pos.getX(), pos.getY(), pos.getX() + PLANT_IMAGE_SIZE[0], pos.getY() + PLANT_IMAGE_SIZE[1]);
+        }
 
     }
-
-    cout << "MAX INDEX : " << index << endl;
 
     imgLoaded = true;
 }
@@ -103,10 +98,6 @@ CImg<unsigned char> Variete::getImage(int state) const {
     }
 
     int plantIndex = ((this->posX << 1) | this->posY) * 6 + state;
-    //int plantIndex = ((this->posX << 1) | this->posY) + (5 - state);
-    cout << "posX : " << posX << " | posY : " << posY << endl;
-    cout << "tried index : " << plantIndex << endl;
-    cout << "res: " << variete_imgs[plantIndex].height() << endl;
     return variete_imgs[plantIndex];
 }
 

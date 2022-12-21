@@ -53,7 +53,6 @@ int Jardiniers::recolter_grains(const Seed_plants &p) const {
 void Jardiniers::manger_legumes(const Legumes &legume) {
 	if ((get_mood() != MoodType::HAPPY) && (legume.is_eatable())) {
 		set_mood(get_previous_mood(get_mood()));
-    cout << "nouveau mood du jardinier :" << get_mood().get_name() << endl;
 	}
 }
 
@@ -66,8 +65,6 @@ CImg<unsigned char> Jardiniers::dessiner_jardiniers() {
     throw invalid_argument("You need to use function load_jardinier_images() before !");
   }
 
-  cout << "mood : " << this->get_mood().get_name() << endl;
-  cout << "orientation : " << this->orientation.get_id() << endl;
   return jardiniers_imgs[this->get_mood().get_id()][this->orientation.get_id()];
 }
 
@@ -102,124 +99,101 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
   dy = (y2 - y1) * 2;
 
   if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
-    cout << "position actuelle du jard : " << get_position() << endl;
     if (x1 <= x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
       if ( (e = e - dy ) <= 0) {
         y1 = y1 + 1;
         set_position({x1, y1});
         set_orientation(Orientation::NORTH);
         dessiner_jardiniers_champs(fenetre);
-        cout << "nouvelle position : " << get_position() << endl;
         e = e + dx;
       }
     }
 
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
-    cout << "position actuelle du jard : " << get_position() << endl;
     if (y1 < y2) {
       y1 = y1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::SOUTH);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
     }
 
   } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    cout << "position actuelle du jard : " << get_position() << endl;
     if (x1 < x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
     } 
 
   } else if ((coordPlante.getX() > get_position().getX()) && (coordPlante.getY() < get_position().getY()) ){
-    cout << "position actuelle du jard : " << get_position() << endl;
     if (x1 <= x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
       if ( (e = e - dy ) <= 0) {
         y1 = y1 - 1;
         set_position({x1, y1});
         set_orientation(Orientation::SOUTH);
         dessiner_jardiniers_champs(fenetre);
-        cout << "nouvelle position : " << get_position() << endl;
         e = e + dx;
       }
     }
 
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() < get_position().getY())) {
-    cout << "position actuelle du jard : " << get_position() << endl;
     if (y1 > y2) {
       y1 = y1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::NORTH);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
     }
     
   } else if ((coordPlante.getX() < get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    cout << "position actuelle du jard : " << get_position() << endl;
     if (x1 > x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
     }
     
   } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    cout << "position actuelle du jard : " << get_position() << endl;
     if (x1 < x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
     }
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() > get_position().getY()) ) {
-    cout << "position actuelle du jard : " << get_position() << endl;
     if (x1 <= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
       if ( (e = e - dy ) <= 0) {
         y1 = y1 + 1;
         set_position({x1, y1});
         set_orientation(Orientation::NORTH);
         dessiner_jardiniers_champs(fenetre);
-        cout << "nouvelle position : " << get_position() << endl;
         e = e + dx;
       }
-      cout << "nouvelle position : " << get_position() << endl;
     }
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() < get_position().getY()) ) {
-    cout << "position actuelle du jard : " << get_position() << endl;
-    if (x1 <= x2) {
+    while (x1 <= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
       dessiner_jardiniers_champs(fenetre);
-      cout << "nouvelle position : " << get_position() << endl;
       if ( (e = e - dy ) <= 0) {
         y1 = y1 - 1;
         set_position({x1, y1});
         set_orientation(Orientation::SOUTH);
         dessiner_jardiniers_champs(fenetre);
-        cout << "nouvelle position : " << get_position() << endl;
         e = e + dx;
       }
     }
