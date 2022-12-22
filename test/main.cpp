@@ -33,15 +33,15 @@ int main(int argc, char *argv[]) {
 	champs.placer_plante(Coordonnees(5, 1), framboise, &fenetre);
 	champs.placer_plante(Coordonnees(0, 1), ble, &fenetre);
 
+	quadrillage(&fenetre);
 
 	while (!jeu.is_closed()) {
-		j.update_mood();
+		//j.update_mood();
 		j2.update_mood();
 		champs.dessiner_champs(&fenetre);
 		champs.update_champs(&fenetre);
-		champs.action(j, &fenetre);
+		//champs.action(j, &fenetre);
 		champs.action(j2, &fenetre);
-		quadrillage(&fenetre);
 		fenetre.display(jeu);
 		sleep(1);
 	}

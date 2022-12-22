@@ -102,10 +102,11 @@ void Champs::detruire_plante(const Plantes &plante, CImg<unsigned char> *fenetre
 }
 
 void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
-
+    jardinier.dessiner_jardiniers_champs(fenetre);
     if (jardinier.get_mood() == MoodType::HAPPY) {
-
+        jardinier.dessiner_jardiniers_champs(fenetre);
         if (contains_plant_type(Plants_types::SEED_PLANTS)) {
+            jardinier.dessiner_jardiniers_champs(fenetre);
             Seed_plants *a_recolter = (Seed_plants *) &plus_proche_plante(jardinier, Plants_types::SEED_PLANTS);
             cout << "plant id: " << a_recolter->get_id() << endl;
             if (a_recolter->isRecoltable()) {
@@ -124,8 +125,9 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
         }
     
     } else if (jardinier.get_mood() == MoodType::NORMAL) {
-    
+        jardinier.dessiner_jardiniers_champs(fenetre);
         if (contains_plant_type(Plants_types::LEGUME)) {
+            jardinier.dessiner_jardiniers_champs(fenetre);
             Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier, Plants_types::LEGUME);
             if (a_manger->is_eatable()) {
                 cout << "plante coordinates: " << get_coordonnees(*a_manger) << endl;
@@ -139,6 +141,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
                 cout << "Le jardinier était normal mais le legume la plus proche n'était pas récoltable." << endl;
             }
         } else if (contains_plant_type(Plants_types::SEED_PLANTS)) {
+            jardinier.dessiner_jardiniers_champs(fenetre);
             Seed_plants *a_recolter = (Seed_plants *) &plus_proche_plante(jardinier, Plants_types::SEED_PLANTS);
             if (a_recolter->isRecoltable()) {
                 jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
@@ -156,9 +159,10 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
         }
 
     } else if (jardinier.get_mood() == MoodType::GRUMPY) {
-
+        jardinier.dessiner_jardiniers_champs(fenetre);
         if (contains_plant_type(Plants_types::LEGUME)) {
             Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier, Plants_types::LEGUME);
+            jardinier.dessiner_jardiniers_champs(fenetre);
             if (a_manger->is_eatable()) {
                 jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                 jardinier.manger_legumes(*a_manger);
@@ -214,7 +218,8 @@ void Champs::update_champs(CImg<unsigned char> *fenetre) {
                 grille[i][j].update_plant();
                 Coordonnees plantCoords = get_coordonnees(grille[i][j]);
                 cout << "plantCoords : " << plantCoords << endl;
-                grille[i][j].dessiner_plantes(fenetre, plantCoords.getX() * 80, plantCoords.getY() * 80);
+                grille[i][j].dessiner_plantes(fenetre, plantCoords.getX() * 40, plantCoords.getY() * 40);
+                quadrillage(fenetre);
             }
         }
     }

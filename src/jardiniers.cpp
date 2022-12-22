@@ -47,7 +47,7 @@ void Jardiniers::set_orientation(const Orientation &orientation) {
   this->orientation = orientation;
 }
 int Jardiniers::recolter_grains(const Seed_plants &p) const {
-	return p.check_recolte_grains();
+	return p.get_nb_grains_recoltables();
 }
 
 void Jardiniers::manger_legumes(const Legumes &legume) {
@@ -98,8 +98,10 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
   dx = e*2;
   dy = (y2 - y1) * 2;
 
+
+  dessiner_jardiniers_champs(fenetre);
   if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
-    if (x1 <= x2) {
+    while (x1 <= x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
@@ -114,7 +116,8 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     }
 
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
-    if (y1 < y2) {
+    dessiner_jardiniers_champs(fenetre);
+    while (y1 < y2) {
       y1 = y1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::SOUTH);
@@ -122,7 +125,8 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     }
 
   } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    if (x1 < x2) {
+    dessiner_jardiniers_champs(fenetre);
+    while (x1 < x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
@@ -130,7 +134,8 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     } 
 
   } else if ((coordPlante.getX() > get_position().getX()) && (coordPlante.getY() < get_position().getY()) ){
-    if (x1 <= x2) {
+    dessiner_jardiniers_champs(fenetre);
+    while (x1 <= x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
@@ -145,7 +150,8 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     }
 
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() < get_position().getY())) {
-    if (y1 > y2) {
+    dessiner_jardiniers_champs(fenetre);
+    while (y1 > y2) {
       y1 = y1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::NORTH);
@@ -153,7 +159,8 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     }
     
   } else if ((coordPlante.getX() < get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    if (x1 > x2) {
+    dessiner_jardiniers_champs(fenetre);
+    while (x1 > x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
@@ -161,7 +168,8 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     }
     
   } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    if (x1 < x2) {
+    dessiner_jardiniers_champs(fenetre);
+    while (x1 < x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
@@ -169,7 +177,8 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     }
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() > get_position().getY()) ) {
-    if (x1 <= x2) {
+    dessiner_jardiniers_champs(fenetre);
+    while (x1 <= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
@@ -184,6 +193,7 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     }
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() < get_position().getY()) ) {
+    dessiner_jardiniers_champs(fenetre);
     while (x1 <= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
@@ -213,5 +223,5 @@ void Jardiniers::dessiner_jardiniers_champs(CImg<unsigned char> *fenetre) {
   load_jardinier_images();
   CImg<unsigned char> jard = dessiner_jardiniers();
   CImg<float> mask = make_transparent(jard);
-  fenetre->draw_image(x1*80, y1*80, 0, 0, jard, mask);
+  fenetre->draw_image(x1*40, y1*40, 0, 0, jard, mask);
 }

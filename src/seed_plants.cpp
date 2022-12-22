@@ -9,7 +9,7 @@ Seed_plants::Seed_plants() :
 Seed_plants(-1, Variete::UNKNOWN) {}
 
 int Seed_plants::get_nb_grains_recoltables() const {
-  return nb_grains_recoltables;
+  return this->nb_grains_recoltables;
 }
 
 int Seed_plants::check_recolte_grains() const {
