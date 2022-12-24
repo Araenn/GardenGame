@@ -16,8 +16,8 @@ class Coordonnees {
         void set_coordonnees(int x, int y);
         int getX()const ;
         int getY()const ;
-        void afficher_coordonnees() const;
         friend ostream& operator<<(ostream& c, const Coordonnees &coord);
+        bool operator!=(const Coordonnees &c2);
 };
 
 

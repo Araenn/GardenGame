@@ -44,8 +44,6 @@ double Champs::calcul_distance(const Plantes &p, const Jardiniers &jardiniers) c
 
     double distance = sqrt(pow(coordsPlante.getY() - coordsJardinier.getY(), 2) + pow(coordsPlante.getX() - coordsJardinier.getX(), 2));
 
-    cout << "la distance entre " << coordsPlante << " et " << coordsJardinier << " vaut " << distance << endl;
-
     return distance;
 }
 
@@ -108,20 +106,25 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
         if (contains_plant_type(Plants_types::SEED_PLANTS)) {
             
             Seed_plants *a_recolter = (Seed_plants *) &plus_proche_plante(jardinier, Plants_types::SEED_PLANTS);
-            cout << "plant id: " << a_recolter->get_id() << endl;
             if (a_recolter->isRecoltable()) {
-                jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
+                while (jardinier.get_position() != get_coordonnees(*a_recolter)) {
+                    update_champs(fenetre);
+                    jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
+                    jardinier.dessiner_jardiniers_champs(fenetre);
+                    update_champs(fenetre);
+                    sleep(1);
+                }
                 jardinier.recolter_grains(*a_recolter);
                 detruire_plante(*a_recolter, fenetre);
                 
-                cout << "Le jardinier était content et a supprimé la plante à graine en " << jardinier.get_position() << "." << endl;
+                cout << "Le jardinier " << jardinier.get_name() << " était content et a supprimé la plante à graine en " << jardinier.get_position() << "." << endl;
             } else {
                 
-                cout << "Le jardinier était content mais la plante a graine la plus proche n'était pas récoltable." << endl;
+                //cout << "Le jardinier était content mais la plante a graine la plus proche n'était pas récoltable." << endl;
             }
         } else {
             
-            cout << "Le jardinier était content, il voulait récolter du grain, mais il n'en a pas trouvé dans le champs." << endl;
+            //cout << "Le jardinier était content, il voulait récolter du grain, mais il n'en a pas trouvé dans le champs." << endl;
         }
     
     } else if (jardinier.get_mood() == MoodType::NORMAL) {
@@ -130,32 +133,42 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             
             Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier, Plants_types::LEGUME);
             if (a_manger->is_eatable()) {
-                cout << "plante coordinates: " << get_coordonnees(*a_manger) << endl;
-                jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
+                while (jardinier.get_position() != get_coordonnees(*a_manger)) {
+                    update_champs(fenetre);
+                    jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
+                    jardinier.dessiner_jardiniers_champs(fenetre);
+                    update_champs(fenetre);
+                    sleep(1);
+                }
                 jardinier.manger_legumes(*a_manger);
                 detruire_plante(*a_manger, fenetre);
                 
-                cout << "Le jardinier était normal et a supprimé le légume en " << jardinier.get_position() << endl;
+                cout << "Le jardinier " << jardinier.get_name() << " était normal et a supprimé le légume en " << jardinier.get_position() << endl;
             } else {
                 
-                cout << "Le jardinier était normal mais le legume la plus proche n'était pas récoltable." << endl;
+                //cout << "Le jardinier était normal mais le legume la plus proche n'était pas récoltable." << endl;
             }
         } else if (contains_plant_type(Plants_types::SEED_PLANTS)) {
             
             Seed_plants *a_recolter = (Seed_plants *) &plus_proche_plante(jardinier, Plants_types::SEED_PLANTS);
             if (a_recolter->isRecoltable()) {
-                jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
+                while (jardinier.get_position() != get_coordonnees(*a_recolter)) {
+                    update_champs(fenetre);
+                    jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
+                    jardinier.dessiner_jardiniers_champs(fenetre);
+                    sleep(1);
+                }
                 jardinier.recolter_grains(*a_recolter);
                 detruire_plante(*a_recolter, fenetre);
                 
-                cout << "Le jardinier était normal et a supprimé la plante  à graine en " << jardinier.get_position() << endl;
+                cout << "Le jardinier " << jardinier.get_name() << " était normal et a supprimé la plante  à graine en " << jardinier.get_position() << endl;
             } else {
                 
-                cout << "Le jardinier était normal mais la plante à graine la plus proche n'était pas récoltable." << endl;
+                //cout << "Le jardinier était normal mais la plante à graine la plus proche n'était pas récoltable." << endl;
             }
         } else {
             
-            cout << "Le jardinier était normal mais n'a pas trouvé de plante a graine et de legume." << endl;
+            //cout << "Le jardinier était normal mais n'a pas trouvé de plante a graine et de legume." << endl;
         }
 
     } else if (jardinier.get_mood() == MoodType::GRUMPY) {
@@ -164,26 +177,37 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier, Plants_types::LEGUME);
             
             if (a_manger->is_eatable()) {
-                jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
+                while (jardinier.get_position() != get_coordonnees(*a_manger)) {
+                    update_champs(fenetre);
+                    jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
+                    jardinier.dessiner_jardiniers_champs(fenetre);
+                    sleep(1);
+                }
                 jardinier.manger_legumes(*a_manger);
                 detruire_plante(*a_manger, fenetre);
                 
-                cout << "Le jardinier était pas content et a supprimé le légume en " << jardinier.get_position() << endl;
+                cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé le légume en " << jardinier.get_position() << endl;
             } else {
                 
-                cout << "Le jardinier était pas content mais le légume la plus proche n'était pas récoltable." << endl;
+                //cout << "Le jardinier était pas content mais le légume la plus proche n'était pas récoltable." << endl;
             }
 
         } else if (contains_plant_type(Plants_types::FLOWER)) {
             Fleurs *a_detruire = (Fleurs *) &plus_proche_plante(jardinier, Plants_types::FLOWER);
-            jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
+            while (jardinier.get_position() != get_coordonnees(*a_detruire)) {
+                update_champs(fenetre);
+                jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
+                jardinier.dessiner_jardiniers_champs(fenetre);
+                update_champs(fenetre);
+                sleep(1);
+            }
             detruire_plante(*a_detruire, fenetre);
             jardinier.set_mood(MoodType::NORMAL);
             
-            cout << "Le jardinier était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
+            cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
         } else {
             
-            cout << "RIEN d'accessible" << endl;
+            //cout << "RIEN d'accessible" << endl;
         }
 
     } else {
@@ -212,14 +236,14 @@ void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
 } 
 
 void Champs::update_champs(CImg<unsigned char> *fenetre) {
+    dessiner_champs(fenetre);
+    quadrillage(fenetre);
     for (int i = 0; i < this->size_grille; i++) {
         for (int j = 0; j < this->size_grille; j++) {
             if (grille[i][j] != Plantes::DEFAULT) {
                 grille[i][j].update_plant();
                 Coordonnees plantCoords = get_coordonnees(grille[i][j]);
-                cout << "plantCoords : " << plantCoords << endl;
                 grille[i][j].dessiner_plantes(fenetre, plantCoords.getX() * 40, plantCoords.getY() * 40);
-                quadrillage(fenetre);
             }
         }
     }

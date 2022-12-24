@@ -24,3 +24,10 @@ int Coordonnees::getY() const {
 ostream& operator<<(ostream& c, const Coordonnees &coord) {
     return c << "{" << coord.x << ", " << coord.y << "}";
 }
+
+bool Coordonnees::operator!=(const Coordonnees &c2) {
+    if ((this->getX() != c2.getX()) || (this->getY() != c2.getY())) {
+        return true;
+    }
+    return false;
+}

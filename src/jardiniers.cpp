@@ -98,7 +98,7 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
   dx = e*2;
   dy = (y1 - y2) * 2;
 
-  cout << "Le jardinier doit aller de " << get_position() << " à " << coordPlante << endl;
+  //cout << "Le jardinier doit aller de " << this->get_position() << " à " << coordPlante << endl;
 
   //plante haut droite
   if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
@@ -119,7 +119,7 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
     
     if (y1 < y2) {
-      y1 = y1 - 1;
+      y1 = y1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::NORTH);
       
@@ -153,9 +153,9 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() < get_position().getY())) {
     
     if (y1 > y2) {
-      y1 = y1 + 1;
+      y1 = y1 - 1;
       set_position({x1, y1});
-      set_orientation(Orientation::SOUTH);
+      set_orientation(Orientation::NORTH);
       
     }
     
@@ -179,23 +179,7 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() > get_position().getY()) ) {
     
-    if (x1 <= x2) {
-      x1 = x1 - 1;
-      set_position({x1, y1});
-      set_orientation(Orientation::WEST);
-      
-      if ( (e = e - dy ) <= 0) {
-        y1 = y1 - 1;
-        set_position({x1, y1});
-        set_orientation(Orientation::NORTH);
-        
-        e = e + dx;
-      }
-    }
-    
-  } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() < get_position().getY()) ) {
-    
-    if (x1 <= x2) {
+    if (x1 >= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
@@ -209,7 +193,26 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
       }
     }
     
-  } else {
+  } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() < get_position().getY()) ) {
+    
+    if (x1 >= x2) {
+      x1 = x1 - 1;
+      set_position({x1, y1});
+      set_orientation(Orientation::WEST);
+      
+      if ( (e = e - dy ) <= 0) {
+        y1 = y1 + 1;
+        set_position({x1, y1});
+        set_orientation(Orientation::SOUTH);
+        
+        e = e + dx;
+      }
+    }
+    
+  } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
+    cout << "jardiniers et plantes au même endroit !" << endl;
+  } 
+    else {
     cout << "probleme de position plante/jard" << endl;
   }
 
