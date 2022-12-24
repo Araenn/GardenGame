@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
 	Fleurs tulipe(Variete::TULIPE);
 	Legumes tomate(Variete::TOMATE);
 	Fleurs marguerite(Variete::TOURNESOL);
-	Seed_plants cafe(10, Variete::CAFE);
-	Seed_plants framboise(10, Variete::FRAMBOISE);
+	Legumes cafe(Variete::CAFE);
+	Legumes framboise(Variete::FRAMBOISE);
 	Legumes ble(Variete::BLE);
 	
 	
@@ -38,10 +38,11 @@ int main(int argc, char *argv[]) {
 	while (!jeu.is_closed()) {
 		//j.update_mood();
 		j2.update_mood();
+		champs.action(j2, &fenetre);
 		champs.dessiner_champs(&fenetre);
 		champs.update_champs(&fenetre);
+		j2.dessiner_jardiniers_champs(&fenetre);
 		//champs.action(j, &fenetre);
-		champs.action(j2, &fenetre);
 		fenetre.display(jeu);
 		sleep(1);
 	}

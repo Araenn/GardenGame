@@ -2,7 +2,9 @@
 
 Seed_plants::Seed_plants(int nb_grains_recoltables, const Variete &variete):
 Crops(Plants_types::SEED_PLANTS, variete) {
+  cout << "affectation : " << nb_grains_recoltables << endl;
   this->nb_grains_recoltables = nb_grains_recoltables;
+  cout << "affectation : " << this->nb_grains_recoltables << endl;
 }
 
 Seed_plants::Seed_plants() :

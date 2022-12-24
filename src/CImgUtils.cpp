@@ -27,14 +27,14 @@ void quadrillage(CImg <unsigned char> *fenetre) {
 
 	unsigned char brown[] = {139, 69, 19};
 	for (int i = 0; i < LineAmount + 1; i++) {
-		cout << i << endl;
+		//cout << i << endl;
 		fenetre->draw_line(pos_x, pos_y + (Hc * i), pos_x + width_f, pos_y + (Hc * i), brown);
-		cout << pos_y + (Hc * i) << ", " << pos_x + width_f << endl;
+		//cout << pos_y + (Hc * i) << ", " << pos_x + width_f << endl;
 	}
 
 	for (int i = 0; i < colAmount + 1; i++) {
-		cout << i << endl;
+		//cout << i << endl;
 		fenetre->draw_line(pos_x + (Lc * i), pos_y, pos_x + (Lc * i), pos_y + height_f, brown);
-		cout << pos_x + (Lc * i) << ", " << pos_y + height_f << endl;
+		//cout << pos_x + (Lc * i) << ", " << pos_y + height_f << endl;
 	}
 }

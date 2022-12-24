@@ -96,114 +96,115 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
   y2 = coordPlante.getY();
   e = x2 - x1;
   dx = e*2;
-  dy = (y2 - y1) * 2;
+  dy = (y1 - y2) * 2;
 
+  cout << "Le jardinier doit aller de " << get_position() << " à " << coordPlante << endl;
 
-  dessiner_jardiniers_champs(fenetre);
+  //plante haut droite
   if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
-    while (x1 <= x2) {
+    if (x1 <= x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
-      dessiner_jardiniers_champs(fenetre);
+      
       if ( (e = e - dy ) <= 0) {
-        y1 = y1 + 1;
+        y1 = y1 - 1;
         set_position({x1, y1});
         set_orientation(Orientation::NORTH);
-        dessiner_jardiniers_champs(fenetre);
+        
         e = e + dx;
       }
     }
 
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() > get_position().getY())) {
-    dessiner_jardiniers_champs(fenetre);
-    while (y1 < y2) {
-      y1 = y1 + 1;
+    
+    if (y1 < y2) {
+      y1 = y1 - 1;
       set_position({x1, y1});
-      set_orientation(Orientation::SOUTH);
-      dessiner_jardiniers_champs(fenetre);
+      set_orientation(Orientation::NORTH);
+      
     }
 
   } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    dessiner_jardiniers_champs(fenetre);
-    while (x1 < x2) {
+    
+    if (x1 < x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
-      dessiner_jardiniers_champs(fenetre);
+      
     } 
 
   } else if ((coordPlante.getX() > get_position().getX()) && (coordPlante.getY() < get_position().getY()) ){
-    dessiner_jardiniers_champs(fenetre);
-    while (x1 <= x2) {
+    
+    if (x1 <= x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
-      dessiner_jardiniers_champs(fenetre);
+      
       if ( (e = e - dy ) <= 0) {
-        y1 = y1 - 1;
+        y1 = y1 + 1;
         set_position({x1, y1});
         set_orientation(Orientation::SOUTH);
-        dessiner_jardiniers_champs(fenetre);
+        
         e = e + dx;
       }
     }
 
   } else if ((coordPlante.getX() == get_position().getX() ) && (coordPlante.getY() < get_position().getY())) {
-    dessiner_jardiniers_champs(fenetre);
-    while (y1 > y2) {
-      y1 = y1 - 1;
+    
+    if (y1 > y2) {
+      y1 = y1 + 1;
       set_position({x1, y1});
-      set_orientation(Orientation::NORTH);
-      dessiner_jardiniers_champs(fenetre);
+      set_orientation(Orientation::SOUTH);
+      
     }
     
   } else if ((coordPlante.getX() < get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    dessiner_jardiniers_champs(fenetre);
-    while (x1 > x2) {
+    
+    if (x1 > x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
-      dessiner_jardiniers_champs(fenetre);
+      
     }
     
   } else if ((coordPlante.getX() > get_position().getX() ) && (coordPlante.getY() == get_position().getY())) {
-    dessiner_jardiniers_champs(fenetre);
-    while (x1 < x2) {
+    
+    if (x1 < x2) {
       x1 = x1 + 1;
       set_position({x1, y1});
       set_orientation(Orientation::EAST);
-      dessiner_jardiniers_champs(fenetre);
+      
     }
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() > get_position().getY()) ) {
-    dessiner_jardiniers_champs(fenetre);
-    while (x1 <= x2) {
+    
+    if (x1 <= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
-      dessiner_jardiniers_champs(fenetre);
+      
       if ( (e = e - dy ) <= 0) {
-        y1 = y1 + 1;
+        y1 = y1 - 1;
         set_position({x1, y1});
         set_orientation(Orientation::NORTH);
-        dessiner_jardiniers_champs(fenetre);
+        
         e = e + dx;
       }
     }
     
   } else if ((coordPlante.getX() < get_position().getX()) && (coordPlante.getY() < get_position().getY()) ) {
-    dessiner_jardiniers_champs(fenetre);
-    while (x1 <= x2) {
+    
+    if (x1 <= x2) {
       x1 = x1 - 1;
       set_position({x1, y1});
       set_orientation(Orientation::WEST);
-      dessiner_jardiniers_champs(fenetre);
+      
       if ( (e = e - dy ) <= 0) {
-        y1 = y1 - 1;
+        y1 = y1 + 1;
         set_position({x1, y1});
         set_orientation(Orientation::SOUTH);
-        dessiner_jardiniers_champs(fenetre);
+        
         e = e + dx;
       }
     }
