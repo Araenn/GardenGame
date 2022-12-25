@@ -77,7 +77,7 @@ void loadImagesVariete() {
                     (col + 16)
                 );
                 variete_imgs.push_back(newImage);
-                variete_imgs[variete_imgs.size() - 1].resize(newImage.height() * 3.5, newImage.width() * 4.5);
+                variete_imgs[variete_imgs.size() - 1].resize(newImage.height() * 3.5, newImage.width() * 3.5);
                 index++;
                 
             }

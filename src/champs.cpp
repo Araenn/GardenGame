@@ -99,7 +99,7 @@ void Champs::detruire_plante(const Plantes &plante, CImg<unsigned char> *fenetre
     placer_plante(get_coordonnees(plante), Plantes::DEFAULT, fenetre);
 }
 
-void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
+void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDisplay &jeu) {
     
     if (jardinier.get_mood() == MoodType::HAPPY) {
         
@@ -108,10 +108,8 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             Seed_plants *a_recolter = (Seed_plants *) &plus_proche_plante(jardinier, Plants_types::SEED_PLANTS);
             if (a_recolter->isRecoltable()) {
                 while (jardinier.get_position() != get_coordonnees(*a_recolter)) {
-                    update_champs(fenetre);
                     jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
                     jardinier.dessiner_jardiniers_champs(fenetre);
-                    update_champs(fenetre);
                     sleep(1);
                 }
                 jardinier.recolter_grains(*a_recolter);
@@ -134,10 +132,8 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             Legumes *a_manger = (Legumes *) &plus_proche_plante(jardinier, Plants_types::LEGUME);
             if (a_manger->is_eatable()) {
                 while (jardinier.get_position() != get_coordonnees(*a_manger)) {
-                    update_champs(fenetre);
                     jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                     jardinier.dessiner_jardiniers_champs(fenetre);
-                    update_champs(fenetre);
                     sleep(1);
                 }
                 jardinier.manger_legumes(*a_manger);
@@ -153,7 +149,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             Seed_plants *a_recolter = (Seed_plants *) &plus_proche_plante(jardinier, Plants_types::SEED_PLANTS);
             if (a_recolter->isRecoltable()) {
                 while (jardinier.get_position() != get_coordonnees(*a_recolter)) {
-                    update_champs(fenetre);
                     jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
                     jardinier.dessiner_jardiniers_champs(fenetre);
                     sleep(1);
@@ -178,7 +173,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
             
             if (a_manger->is_eatable()) {
                 while (jardinier.get_position() != get_coordonnees(*a_manger)) {
-                    update_champs(fenetre);
                     jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
                     jardinier.dessiner_jardiniers_champs(fenetre);
                     sleep(1);
@@ -195,10 +189,8 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre) {
         } else if (contains_plant_type(Plants_types::FLOWER)) {
             Fleurs *a_detruire = (Fleurs *) &plus_proche_plante(jardinier, Plants_types::FLOWER);
             while (jardinier.get_position() != get_coordonnees(*a_detruire)) {
-                update_champs(fenetre);
                 jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
                 jardinier.dessiner_jardiniers_champs(fenetre);
-                update_champs(fenetre);
                 sleep(1);
             }
             detruire_plante(*a_detruire, fenetre);
@@ -230,9 +222,19 @@ bool Champs::is_empty() {
 }
 
 void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
+    unsigned char brown[] = {153, 76, 0};
+    fenetre->draw_rectangle(0, 0, 1200, 640*2, brown);
+
     CImg<unsigned char> grass("./data/grass.bmp");
-    grass.resize(grass.width()*1.2, grass.height()*1.2);
+    grass.resize(grass.width() * 1.2, grass.height() * 1.2);
     fenetre->draw_image(0, 0, grass);
+
+    /*
+    CImg<unsigned char> wood("./data/wood2.bmp");
+    for (int i = 0; i < 3.5; i++) {
+        fenetre->draw_image(640*1.2, i * 300, wood);
+    }*/
+    
 } 
 
 void Champs::update_champs(CImg<unsigned char> *fenetre) {

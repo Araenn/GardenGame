@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
 
 
 	Champs champs(35);
-	CImg<unsigned char> fenetre(1200, 1050, 1, 3, 0);
+	CImg<unsigned char> fenetre(1200, 640*1.2, 1, 3, 0);
 	
 	Fleurs rose(Variete::ROSE);
 	Fleurs tulipe(Variete::TULIPE);
@@ -22,9 +22,10 @@ int main(int argc, char *argv[]) {
 	
 	Jardiniers j("Jean", Coordonnees(10, 1));
 	Jardiniers j2("Claude", Coordonnees(0, 1));
+
 	champs.dessiner_champs(&fenetre);
 
-	CImgDisplay jeu(1200, 1050, "Garden Game");
+	CImgDisplay jeu(1200, 640*1.2, "Garden Game");
 	champs.placer_plante(Coordonnees(2, 0), rose, &fenetre);
 	champs.placer_plante(Coordonnees(4, 4), tulipe, &fenetre);
 	champs.placer_plante(Coordonnees(5, 0), tomate, &fenetre);
@@ -39,7 +40,7 @@ int main(int argc, char *argv[]) {
 		//j2.update_mood();
 
 		//champs.action(j2, &fenetre);
-		champs.action(j, &fenetre);
+		champs.action(j, &fenetre, jeu);
 
 		champs.dessiner_champs(&fenetre);
 		champs.update_champs(&fenetre);

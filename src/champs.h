@@ -27,7 +27,7 @@ public:
 	bool contains_plant_type(const Plants_types &plant_type);
 	Plantes &plus_proche_plante(const Jardiniers &, const Plants_types&);
 	void detruire_plante(const Plantes &plant, CImg<unsigned char> *fenetre);
-	void action(Jardiniers &, CImg<unsigned char> *fenetre);
+	void action(Jardiniers &, CImg<unsigned char> *fenetre, CImgDisplay &jeu);
 	Coordonnees &get_plante_coordonnees(const Plantes &plant);
 	bool is_empty();
 	void dessiner_champs(CImg<unsigned char> *);
