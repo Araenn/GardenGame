@@ -20,7 +20,7 @@ public:
 	Champs(int);
 
 	void afficher_champs() const;
-	void placer_plante(const Coordonnees &coordonnees, const Plantes &plant, CImg<unsigned char> *fenetre);
+	void placer_plante(const Coordonnees &coordonnees, const Plantes &plant);
 	Coordonnees get_coordonnees(const Plantes &p) const;
 	vector<Plantes> getAllPlantType(const Plants_types &plants_types);
 	double calcul_distance(const Plantes &p, const Jardiniers &jardiniers) const;

@@ -11,6 +11,14 @@ Jardiniers::Jardiniers(string name, const Coordonnees &coordonnees) {
   this->orientation = Orientation::SOUTH;
 }
 
+Jardiniers::Jardiniers(const Coordonnees &position) {
+  this->position = position;
+  this->name = name;
+  this->moodType = MoodType::HAPPY;
+  this->date_mood_changed = time(NULL);
+  this->orientation = Orientation::SOUTH;
+}
+
 string Jardiniers::get_name() const {
   return this->name;
 }
@@ -227,5 +235,5 @@ void Jardiniers::dessiner_jardiniers_champs(CImg<unsigned char> *fenetre) {
   load_jardinier_images();
   CImg<unsigned char> jard = dessiner_jardiniers();
   CImg<float> mask = make_transparent(jard);
-  fenetre->draw_image(x1*40, y1*40, 0, 0, jard, mask);
+  fenetre->draw_image(x1*48, y1*48, 0, 0, jard, mask);
 }

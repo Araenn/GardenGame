@@ -28,7 +28,8 @@ class Jardiniers {
 
   public:
     Jardiniers(string, const Coordonnees &coordonnees);
-    
+    Jardiniers(const Coordonnees &position);
+
     string get_name() const;
     MoodType get_mood() const;
     Coordonnees get_position() const;
@@ -46,6 +47,8 @@ class Jardiniers {
     void se_deplacer(const Coordonnees &, CImg<unsigned char> *fenetre);
 
     friend ostream &operator<<(ostream &stream, const Jardiniers &jardinier);
+
+    
 };
 
 #endif

@@ -21,7 +21,7 @@ void Champs::afficher_champs() const {
 	}
 }
 
-void Champs::placer_plante(const Coordonnees &coord, const Plantes &p, CImg<unsigned char> *fenetre) {
+void Champs::placer_plante(const Coordonnees &coord, const Plantes &p) {
     grille[coord.getX()][coord.getY()] = p;
 }
 
@@ -96,7 +96,7 @@ bool Champs::contains_plant_type(const Plants_types &plant_type) {
 }
 
 void Champs::detruire_plante(const Plantes &plante, CImg<unsigned char> *fenetre) {
-    placer_plante(get_coordonnees(plante), Plantes::DEFAULT, fenetre);
+    placer_plante(get_coordonnees(plante), Plantes::DEFAULT);
 }
 
 void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDisplay &jeu) {
@@ -109,7 +109,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
             if (a_recolter->isRecoltable()) {
                 while (jardinier.get_position() != get_coordonnees(*a_recolter)) {
                     jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
-                    jardinier.dessiner_jardiniers_champs(fenetre);
                     sleep(1);
                 }
                 jardinier.recolter_grains(*a_recolter);
@@ -133,7 +132,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
             if (a_manger->is_eatable()) {
                 while (jardinier.get_position() != get_coordonnees(*a_manger)) {
                     jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
-                    jardinier.dessiner_jardiniers_champs(fenetre);
                     sleep(1);
                 }
                 jardinier.manger_legumes(*a_manger);
@@ -150,7 +148,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
             if (a_recolter->isRecoltable()) {
                 while (jardinier.get_position() != get_coordonnees(*a_recolter)) {
                     jardinier.se_deplacer(get_coordonnees(*a_recolter), fenetre);
-                    jardinier.dessiner_jardiniers_champs(fenetre);
                     sleep(1);
                 }
                 jardinier.recolter_grains(*a_recolter);
@@ -174,7 +171,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
             if (a_manger->is_eatable()) {
                 while (jardinier.get_position() != get_coordonnees(*a_manger)) {
                     jardinier.se_deplacer(get_coordonnees(*a_manger), fenetre);
-                    jardinier.dessiner_jardiniers_champs(fenetre);
                     sleep(1);
                 }
                 jardinier.manger_legumes(*a_manger);
@@ -190,7 +186,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
             Fleurs *a_detruire = (Fleurs *) &plus_proche_plante(jardinier, Plants_types::FLOWER);
             while (jardinier.get_position() != get_coordonnees(*a_detruire)) {
                 jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
-                jardinier.dessiner_jardiniers_champs(fenetre);
                 sleep(1);
             }
             detruire_plante(*a_detruire, fenetre);
@@ -222,7 +217,7 @@ bool Champs::is_empty() {
 }
 
 void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
-    unsigned char brown[] = {153, 76, 0};
+    unsigned char brown[] = {129, 97, 60};
     fenetre->draw_rectangle(0, 0, 1200, 640*2, brown);
 
     CImg<unsigned char> grass("./data/grass.bmp");
@@ -245,7 +240,7 @@ void Champs::update_champs(CImg<unsigned char> *fenetre) {
             if (grille[i][j] != Plantes::DEFAULT) {
                 grille[i][j].update_plant();
                 Coordonnees plantCoords = get_coordonnees(grille[i][j]);
-                grille[i][j].dessiner_plantes(fenetre, plantCoords.getX() * 40, plantCoords.getY() * 40);
+                grille[i][j].dessiner_plantes(fenetre, plantCoords.getX() * 48, plantCoords.getY() * 48);
             }
         }
     }
