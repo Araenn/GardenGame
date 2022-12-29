@@ -39,7 +39,6 @@ int main(int argc, char *argv[]) {
   while (!jeu.is_closed()) {//d'abord mood, puis action, puis dessin champs, update champs (plantes), et dessin jardiniers
       for (int i = 0; i < listJard.size(); i++) {
         listJard[i].update_mood();
-        cout << "mood updated" << endl;
       }
 
       for (int i = 0; i < listJard.size(); i++) {
@@ -47,7 +46,6 @@ int main(int argc, char *argv[]) {
         cout << "action done" << endl;
       }
       champs.update_champs(&fenetre);
-      cout << "champs updated" << endl;
 
       if (jeu.button()) {
         //achat jardinier
@@ -73,7 +71,6 @@ int main(int argc, char *argv[]) {
 
       for (int i = 0; i < listJard.size(); i++) {
         listJard[i].dessiner_jardiniers_champs(&fenetre);
-        cout << "jard drawed" << endl;
       }
     
       

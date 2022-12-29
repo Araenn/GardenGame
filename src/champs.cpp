@@ -217,18 +217,36 @@ bool Champs::is_empty() {
 }
 
 void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
-    unsigned char brown[] = {129, 97, 60};
-    fenetre->draw_rectangle(0, 0, 1200, 640*2, brown);
+    //dessin du fond
+    unsigned char coyote_brown[] = {129, 97, 60};
+    fenetre->draw_rectangle(0, 0, 1200, 640*2, coyote_brown);
 
+    //dessin du champs
     CImg<unsigned char> grass("./data/grass.bmp");
     grass.resize(grass.width() * 1.2, grass.height() * 1.2);
     fenetre->draw_image(0, 0, grass);
 
-    /*
-    CImg<unsigned char> wood("./data/wood2.bmp");
-    for (int i = 0; i < 3.5; i++) {
-        fenetre->draw_image(640*1.2, i * 300, wood);
-    }*/
+    //dessin du menu
+    unsigned char brown[] = {144, 84, 47};
+    fenetre->draw_rectangle(640*1.2, 0, 1200, 300, brown);
+
+    //dessin du contour de "jardin"
+    unsigned char black[] = {0, 0, 0};
+    int lineWidth = 200;
+    int offset = 1;
+    fenetre->draw_line(640*1.2 + offset, 300/1.5, 1200, 300/1.5, black, lineWidth);//hor bas
+    fenetre->draw_line(640*1.2 + offset, 0, 640*1.2 + offset, 300, black, lineWidth);//vert gauche
+    fenetre->draw_line(640*1.2, 0, 1200, 0, black, lineWidth);//hor haut
+    fenetre->draw_line(1200 - offset, 0, 1200 - offset, 300, black, lineWidth);//vert droite
+
+    //dessin separation menu
+    fenetre->draw_line(640*1.2, 300, 1200, 300, black); //hor bas
+    fenetre->draw_line(640*1.2 + ((1200 - 640*1.2)/ 2), 300/1.5, 640*1.2 + ((1200 - 640*1.2)/ 2), 300, black); //vert milieu
+
+    CImg <unsigned char> logo("./data/logo_gardengame.bmp");
+    logo.resize(logo.width()/9, logo.height()/9);
+    CImg <float> mask = make_transparent(logo);
+    fenetre->draw_image(640*1.2 + 50, 0, logo, mask);
     
 } 
 
