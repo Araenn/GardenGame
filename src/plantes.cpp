@@ -39,6 +39,9 @@ int Plantes::get_id() const {
 	return this->id;
 }
 
+/*
+update the plant stage according its time to grow
+*/
 void Plantes::update_plant() {
 	int nbrEtat = 5;
 	int duree_plantation = min(this->get_variete().get_duree_pousse(), get_temps_plantation());
@@ -62,19 +65,27 @@ ostream& operator<<(ostream& c, const Plantes &v) {
 	return c << "{id:" << v.get_id() << ",type: " << v.get_type() << "}";
 }
 
+/*
+draw plants on the screen according their species and stages
+*/
 void Plantes::dessiner_plantes(CImg<unsigned char> *fenetre, int x, int y) {
-    CImg<unsigned char> img_plante = this->get_variete().getImage(this->get_etat());
+    CImg<unsigned char> img_plante = choix_img_plantes();
 	CImg<float> mask = make_transparent(img_plante);
 
 	fenetre->draw_image(x, y, 0, 0, img_plante, mask);
 }
 
-
+/*
+determine the right picture for the plant according its species and stage
+*/
 CImg<unsigned char> Plantes::choix_img_plantes() const {
 	loadImagesVariete();
 	return this->get_variete().getImage(get_etat());
 }
 
+/*
+get the coord of plants pictures on the spritesheet
+*/
 Coordonnees get_spritesheet_plantes_coord(const Variete variete, int etat) {
 	int line = variete.get_posY() * 6 * PLANT_IMAGE_SIZE[1] + PLANT_IMAGE_SIZE[1] * (5 - etat);
 	int col = variete.get_posX() * PLANT_IMAGE_SIZE[0];

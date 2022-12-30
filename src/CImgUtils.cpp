@@ -1,5 +1,8 @@
 #include "CImgUtils.h"
 
+/*
+apply transparency to an image with a mask
+*/
 CImg<float> make_transparent(CImg<unsigned char> &image) {
 	CImg<float> opacite(image.width(), image.height(), 1, 1, 0);
 	for (int x = 0; x < opacite.width(); x++)
@@ -12,6 +15,9 @@ CImg<float> make_transparent(CImg<unsigned char> &image) {
 	return opacite;
 }
 
+/*
+draw a grid for visualization 
+*/
 void quadrillage(CImg <unsigned char> *fenetre) {
 	int pos_x = 0;
 	int pos_y = 0;
@@ -31,7 +37,6 @@ void quadrillage(CImg <unsigned char> *fenetre) {
 	}
 
 	for (int i = 0; i < colAmount + 1; i++) {
-		//cout << i << endl;
 		fenetre->draw_line(pos_x + (Lc * i), pos_y, pos_x + (Lc * i), pos_y + height_f, brown);
 	}
 }

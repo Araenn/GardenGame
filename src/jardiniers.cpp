@@ -35,6 +35,10 @@ void Jardiniers::set_position(const Coordonnees &position) {
   this->position = position;
 }
 
+/*
+update the mood of the gardeners, according to the threshold determined
+they start happy, then normal and finally grumpy
+*/
 void Jardiniers::update_mood() {
   int timeElapsedFromCurrentMood = time(NULL) - this->date_mood_changed;
 
@@ -54,10 +58,17 @@ void Jardiniers::set_mood(const MoodType &moodType) {
 void Jardiniers::set_orientation(const Orientation &orientation) {
   this->orientation = orientation;
 }
+
+/*
+get the seeds from a seed plant
+*/
 int Jardiniers::recolter_grains(const Seed_plants &p) const {
 	return p.get_nb_grains_recoltables();
 }
 
+/*
+eat vegetables, and change mood from normal to happy
+*/
 void Jardiniers::manger_legumes(const Legumes &legume) {
 	if ((get_mood() != MoodType::HAPPY) && (legume.is_eatable())) {
 		set_mood(get_previous_mood(get_mood()));
@@ -68,6 +79,9 @@ ostream &operator<<(ostream &stream, const Jardiniers &jardinier) {
   return stream << "Jardinier: " << jardinier.get_position() << ", mood: " << jardinier.get_mood();
 }
 
+/*
+load the gardener picture according to its orientation and mood
+*/
 CImg<unsigned char> Jardiniers::dessiner_jardiniers() {
   if (!jardiniers_imgs_loaded) {
     throw invalid_argument("You need to use function load_jardinier_images() before !");
@@ -76,6 +90,9 @@ CImg<unsigned char> Jardiniers::dessiner_jardiniers() {
   return jardiniers_imgs[this->get_mood().get_id()][this->orientation.get_id()];
 }
 
+/*
+pre load all the gardener pictures
+*/
 void load_jardinier_images() {
   if (jardiniers_imgs_loaded) {return;}
 
@@ -94,6 +111,9 @@ void load_jardinier_images() {
   jardiniers_imgs_loaded = true;
 }
 
+/*
+update the new position of the gardener according to its current position and the plants coordinates
+*/
 void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char> *fenetre) {
   int dx, dy;
   int e;
@@ -226,6 +246,10 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
 
 }
 
+
+/*
+draw the gardeners to the screen
+*/
 void Jardiniers::dessiner_jardiniers_champs(CImg<unsigned char> *fenetre) {
   
   int x1, y1;

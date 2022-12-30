@@ -57,6 +57,9 @@ int Variete::get_duree_pousse() const {
     return this->duree_pousse;
 }
 
+/*
+pre load all the plants pictures from the spritesheet in a vector
+*/
 void loadImagesVariete() {
     if (imgLoaded) {
         return;
@@ -88,6 +91,9 @@ void loadImagesVariete() {
     imgLoaded = true;
 }
 
+/*
+return the right picture of the species
+*/
 CImg<unsigned char> Variete::getImage(int state) const {
     if (!imgLoaded) {
         throw std::invalid_argument("Veuillez charger les images avec la fonction Variete.loadImages() avant !");
