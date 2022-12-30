@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 int main(int argc, char *argv[]) {
 
 	load_jardinier_images(); //chargement des images des jardiniers
@@ -7,7 +8,7 @@ int main(int argc, char *argv[]) {
 
 
 	Champs champs(35);
-	CImg<unsigned char> fenetre(1200, 640*1.2, 1, 3, 0);
+	CImg<unsigned char> fenetre(WIDTH_GAME, HEIGHT_C, 1, 3, 0);
 	
 	Fleurs rose(Variete::ROSE);
 	Fleurs tulipe(Variete::TULIPE);
@@ -27,7 +28,7 @@ int main(int argc, char *argv[]) {
 
 	champs.dessiner_champs(&fenetre);
 
-	CImgDisplay jeu(1200, 640*1.2, "Garden Game");
+	CImgDisplay jeu(WIDTH_GAME, HEIGHT_GAME, "Garden Game");
 	champs.placer_plante(Coordonnees(2, 0), rose);
 	champs.placer_plante(Coordonnees(4, 4), tulipe);
 	champs.placer_plante(Coordonnees(5, 0), tomate);
@@ -36,50 +37,76 @@ int main(int argc, char *argv[]) {
 	champs.placer_plante(Coordonnees(5, 1), framboise);
 	champs.placer_plante(Coordonnees(0, 1), ble);
 
+  int buttonEnabled = 1;
+  int keyAEnabled = 1;
   while (!jeu.is_closed()) {//d'abord mood, puis action, puis dessin champs, update champs (plantes), et dessin jardiniers
-      for (int i = 0; i < listJard.size(); i++) {
-        listJard[i].update_mood();
-      }
 
-      for (int i = 0; i < listJard.size(); i++) {
-        champs.action(listJard[i], &fenetre, jeu);
-        cout << "action done" << endl;
-      }
-      champs.update_champs(&fenetre);
 
+    for (int i = 0; i < listJard.size(); i++) {
+      listJard[i].update_mood();
+    }
+
+    for (int i = 0; i < listJard.size(); i++) {
+      champs.action(listJard[i], &fenetre, jeu);
+    }
+    champs.update_champs(&fenetre);
+
+    int start = time(NULL);
+
+    while (time(NULL) - start < 1) {
       if (jeu.button()) {
-        //achat jardinier
-        //choix position attention pas sur jardinier deja existant
-        int x = jeu.mouse_x()/48;
-        int y = jeu.mouse_y()/48;
-        cout << x << ", " << y << endl;
-        //choix du nom
-        Jardiniers j3("j3", {x, y});
-        listJard.push_back(j3);
+        if (buttonEnabled) {
+          buttonEnabled = 0;
+          int x = jeu.mouse_x();
+          int y = jeu.mouse_y();
+          //achat jardinier
+          //choix position attention pas sur jardinier deja existant
+          if ((POSX + WIDTH_C > x && x > POSX) && (POSY + HEIGHT_C > y && y > POSY)) {
+            x = jeu.mouse_x()/48;
+            y = jeu.mouse_y()/48;
+            cout << x << ", " << y << endl;
+            //choix du nom
+            Jardiniers j3("j3", {x, y});
+            listJard.push_back(j3);
+          }
+        }
+      } else {
+        buttonEnabled = 1;
       }
 
       if (jeu.is_key('a')) {
-        //recuperer coordonnees
-        int v = 2;
-        int w = 4;
-        cout << v << ", " << w << endl;
-        //recuperer variete
-        Plantes p(Plants_types::LEGUME, Variete::TOMATE);
-        champs.placer_plante({v, w}, p); //mettre plante choisie selon variete, donc recuperer variete
-        cout << "plante placee" << endl;
-      }	
-
-      for (int i = 0; i < listJard.size(); i++) {
-        listJard[i].dessiner_jardiniers_champs(&fenetre);
+        if (keyAEnabled) {
+          //recuperer coordonnees
+          keyAEnabled = 0;
+          int v = 2;
+          int w = 4;
+          cout << v << ", " << w << endl;
+          //recuperer variete
+          Plantes p(Plants_types::LEGUME, Variete::TOMATE);
+          champs.placer_plante({v, w}, p); //mettre plante choisie selon variete, donc recuperer variete
+          cout << "plante placee" << endl;
+        }
+      }	else {
+        keyAEnabled = 1;
       }
-    
-      
 
-      
-      fenetre.display(jeu);
-      cout << "windows displayed" << endl;
-      sleep(1);
+      if ( (WIDTH_MENU < jeu.mouse_x() && jeu.mouse_x() <  WIDTH_GAME) && (POSY < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU ) ) {
+        Coordonnees up(WIDTH_MENU, POSY);
+        Coordonnees down(WIDTH_GAME, HEIGHT_MENU);
+        filtre(&fenetre, up, down);
+      }
+
+      sleep(0.1);
+    } 
+
+    for (int i = 0; i < listJard.size(); i++) {
+      listJard[i].dessiner_jardiniers_champs(&fenetre);
+      cout << "jard " << listJard[i].get_name() << " drawed" << endl;
     }
+  
+    fenetre.display(jeu);
+    cout << "windows displayed" << endl;
+  }
 
 	return 0;
 }

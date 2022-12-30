@@ -40,3 +40,12 @@ void quadrillage(CImg <unsigned char> *fenetre) {
 		fenetre->draw_line(pos_x + (Lc * i), pos_y, pos_x + (Lc * i), pos_y + height_f, brown);
 	}
 }
+
+/*
+apply a rectangular filter to the chosen area
+*/
+void filtre(CImg<unsigned char> *fenetre, Coordonnees up, Coordonnees down) {
+	unsigned char grey[] = {100, 100, 100};
+	const float alpha = 0.01; //transparency, 0 for full transparent and 1 for opaque
+	fenetre->draw_rectangle(up.getX(), up.getY(), down.getX(), down.getY(), grey, alpha);
+}
