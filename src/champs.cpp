@@ -152,7 +152,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                 jardinier.recolter_grains(*a_recolter);
                 detruire_plante(*a_recolter, fenetre);
                 
-                cout << "Le jardinier " << jardinier.get_name() << " était content et a supprimé la plante à graine en " << jardinier.get_position() << "." << endl;
+                //cout << "Le jardinier " << jardinier.get_name() << " était content et a supprimé la plante à graine en " << jardinier.get_position() << "." << endl;
             } else {
                 
                 //cout << "Le jardinier était content mais la plante a graine la plus proche n'était pas récoltable." << endl;
@@ -175,7 +175,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                 jardinier.manger_legumes(*a_manger);
                 detruire_plante(*a_manger, fenetre);
                 
-                cout << "Le jardinier " << jardinier.get_name() << " était normal et a supprimé le légume en " << jardinier.get_position() << endl;
+                //cout << "Le jardinier " << jardinier.get_name() << " était normal et a supprimé le légume en " << jardinier.get_position() << endl;
             } else {
                 
                 //cout << "Le jardinier était normal mais le legume la plus proche n'était pas récoltable." << endl;
@@ -191,7 +191,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                 jardinier.recolter_grains(*a_recolter);
                 detruire_plante(*a_recolter, fenetre);
                 
-                cout << "Le jardinier " << jardinier.get_name() << " était normal et a supprimé la plante  à graine en " << jardinier.get_position() << endl;
+                //cout << "Le jardinier " << jardinier.get_name() << " était normal et a supprimé la plante  à graine en " << jardinier.get_position() << endl;
             } else {
                 
                 //cout << "Le jardinier était normal mais la plante à graine la plus proche n'était pas récoltable." << endl;
@@ -214,7 +214,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                 jardinier.manger_legumes(*a_manger);
                 detruire_plante(*a_manger, fenetre);
                 
-                cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé le légume en " << jardinier.get_position() << endl;
+                //cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé le légume en " << jardinier.get_position() << endl;
             } else {
                 
                 //cout << "Le jardinier était pas content mais le légume la plus proche n'était pas récoltable." << endl;
@@ -229,7 +229,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
             detruire_plante(*a_detruire, fenetre);
             jardinier.set_mood(MoodType::NORMAL);
             
-            cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
+            //cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
         } else {
             
             //cout << "RIEN d'accessible" << endl;
@@ -291,6 +291,16 @@ void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
     logo.resize(logo.width()/9, logo.height()/9);
     CImg <float> mask = make_transparent(logo);
     fenetre->draw_image(WIDTH_C + 50, 0, logo, mask);
+
+    CImg <unsigned char> bag("./data/bag.bmp");
+    bag.resize(bag.width()*1.5, bag.height()*1.5);
+    CImg <float> mask_bag = make_transparent(bag);
+    fenetre->draw_image(WIDTH_MENU + 60, HEIGHT_MENU/1.5, bag, mask_bag);
+
+    CImg <unsigned char> shop("./data/shop.bmp");
+    shop.resize(shop.width()*1.5, shop.height()*1.5);
+    CImg <float> mask_shop = make_transparent(shop);
+    fenetre->draw_image(WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2) + 50, HEIGHT_MENU/1.5 + 10, shop, mask_shop);
     
 } 
 

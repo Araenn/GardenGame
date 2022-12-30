@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 
     while (time(NULL) - start < 1) {
       if (jeu.button()) {
-        if (buttonEnabled) {
+        if (buttonEnabled) { //don't allow multiple clicks to be taken into account
           buttonEnabled = 0;
           int x = jeu.mouse_x();
           int y = jeu.mouse_y();
@@ -90,8 +90,16 @@ int main(int argc, char *argv[]) {
         keyAEnabled = 1;
       }
 
-      if ( (WIDTH_MENU < jeu.mouse_x() && jeu.mouse_x() <  WIDTH_GAME) && (POSY < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU ) ) {
-        Coordonnees up(WIDTH_MENU, POSY);
+      //bag
+      if (jeu.button() && ((WIDTH_MENU < jeu.mouse_x() && jeu.mouse_x() <  WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2)) && (HEIGHT_MENU/1.5 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU )) ) {
+        Coordonnees up(WIDTH_MENU, HEIGHT_MENU/1.5);
+        Coordonnees down(WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2), HEIGHT_MENU);
+        filtre(&fenetre, up, down);
+      }
+
+      //shop
+      if (jeu.button() && ((WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2) < jeu.mouse_x() && jeu.mouse_x() <  WIDTH_GAME) && (HEIGHT_MENU/1.5 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU )) ) {
+        Coordonnees up(WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2), HEIGHT_MENU/1.5);
         Coordonnees down(WIDTH_GAME, HEIGHT_MENU);
         filtre(&fenetre, up, down);
       }
@@ -101,11 +109,9 @@ int main(int argc, char *argv[]) {
 
     for (int i = 0; i < listJard.size(); i++) {
       listJard[i].dessiner_jardiniers_champs(&fenetre);
-      cout << "jard " << listJard[i].get_name() << " drawed" << endl;
     }
   
     fenetre.display(jeu);
-    cout << "windows displayed" << endl;
   }
 
 	return 0;
