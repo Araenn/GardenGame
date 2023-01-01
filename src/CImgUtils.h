@@ -6,6 +6,7 @@
 #include <filesystem>
 #include "coordonnees.h"
 
+extern int CHOIX_MENU;
 
 using namespace cimg_library;
 using namespace std;
@@ -26,5 +27,6 @@ void filtre(CImg<unsigned char> *fenetre, Coordonnees up, Coordonnees down);
 void dessin_menu_sac(CImg<unsigned char> *fenetre);
 void dessin_menu_shop(CImg<unsigned char> *fenetre);
 void prevent_fullscreen(CImgDisplay &jeu);
+void dessin_jeu(CImg<unsigned char> *fenetre);
 
 #endif

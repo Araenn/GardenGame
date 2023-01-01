@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 int main(int argc, char *argv[]) {
 
 	load_jardinier_images(); //chargement des images des jardiniers
@@ -54,6 +53,7 @@ int main(int argc, char *argv[]) {
       champs.action(listJard[i], &fenetre, jeu);
     }
     champs.update_champs(&fenetre);
+    dessin_jeu(&fenetre);
 
     int start = time(NULL);
 
@@ -102,6 +102,8 @@ int main(int argc, char *argv[]) {
         if (buttonBagEnabled) { //don't allow multiple clicks to be taken into account
           buttonBagEnabled = 0;
           dessin_menu_sac(&fenetre);
+          CHOIX_MENU = 1;
+          dessin_jeu(&fenetre);
           cout << "sac dessine" << endl;
         } 
       } else {
@@ -116,6 +118,8 @@ int main(int argc, char *argv[]) {
         if (buttonShopEnabled) { //don't allow multiple clicks to be taken into account
           buttonShopEnabled = 0;
           dessin_menu_shop(&fenetre);
+          CHOIX_MENU = 2;
+          dessin_jeu(&fenetre);
           cout << "shop dessine" << endl;
         } 
       } else {

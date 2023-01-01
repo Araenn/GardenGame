@@ -268,41 +268,7 @@ void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
     //dessin du champs
     CImg<unsigned char> grass("./data/grass.bmp");
     grass.resize(grass.width() * 1.2, grass.height() * 1.2);
-    fenetre->draw_image(0, 0, grass);
-
-    //dessin du menu
-    unsigned char brown[] = {144, 84, 47};
-    fenetre->draw_rectangle(WIDTH_C, 0, WIDTH_GAME, HEIGHT_MENU, brown);
-
-    //dessin du contour de "jardin"
-    unsigned char black[] = {0, 0, 0};
-    int lineWidth = 200;
-    int offset = 1;
-    fenetre->draw_line(WIDTH_C + offset, HEIGHT_MENU/1.5, WIDTH_GAME, HEIGHT_MENU/1.5, black, lineWidth);//hor bas
-    fenetre->draw_line(WIDTH_C + offset, 0, WIDTH_C + offset, HEIGHT_MENU, black, lineWidth);//vert gauche
-    fenetre->draw_line(WIDTH_C, 0, WIDTH_GAME, 0, black, lineWidth);//hor haut
-    fenetre->draw_line(WIDTH_GAME - offset, 0, WIDTH_GAME - offset, HEIGHT_MENU, black, lineWidth);//vert droite
-
-    //dessin separation menu
-    fenetre->draw_line(WIDTH_C, HEIGHT_MENU, WIDTH_GAME, HEIGHT_MENU, black); //hor bas
-    fenetre->draw_line(WIDTH_C + LENGTH_MID, HEIGHT_MENU/1.5, WIDTH_C + LENGTH_MID, HEIGHT_MENU, black); //vert milieu
-
-    CImg <unsigned char> logo("./data/logo_gardengame.bmp");
-    logo.resize(logo.width()/9, logo.height()/9);
-    CImg <float> mask = make_transparent(logo);
-    fenetre->draw_image(WIDTH_C + 50, 0, logo, mask);
-
-    CImg <unsigned char> bag("./data/bag.bmp");
-    bag.resize(bag.width()*1.5, bag.height()*1.5);
-    CImg <float> mask_bag = make_transparent(bag);
-    fenetre->draw_image(WIDTH_MENU + 60, HEIGHT_MENU/1.5, bag, mask_bag);
-
-    CImg <unsigned char> shop("./data/shop.bmp");
-    shop.resize(shop.width()*1.5, shop.height()*1.5);
-    CImg <float> mask_shop = make_transparent(shop);
-    fenetre->draw_image(WIDTH_MENU + LENGTH_MID + 50, HEIGHT_MENU/1.5 + 10, shop, mask_shop);
-
-    
+    fenetre->draw_image(0, 0, grass);    
 } 
 
 /*
