@@ -29,6 +29,8 @@ int main(int argc, char *argv[]) {
 	champs.dessiner_champs(&fenetre);
 
 	CImgDisplay jeu(WIDTH_GAME, HEIGHT_GAME, "Garden Game");
+  prevent_fullscreen(jeu);
+
 	champs.placer_plante(Coordonnees(2, 0), rose);
 	champs.placer_plante(Coordonnees(4, 4), tulipe);
 	champs.placer_plante(Coordonnees(5, 0), tomate);
@@ -38,15 +40,17 @@ int main(int argc, char *argv[]) {
 	champs.placer_plante(Coordonnees(0, 1), ble);
 
   int buttonEnabled = 1;
+  int buttonBagEnabled = 1;
+  int buttonShopEnabled = 1;
   int keyAEnabled = 1;
   while (!jeu.is_closed()) {//d'abord mood, puis action, puis dessin champs, update champs (plantes), et dessin jardiniers
 
 
-    for (int i = 0; i < listJard.size(); i++) {
+    for (long unsigned int i = 0; i < listJard.size(); i++) {
       listJard[i].update_mood();
     }
 
-    for (int i = 0; i < listJard.size(); i++) {
+    for (long unsigned int i = 0; i < listJard.size(); i++) {
       champs.action(listJard[i], &fenetre, jeu);
     }
     champs.update_champs(&fenetre);
@@ -95,6 +99,13 @@ int main(int argc, char *argv[]) {
         Coordonnees up(WIDTH_MENU, HEIGHT_MENU/1.5);
         Coordonnees down(WIDTH_MENU + LENGTH_MID, HEIGHT_MENU);
         filtre(&fenetre, up, down);
+        if (buttonBagEnabled) { //don't allow multiple clicks to be taken into account
+          buttonBagEnabled = 0;
+          dessin_menu_sac(&fenetre);
+          cout << "sac dessine" << endl;
+        } 
+      } else {
+        buttonBagEnabled = 1;
       }
 
       //shop
@@ -102,12 +113,19 @@ int main(int argc, char *argv[]) {
         Coordonnees up(WIDTH_MENU + LENGTH_MID, HEIGHT_MENU/1.5);
         Coordonnees down(WIDTH_GAME, HEIGHT_MENU);
         filtre(&fenetre, up, down);
+        if (buttonShopEnabled) { //don't allow multiple clicks to be taken into account
+          buttonShopEnabled = 0;
+          dessin_menu_shop(&fenetre);
+          cout << "shop dessine" << endl;
+        } 
+      } else {
+        buttonShopEnabled = 1;
       }
 
       sleep(0.1);
     } 
 
-    for (int i = 0; i < listJard.size(); i++) {
+    for (long unsigned int i = 0; i < listJard.size(); i++) {
       listJard[i].dessiner_jardiniers_champs(&fenetre);
     }
   

@@ -3,7 +3,9 @@
 
 #include "./lib/CImg.h"
 #include <iostream>
+#include <filesystem>
 #include "coordonnees.h"
+
 
 using namespace cimg_library;
 using namespace std;
@@ -21,6 +23,8 @@ static const int LENGTH_MID = ((WIDTH_GAME - WIDTH_C)/ 2);
 CImg<float> make_transparent(CImg<unsigned char> &image);
 void quadrillage(CImg<unsigned char> *fenetre);
 void filtre(CImg<unsigned char> *fenetre, Coordonnees up, Coordonnees down);
-void dessin_menu(CImg<unsigned char> *fenetre, int choix);
+void dessin_menu_sac(CImg<unsigned char> *fenetre);
+void dessin_menu_shop(CImg<unsigned char> *fenetre);
+void prevent_fullscreen(CImgDisplay &jeu);
 
 #endif

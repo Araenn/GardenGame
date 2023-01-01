@@ -302,8 +302,6 @@ void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
     CImg <float> mask_shop = make_transparent(shop);
     fenetre->draw_image(WIDTH_MENU + LENGTH_MID + 50, HEIGHT_MENU/1.5 + 10, shop, mask_shop);
 
-    //test menu
-    dessin_menu(fenetre, 1);
     
 } 
 
