@@ -91,15 +91,15 @@ int main(int argc, char *argv[]) {
       }
 
       //bag
-      if (jeu.button() && ((WIDTH_MENU < jeu.mouse_x() && jeu.mouse_x() <  WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2)) && (HEIGHT_MENU/1.5 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU )) ) {
+      if (jeu.button() && ((WIDTH_MENU < jeu.mouse_x() && jeu.mouse_x() <  WIDTH_MENU + LENGTH_MID) && (HEIGHT_MENU/1.5 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU )) ) {
         Coordonnees up(WIDTH_MENU, HEIGHT_MENU/1.5);
-        Coordonnees down(WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2), HEIGHT_MENU);
+        Coordonnees down(WIDTH_MENU + LENGTH_MID, HEIGHT_MENU);
         filtre(&fenetre, up, down);
       }
 
       //shop
-      if (jeu.button() && ((WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2) < jeu.mouse_x() && jeu.mouse_x() <  WIDTH_GAME) && (HEIGHT_MENU/1.5 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU )) ) {
-        Coordonnees up(WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2), HEIGHT_MENU/1.5);
+      if (jeu.button() && ((WIDTH_MENU + LENGTH_MID < jeu.mouse_x() && jeu.mouse_x() <  WIDTH_GAME) && (HEIGHT_MENU/1.5 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU )) ) {
+        Coordonnees up(WIDTH_MENU + LENGTH_MID, HEIGHT_MENU/1.5);
         Coordonnees down(WIDTH_GAME, HEIGHT_MENU);
         filtre(&fenetre, up, down);
       }

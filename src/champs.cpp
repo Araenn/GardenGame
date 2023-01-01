@@ -285,7 +285,7 @@ void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
 
     //dessin separation menu
     fenetre->draw_line(WIDTH_C, HEIGHT_MENU, WIDTH_GAME, HEIGHT_MENU, black); //hor bas
-    fenetre->draw_line(WIDTH_C + ((WIDTH_GAME - WIDTH_C)/ 2), HEIGHT_MENU/1.5, WIDTH_C + ((WIDTH_GAME - WIDTH_C)/ 2), HEIGHT_MENU, black); //vert milieu
+    fenetre->draw_line(WIDTH_C + LENGTH_MID, HEIGHT_MENU/1.5, WIDTH_C + LENGTH_MID, HEIGHT_MENU, black); //vert milieu
 
     CImg <unsigned char> logo("./data/logo_gardengame.bmp");
     logo.resize(logo.width()/9, logo.height()/9);
@@ -300,7 +300,10 @@ void Champs::dessiner_champs(CImg<unsigned char> *fenetre) {
     CImg <unsigned char> shop("./data/shop.bmp");
     shop.resize(shop.width()*1.5, shop.height()*1.5);
     CImg <float> mask_shop = make_transparent(shop);
-    fenetre->draw_image(WIDTH_MENU + ((WIDTH_GAME - WIDTH_C)/ 2) + 50, HEIGHT_MENU/1.5 + 10, shop, mask_shop);
+    fenetre->draw_image(WIDTH_MENU + LENGTH_MID + 50, HEIGHT_MENU/1.5 + 10, shop, mask_shop);
+
+    //test menu
+    dessin_menu(fenetre, 1);
     
 } 
 
