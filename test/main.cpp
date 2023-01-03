@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
   int buttonBagEnabled = 1;
   int buttonShopEnabled = 1;
   int keyAEnabled = 1;
+  int firstLegumeClicked = 1;
   while (!jeu.is_closed()) {//d'abord mood, puis action, puis dessin champs, update champs (plantes), et dessin jardiniers
 
 
@@ -124,6 +125,42 @@ int main(int argc, char *argv[]) {
         } 
       } else {
         buttonShopEnabled = 1;
+      }
+
+      if ((CHOIX_MENU == 2) && (jeu.button())) {
+        for (int i = 0; i < floor(20/3); i++) {
+          if ((WIDTH_MENU + 40 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU + 40 + i * 60 + 16*4.5) && (HEIGHT_MENU + 50 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 50 + 16*4.5)) {
+            if (firstLegumeClicked) {
+              firstLegumeClicked = 0;
+              cout << "legume " << i << " clique" << endl;
+            }
+        
+          } else {
+            firstLegumeClicked = 1;
+          }
+        }
+        for (int i = floor(20/3); i < floor(20 * 2/3); i++) {
+          if ((WIDTH_MENU/1.85 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU/1.85 + i * 60 + 16*4.5) && (HEIGHT_MENU + 180 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 180 + 16*4.5)) {
+            if (firstLegumeClicked) {
+              firstLegumeClicked = 0;
+              cout << "legume " << i << " clique" << endl;
+            }
+        
+          } else {
+            firstLegumeClicked = 1;
+          }
+        }
+        for (int i = floor(20*2/3); i < floor(20 + 1); i++) {
+          if ((-5 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < -5 + i * 60 + 16*4.5) && (HEIGHT_MENU + 330 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 330 + 16*4.5)) {
+            if (firstLegumeClicked) {
+              firstLegumeClicked = 0;
+              cout << "legume " << i << " clique" << endl;
+            }
+        
+          } else {
+            firstLegumeClicked = 1;
+          }
+        }
       }
 
       sleep(0.1);

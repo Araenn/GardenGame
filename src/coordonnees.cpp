@@ -31,3 +31,10 @@ bool Coordonnees::operator!=(const Coordonnees &c2) {
     }
     return false;
 }
+
+bool Coordonnees::operator==(const Coordonnees &c2) {
+    if ((this->getX() == c2.getX()) && (this->getY() == c2.getY())) {
+        return true;
+    }
+    return false;
+}

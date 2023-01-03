@@ -2,6 +2,7 @@
 
 static vector<CImg<unsigned char>> plants_fullygrown; 
 int CHOIX_MENU = 0;
+int nb_graines_joueur = 0;
 
 /*
 apply transparency to an image with a mask

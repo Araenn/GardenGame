@@ -7,6 +7,7 @@
 #include "coordonnees.h"
 
 extern int CHOIX_MENU;
+extern int nb_graines_joueur;
 
 using namespace cimg_library;
 using namespace std;

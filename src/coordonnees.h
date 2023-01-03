@@ -18,6 +18,7 @@ class Coordonnees {
         int getY()const ;
         friend ostream& operator<<(ostream& c, const Coordonnees &coord);
         bool operator!=(const Coordonnees &c2);
+        bool operator==(const Coordonnees &c2);
 };
 
 

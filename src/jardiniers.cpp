@@ -62,8 +62,8 @@ void Jardiniers::set_orientation(const Orientation &orientation) {
 /*
 get the seeds from a seed plant
 */
-int Jardiniers::recolter_grains(const Seed_plants &p) const {
-	return p.get_nb_grains_recoltables();
+void Jardiniers::recolter_grains(const Seed_plants &p) {
+	nb_graines_joueur =  p.get_nb_grains_recoltables();
 }
 
 /*

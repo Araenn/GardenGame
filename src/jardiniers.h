@@ -39,7 +39,7 @@ class Jardiniers {
     void update_mood();
     void set_mood(const MoodType &moodType);
 
-    int recolter_grains(const Seed_plants &p) const;
+    void recolter_grains(const Seed_plants &p);
     void manger_legumes(const Legumes &legume);
 
     CImg<unsigned char> dessiner_jardiniers();
