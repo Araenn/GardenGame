@@ -138,7 +138,7 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
       if ( (e = e - dy ) <= 0) {
         y1 = y1 - 1;
         set_position({x1, y1});
-        set_orientation(Orientation::NORTH);
+        set_orientation(Orientation::SOUTH);
         
         e = e + dx;
       }
@@ -149,7 +149,7 @@ void Jardiniers::se_deplacer(const Coordonnees &coordPlante, CImg<unsigned char>
     if (y1 < y2) {
       y1 = y1 + 1;
       set_position({x1, y1});
-      set_orientation(Orientation::NORTH);
+      set_orientation(Orientation::SOUTH);
       
     }
 

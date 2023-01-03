@@ -230,15 +230,16 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
 
         } else if (contains_plant_type(Plants_types::FLOWER)) {
             Fleurs *a_detruire = (Fleurs *) &plus_proche_plante(jardinier, Plants_types::FLOWER);
-            if (jardinier.get_position() != get_coordonnees(*a_detruire)) {
-                jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
-                
+            if (a_detruire->is_fullyGrown()) {
+                if (jardinier.get_position() != get_coordonnees(*a_detruire)) {
+                    jardinier.se_deplacer(get_coordonnees(*a_detruire), fenetre);
+                    
+                }
+                if (jardinier.get_position() == get_coordonnees(*a_detruire)) {
+                    detruire_plante(*a_detruire, fenetre);
+                    jardinier.set_mood(MoodType::NORMAL);
+                }
             }
-            if (jardinier.get_position() == get_coordonnees(*a_detruire)) {
-                detruire_plante(*a_detruire, fenetre);
-                jardinier.set_mood(MoodType::NORMAL);
-            }
-            
             //cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
         } else {
             

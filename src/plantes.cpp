@@ -35,6 +35,10 @@ const Variete &Plantes::get_variete() const {
 	return this->variete;
 }
 
+void Plantes::set_variete(const Variete &v) {
+	this->variete = v;
+}
+
 int Plantes::get_id() const {
 	return this->id;
 }

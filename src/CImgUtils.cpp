@@ -66,7 +66,7 @@ void dessin_menu_sac(CImg<unsigned char> *fenetre) {
 	gardener.resize(gardener.height() * 3.5, gardener.width() * 4.5);
 	CImg<float> mask_gardener = make_transparent(gardener);
 
-	CImg<unsigned char> plant("./data/fully_grown/rose.bmp");
+	CImg<unsigned char> plant("./data/fully_grown/fleur1.bmp");
 	plant.resize(plant.height() * 3.5, plant.width() * 3.5);
 	CImg<float> mask_plant = make_transparent(plant);
 

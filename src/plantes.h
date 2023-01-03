@@ -33,6 +33,7 @@ class Plantes {
 		int get_temps_plantation() const;
 		int get_etat() const;
 		int get_id() const;
+		void set_variete(const Variete &v);
 		const Variete &get_variete() const;
 		const Plants_types &get_type() const;
 		void update_plant();

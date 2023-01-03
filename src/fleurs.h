@@ -9,6 +9,7 @@ class Fleurs : public Plantes {
 
 	public:
 		Fleurs(const Variete &variete);
+		bool is_fullyGrown();
 
 };
 
