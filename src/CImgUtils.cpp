@@ -119,27 +119,6 @@ void dessin_menu_shop(CImg<unsigned char> *fenetre) {
 	}
 }
 
-void prevent_fullscreen(CImgDisplay &jeu) {
-	int width = jeu.width(), height = jeu.height();
-	int x = jeu.window_x(), y = jeu.window_y();
-
-  	bool is_fullscreen = false; // Flag to track fullscreen mode
-		// Check for fullscreen mode events
-		jeu.wait();
-		if (jeu.is_resized()) {
-		// If the window is resized, switch between fullscreen and windowed mode
-			if (!is_fullscreen) {
-				// Switch to fullscreen mode
-				jeu.move(0,0).resize(jeu.width(), jeu.height());
-				is_fullscreen = true;
-			}
-			else {
-				// Switch to windowed mode
-				jeu.move(x,y).resize(width,height);
-				is_fullscreen = false;
-			}
-		}
-}
 
 void dessin_jeu(CImg<unsigned char> *fenetre) {
 	//dessin du menu
@@ -175,8 +154,8 @@ void dessin_jeu(CImg<unsigned char> *fenetre) {
     fenetre->draw_image(WIDTH_MENU + LENGTH_MID + 50, HEIGHT_MENU/1.5 + 10, shop, mask_shop);
 
 	if (CHOIX_MENU == 1) {
-		dessin_menu_sac(fenetre);
-	} else {
 		dessin_menu_shop(fenetre);
+	} else {
+		dessin_menu_sac(fenetre);
 	}
 }

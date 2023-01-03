@@ -2,35 +2,35 @@
 
 const Variete Variete::UNKNOWN = Variete("?", -1, -1, -1);
 
-const Variete Variete::RADIS = Variete("Radis", 10, 0, 0);
-const Variete Variete::ROSE = Variete("Rose", 50, 0, 1);
+const Variete Variete::RADIS = Variete("Radis", TEMPS_POUSSE_LEGUMES, 0, 0);
+const Variete Variete::ROSE = Variete("Rose", TEMPS_POUSSE_FLEURS, 0, 1);
 
-const Variete Variete::HARICOT = Variete("Haricot", 10, 1, 0);
-const Variete Variete::TULIPE = Variete("Tulipe", 50, 1, 1);
+const Variete Variete::HARICOT = Variete("Haricot", TEMPS_POUSSE_LEGUMES, 1, 0);
+const Variete Variete::TULIPE = Variete("Tulipe", TEMPS_POUSSE_FLEURS, 1, 1);
 
-const Variete Variete::TOMATE = Variete("Tomate", 10, 2, 0);
-const Variete Variete::MELON = Variete("Melon", 10, 2, 1);
+const Variete Variete::TOMATE = Variete("Tomate", TEMPS_POUSSE_LEGUMES, 2, 0);
+const Variete Variete::MELON = Variete("Melon", TEMPS_POUSSE_LEGUMES, 2, 1);
 
-const Variete Variete::AUBERGINE = Variete("Aubergine", 10, 3, 0);
-const Variete Variete::CITRON = Variete("Citron", 10, 3, 1);
+const Variete Variete::AUBERGINE = Variete("Aubergine", TEMPS_POUSSE_LEGUMES, 3, 0);
+const Variete Variete::CITRON = Variete("Citron", TEMPS_POUSSE_LEGUMES, 3, 1);
 
-const Variete Variete::ANANAS = Variete("Ananas", 10, 4, 0);
-const Variete Variete::BLE = Variete("Ble", 20, 4, 1);
+const Variete Variete::ANANAS = Variete("Ananas", TEMPS_POUSSE_LEGUMES, 4, 0);
+const Variete Variete::BLE = Variete("Ble", TEMPS_POUSSE_SEEDPLANTS, 4, 1);
 
-const Variete Variete::RIZ = Variete("Riz", 20, 5, 0);
-const Variete Variete::RAISIN = Variete("Raisin", 20, 5, 1);
+const Variete Variete::RIZ = Variete("Riz", TEMPS_POUSSE_SEEDPLANTS, 5, 0);
+const Variete Variete::RAISIN = Variete("Raisin", TEMPS_POUSSE_SEEDPLANTS, 5, 1);
 
-const Variete Variete::FRAISE = Variete("Fraise", 10, 6, 0);
-const Variete Variete::CAFE = Variete("Cafe", 20, 6, 1);
+const Variete Variete::FRAISE = Variete("Fraise", TEMPS_POUSSE_LEGUMES, 6, 0);
+const Variete Variete::CAFE = Variete("Cafe", TEMPS_POUSSE_SEEDPLANTS, 6, 1);
 
-const Variete Variete::PATATE = Variete("Patate", 10, 7, 0);
-const Variete Variete::FRAMBOISE = Variete("Framboise", 20, 7, 1);
+const Variete Variete::PATATE = Variete("Patate", TEMPS_POUSSE_LEGUMES, 7, 0);
+const Variete Variete::FRAMBOISE = Variete("Framboise", TEMPS_POUSSE_SEEDPLANTS, 7, 1);
 
-const Variete Variete::ORANGE = Variete("Orange", 10, 8, 0);
-const Variete Variete::AVOCAT = Variete("Avocat", 10, 8, 1);
+const Variete Variete::ORANGE = Variete("Orange", TEMPS_POUSSE_LEGUMES, 8, 0);
+const Variete Variete::AVOCAT = Variete("Avocat", TEMPS_POUSSE_LEGUMES, 8, 1);
 
-const Variete Variete::MAIS = Variete("Mais", 20, 9, 0);
-const Variete Variete::TOURNESOL = Variete("Tournesol", 50, 9, 1);
+const Variete Variete::MAIS = Variete("Mais", TEMPS_POUSSE_SEEDPLANTS, 9, 0);
+const Variete Variete::TOURNESOL = Variete("Tournesol", TEMPS_POUSSE_FLEURS, 9, 1);
 
 static int idGlobal = 0;
 static vector<CImg<unsigned char>> variete_imgs; 
@@ -68,7 +68,7 @@ void loadImagesVariete() {
     CImg <unsigned char> img("./data/Crop_Spritesheet.bmp");
 
     int index = 0;
-    for (int i = 0; i < 10; i++) { // boucle des lignes
+    for (int i = 0; i < TEMPS_POUSSE_LEGUMES; i++) { // boucle des lignes
         for (int k = 0; k < 2; k++) { // boucle des colonnes
             for (int j = 0; j < 6; j++) { // boucle des etats
                 int line = k * 6 * 16 + 16 * (5 - j);

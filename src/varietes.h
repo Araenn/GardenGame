@@ -4,7 +4,7 @@
 #include <iostream>
 #include "./lib/CImg.h"
 #include "coordonnees.h"
-#include "CImgUtils.h"
+#include "constants.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -59,8 +59,6 @@ class Variete {
 
         bool operator==(const Variete &variete) const;
         bool operator!=(const Variete &Variete) const;
-
-        friend ostream &operator<<(ostream &stream, const Variete &variete);
 
 };
 

@@ -59,7 +59,6 @@ int main(int argc, char *argv[]) {
 	champs.dessiner_champs(&fenetre);
 
 	CImgDisplay jeu(WIDTH_GAME, HEIGHT_GAME, "Garden Game");
-  prevent_fullscreen(jeu);
 
 	champs.placer_plante(Coordonnees(2, 0), rose);
 	champs.placer_plante(Coordonnees(4, 4), tulipe);
@@ -74,6 +73,7 @@ int main(int argc, char *argv[]) {
   unsigned char ruby[] = {255, 17, 30};
   int font_size = 20;
 	int font_width = 10;
+  int posX_icon = WIDTH_C + LENGTH_MID/1.5;
 
   int buttonEnabled = 1;
   int buttonBagEnabled = 1;
@@ -98,30 +98,31 @@ int main(int argc, char *argv[]) {
     while (time(NULL) - start < 1) {
 
       //bought gardeners and place them
-      if (jeu.button() && (POSX + WIDTH_C > jeu.mouse_x() && jeu.mouse_x() > POSX) && (POSY + HEIGHT_C > jeu.mouse_y() && jeu.mouse_y() > POSY)) {
-        if (buttonEnabled) { //don't allow multiple clicks to be taken into account
-          for (long unsigned int i = 0; i < listJard.size(); i++) {
-            if (listJard[i].get_position() != Coordonnees(jeu.mouse_x()/48, jeu.mouse_y()/48)) {
-              if (nb_graines_joueur >= 100) {
-                buttonEnabled = 0;
-                //choix position attention pas sur jardinier deja existant
-                Jardiniers j3("j3", {jeu.mouse_x()/48, jeu.mouse_y()/48});
-                listJard.push_back(j3);
-                nb_graines_joueur-= 100;
-              } else if (nb_graines_joueur < 100) {
-                fenetre.draw_text(WIDTH_MENU + 60, HEIGHT_MENU + 400, "Not enough seeds !", ruby, 0, 1, font_size, font_width);
+      if (CHOIX_MENU == 0 && jeu.button() ){
+        if ((posX_icon < jeu.mouse_x() && jeu.mouse_x() < posX_icon + GARDENERS_WIDTH) && (HEIGHT_MENU + 1024/12 + 140 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 1024/12 + 140 + GARDENERS_HEIGHT)) {
+          if (buttonEnabled) { //don't allow multiple clicks to be taken into account
+            for (long unsigned int i = 0; i < listJard.size(); i++) {
+              if (listJard[i].get_position() != Coordonnees(jeu.mouse_x()/48, jeu.mouse_y()/48)) {
+                if (nb_graines_joueur >= COUT_JOUEUR) {
+                  buttonEnabled = 0;
+                  Jardiniers j3("j3", {jeu.mouse_x()/48, jeu.mouse_y()/48});
+                  listJard.push_back(j3);
+                  nb_graines_joueur-= COUT_JOUEUR;
+                } else if (nb_graines_joueur < COUT_JOUEUR) {
+                  fenetre.draw_text(WIDTH_MENU + LENGTH_MID/2, HEIGHT_MENU + 10, "Not enough seeds !", ruby, 0, 1, font_size, font_width);
+                } else {
+
+                }
+              } else if (listJard[i].get_position() == Coordonnees(jeu.mouse_x()/48, jeu.mouse_y()/48)) {
+                fenetre.draw_text(WIDTH_MENU + LENGTH_MID/2, HEIGHT_MENU + 10, "Already a gardener here !", ruby, 0, 1, font_size, font_width);
               } else {
 
               }
-            } else if (listJard[i].get_position() == Coordonnees(jeu.mouse_x()/48, jeu.mouse_y()/48)) {
-              fenetre.draw_text(WIDTH_MENU + 60, HEIGHT_MENU + 400, "Already a gardener here !", ruby, 0, 1, font_size, font_width);
-            } else {
-
             }
-          }
-          
-      } else {
-        buttonEnabled = 1;
+            
+        } else {
+          buttonEnabled = 1;
+        }
       }
     }
 
@@ -133,7 +134,7 @@ int main(int argc, char *argv[]) {
         if (buttonBagEnabled) { //don't allow multiple clicks to be taken into account
           buttonBagEnabled = 0;
           dessin_menu_sac(&fenetre);
-          CHOIX_MENU = 1;
+          CHOIX_MENU = 0;
           dessin_jeu(&fenetre);
         } 
       } else {
@@ -148,7 +149,7 @@ int main(int argc, char *argv[]) {
         if (buttonShopEnabled) { //don't allow multiple clicks to be taken into account
           buttonShopEnabled = 0;
           dessin_menu_shop(&fenetre);
-          CHOIX_MENU = 2;
+          CHOIX_MENU = 1;
           dessin_jeu(&fenetre);
         } 
       } else {
@@ -156,13 +157,13 @@ int main(int argc, char *argv[]) {
       }
       
       //bought plants and place them
-      if ((CHOIX_MENU == 2) && (jeu.button())) {
+      if ((CHOIX_MENU == 1) && (jeu.button())) {
 
         //buying flowers, need 150 seeds or warning message in red
-        if (nb_graines_joueur >= 150) {
+        if (nb_graines_joueur >= COUT_FLEUR) {
           Plantes fleur(Plants_types::FLOWER, Variete::UNKNOWN);
           for (int i = 0; i < 3; i++) {
-            if ((WIDTH_MENU + 40 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU + 40 + i * 60 + 16*4.5) && (HEIGHT_MENU + 50 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 50 + 16*4.5)) {
+            if ((WIDTH_MENU + 40 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU + 40 + i * 60 + GARDENERS_HEIGHT) && (HEIGHT_MENU + 50 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 50 + GARDENERS_HEIGHT)) {
               if (shopLegumeClicked) {
                 shopLegumeClicked = 0;
                 jeu.wait();
@@ -173,7 +174,7 @@ int main(int argc, char *argv[]) {
                     if (jeu.button()) {
                       Coordonnees fleurCoord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
                       champs.placer_plante(fleurCoord, fleur);
-                      nb_graines_joueur-= 150;
+                      nb_graines_joueur-= COUT_FLEUR;
                       plantePlacee = true;
                       nb_fleurs++;
                     }
@@ -185,16 +186,16 @@ int main(int argc, char *argv[]) {
               shopLegumeClicked = 1;
             }
           }
-        } else if (nb_graines_joueur < 150) {
-          fenetre.draw_text(WIDTH_MENU + 60, HEIGHT_MENU + 400, "Not enough seeds !", ruby, 0, 1, font_size, font_width);
+        } else if (nb_graines_joueur < COUT_FLEUR) {
+          fenetre.draw_text(WIDTH_MENU + LENGTH_MID/2, HEIGHT_MENU + 400, "Not enough seeds !", ruby, 0, 1, font_size, font_width);
         } else {
         }
         
         //buying legumes, need 20 seeds or warning message in red
-        if (nb_graines_joueur >= 20) {
+        if (nb_graines_joueur >= COUT_LEGUME) {
           Plantes leg1(Plants_types::LEGUME, Variete::UNKNOWN);
           for (int i = 3; i < 6; i++) {
-            if ((WIDTH_MENU + 40 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU + 40 + i * 60 + 16*4.5) && (HEIGHT_MENU + 50 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 50 + 16*4.5)) {
+            if ((WIDTH_MENU + 40 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU + 40 + i * 60 + GARDENERS_HEIGHT) && (HEIGHT_MENU + 50 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 50 + GARDENERS_HEIGHT)) {
               if (shopLegumeClicked) {
                 shopLegumeClicked = 0;
                 leg1.set_variete(listVariete[i]);
@@ -204,7 +205,7 @@ int main(int argc, char *argv[]) {
                     if (jeu.button()) {
                       Coordonnees leg1Coord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
                       champs.placer_plante(leg1Coord, leg1);
-                      nb_graines_joueur-= 20;
+                      nb_graines_joueur-= COUT_LEGUME;
                       plantePlacee = true;
                     }
                   }
@@ -217,7 +218,7 @@ int main(int argc, char *argv[]) {
           }
           Plantes leg2(Plants_types::LEGUME, Variete::UNKNOWN);
           for (int i = 6; i < 13; i++) {
-            if ((WIDTH_MENU/1.85 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU/1.85 + i * 60 + 16*4.5) && (HEIGHT_MENU + 180 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 180 + 16*4.5)) {
+            if ((WIDTH_MENU/1.85 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU/1.85 + i * 60 + GARDENERS_HEIGHT) && (HEIGHT_MENU + 180 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 180 + GARDENERS_HEIGHT)) {
               if (shopLegumeClicked) {
                 shopLegumeClicked = 0;
                 leg2.set_variete(listVariete[i]);
@@ -227,7 +228,7 @@ int main(int argc, char *argv[]) {
                     if (jeu.button()) {
                       Coordonnees leg2Coord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
                       champs.placer_plante(leg2Coord, leg2);
-                      nb_graines_joueur-= 20;
+                      nb_graines_joueur-= COUT_LEGUME;
                       plantePlacee = true;
                     }
                   }
@@ -240,7 +241,7 @@ int main(int argc, char *argv[]) {
           }
           Plantes leg3(Plants_types::LEGUME, Variete::UNKNOWN);
           for (int i = 13; i < 14; i++) {
-            if ((-5 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < -5 + i * 60 + 16*4.5) && (HEIGHT_MENU + 330 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 330 + 16*4.5)) {
+            if ((-5 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < -5 + i * 60 + GARDENERS_HEIGHT) && (HEIGHT_MENU + 330 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 330 + GARDENERS_HEIGHT)) {
               if (shopLegumeClicked) {
                 shopLegumeClicked = 0;
                 leg3.set_variete(listVariete[i]);
@@ -250,7 +251,7 @@ int main(int argc, char *argv[]) {
                     if (jeu.button()) {
                       Coordonnees leg3Coord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
                       champs.placer_plante(leg3Coord, leg3);
-                      nb_graines_joueur-= 20;
+                      nb_graines_joueur-= COUT_LEGUME;
                       plantePlacee = true;
                     }
                   }
@@ -261,15 +262,15 @@ int main(int argc, char *argv[]) {
             }
           }
 
-        } else if (nb_graines_joueur < 20) {
-          fenetre.draw_text(WIDTH_MENU + 60, HEIGHT_MENU + 400, "Not enough seeds !", ruby, 0, 1, font_size, font_width);
+        } else if (nb_graines_joueur < COUT_LEGUME) {
+          fenetre.draw_text(WIDTH_MENU + LENGTH_MID/2, HEIGHT_MENU + 400, "Not enough seeds !", ruby, 0, 1, font_size, font_width);
         }
 
         //buying seed_plants, need 90 seeds or warning message in red
-        if (nb_graines_joueur >= 90) {
+        if (nb_graines_joueur >= COUT_SEEDPLANT) {
           Plantes seed(Plants_types::SEED_PLANTS, Variete::UNKNOWN);
-          for (int i = 14; i < 20+1; i++) {
-            if ((-5 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < -5 + i * 60 + 16*4.5) && (HEIGHT_MENU + 330 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 330 + 16*4.5)) {
+          for (int i = 14; i < COUT_LEGUME+1; i++) {
+            if ((-5 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < -5 + i * 60 + GARDENERS_HEIGHT) && (HEIGHT_MENU + 330 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 330 + GARDENERS_HEIGHT)) {
               if (shopLegumeClicked) {
                 shopLegumeClicked = 0;
                 seed.set_variete(listVariete[i]);
@@ -279,7 +280,7 @@ int main(int argc, char *argv[]) {
                     if (jeu.button()) {
                       Coordonnees seeCoord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
                       champs.placer_plante(seeCoord, seed);
-                      nb_graines_joueur-= 90;
+                      nb_graines_joueur-= COUT_SEEDPLANT;
                       plantePlacee = true;
                     }
                   }
@@ -290,8 +291,8 @@ int main(int argc, char *argv[]) {
               shopLegumeClicked = 1;
             }
           }
-        } else if (nb_graines_joueur < 90) {
-          fenetre.draw_text(WIDTH_MENU + 60, HEIGHT_MENU + 400, "Not enough seeds !", ruby, 0, 1, font_size, font_width);
+        } else if (nb_graines_joueur < COUT_SEEDPLANT) {
+          fenetre.draw_text(WIDTH_MENU + LENGTH_MID/2, HEIGHT_MENU + 400, "Not enough seeds !", ruby, 0, 1, font_size, font_width);
         } else {
 
         }
