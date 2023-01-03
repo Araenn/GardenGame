@@ -42,7 +42,7 @@ they start happy, then normal and finally grumpy
 void Jardiniers::update_mood() {
   int timeElapsedFromCurrentMood = time(NULL) - this->date_mood_changed;
 
-  int seuil = 6; //30s par mood sans manger
+  int seuil = 15;
 
   if ((timeElapsedFromCurrentMood >= seuil) && (get_mood() != MoodType::GRUMPY)){
     set_mood(get_next_mood(this->get_mood()));
@@ -63,7 +63,7 @@ void Jardiniers::set_orientation(const Orientation &orientation) {
 get the seeds from a seed plant
 */
 void Jardiniers::recolter_grains(const Seed_plants &p) {
-	nb_graines_joueur =  p.get_nb_grains_recoltables();
+	nb_graines_joueur =  20 + nb_graines_joueur;
 }
 
 /*

@@ -3,10 +3,10 @@
 const Variete Variete::UNKNOWN = Variete("?", -1, -1, -1);
 
 const Variete Variete::RADIS = Variete("Radis", 10, 0, 0);
-const Variete Variete::ROSE = Variete("Rose", 10, 0, 1);
+const Variete Variete::ROSE = Variete("Rose", 50, 0, 1);
 
 const Variete Variete::HARICOT = Variete("Haricot", 10, 1, 0);
-const Variete Variete::TULIPE = Variete("Tulipe", 10, 1, 1);
+const Variete Variete::TULIPE = Variete("Tulipe", 50, 1, 1);
 
 const Variete Variete::TOMATE = Variete("Tomate", 10, 2, 0);
 const Variete Variete::MELON = Variete("Melon", 10, 2, 1);
@@ -15,22 +15,22 @@ const Variete Variete::AUBERGINE = Variete("Aubergine", 10, 3, 0);
 const Variete Variete::CITRON = Variete("Citron", 10, 3, 1);
 
 const Variete Variete::ANANAS = Variete("Ananas", 10, 4, 0);
-const Variete Variete::BLE = Variete("Ble", 10, 4, 1);
+const Variete Variete::BLE = Variete("Ble", 20, 4, 1);
 
-const Variete Variete::RIZ = Variete("Riz", 10, 5, 0);
-const Variete Variete::RAISIN = Variete("Raisin", 10, 5, 1);
+const Variete Variete::RIZ = Variete("Riz", 20, 5, 0);
+const Variete Variete::RAISIN = Variete("Raisin", 20, 5, 1);
 
 const Variete Variete::FRAISE = Variete("Fraise", 10, 6, 0);
-const Variete Variete::CAFE = Variete("Cafe", 10, 6, 1);
+const Variete Variete::CAFE = Variete("Cafe", 20, 6, 1);
 
 const Variete Variete::PATATE = Variete("Patate", 10, 7, 0);
-const Variete Variete::FRAMBOISE = Variete("Framboise", 10, 7, 1);
+const Variete Variete::FRAMBOISE = Variete("Framboise", 20, 7, 1);
 
 const Variete Variete::ORANGE = Variete("Orange", 10, 8, 0);
 const Variete Variete::AVOCAT = Variete("Avocat", 10, 8, 1);
 
-const Variete Variete::MAIS = Variete("Mais", 10, 9, 0);
-const Variete Variete::TOURNESOL = Variete("Tournesol", 10, 9, 1);
+const Variete Variete::MAIS = Variete("Mais", 20, 9, 0);
+const Variete Variete::TOURNESOL = Variete("Tournesol", 50, 9, 1);
 
 static int idGlobal = 0;
 static vector<CImg<unsigned char>> variete_imgs; 

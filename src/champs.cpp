@@ -153,16 +153,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                     jardinier.recolter_grains(*a_recolter);
                     detruire_plante(*a_recolter, fenetre);
                 }
-                
-                
-                //cout << "Le jardinier " << jardinier.get_name() << " était content et a supprimé la plante à graine en " << jardinier.get_position() << "." << endl;
-            } else {
-                
-                //cout << "Le jardinier était content mais la plante a graine la plus proche n'était pas récoltable." << endl;
             }
-        } else {
-            
-            //cout << "Le jardinier était content, il voulait récolter du grain, mais il n'en a pas trouvé dans le champs." << endl;
         }
     
     } else if (jardinier.get_mood() == MoodType::NORMAL) {
@@ -179,11 +170,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                     jardinier.manger_legumes(*a_manger);
                     detruire_plante(*a_manger, fenetre);
                 }
-                
-                //cout << "Le jardinier " << jardinier.get_name() << " était normal et a supprimé le légume en " << jardinier.get_position() << endl;
-            } else {
-                
-                //cout << "Le jardinier était normal mais le legume la plus proche n'était pas récoltable." << endl;
             }
         } else if (contains_plant_type(Plants_types::SEED_PLANTS)) {
             
@@ -197,15 +183,7 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                     jardinier.recolter_grains(*a_recolter);
                     detruire_plante(*a_recolter, fenetre);
                 }
-                
-                //cout << "Le jardinier " << jardinier.get_name() << " était normal et a supprimé la plante  à graine en " << jardinier.get_position() << endl;
-            } else {
-                
-                //cout << "Le jardinier était normal mais la plante à graine la plus proche n'était pas récoltable." << endl;
             }
-        } else {
-            
-            //cout << "Le jardinier était normal mais n'a pas trouvé de plante a graine et de legume." << endl;
         }
 
     } else if (jardinier.get_mood() == MoodType::GRUMPY) {
@@ -222,10 +200,6 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                     jardinier.manger_legumes(*a_manger);
                     detruire_plante(*a_manger, fenetre);
                 }
-                //cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé le légume en " << jardinier.get_position() << endl;
-            } else {
-                
-                //cout << "Le jardinier était pas content mais le légume la plus proche n'était pas récoltable." << endl;
             }
 
         } else if (contains_plant_type(Plants_types::FLOWER)) {
@@ -237,13 +211,10 @@ void Champs::action(Jardiniers &jardinier, CImg<unsigned char> *fenetre, CImgDis
                 }
                 if (jardinier.get_position() == get_coordonnees(*a_detruire)) {
                     detruire_plante(*a_detruire, fenetre);
+                    nb_fleurs--;
                     jardinier.set_mood(MoodType::NORMAL);
                 }
             }
-            //cout << "Le jardinier " << jardinier.get_name() << " était pas content et a supprimé la fleur en " << jardinier.get_position() << endl;
-        } else {
-            
-            //cout << "RIEN d'accessible" << endl;
         }
 
     } else {

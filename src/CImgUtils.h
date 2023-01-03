@@ -3,11 +3,14 @@
 
 #include "./lib/CImg.h"
 #include <iostream>
+#include <string>
 #include <filesystem>
 #include "coordonnees.h"
 
 extern int CHOIX_MENU;
 extern int nb_graines_joueur;
+extern int nb_jardiniers;
+extern int nb_fleurs;
 
 using namespace cimg_library;
 using namespace std;

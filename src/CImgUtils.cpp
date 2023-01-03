@@ -2,7 +2,9 @@
 
 static vector<CImg<unsigned char>> plants_fullygrown; 
 int CHOIX_MENU = 0;
-int nb_graines_joueur = 0;
+int nb_graines_joueur;
+int nb_jardiniers;
+int nb_fleurs;
 
 /*
 apply transparency to an image with a mask
@@ -75,14 +77,18 @@ void dessin_menu_sac(CImg<unsigned char> *fenetre) {
 	int font_size = 20;
 	int font_width = 20;
 
+	string nb_grains = ": " + to_string(nb_graines_joueur) + " graines";
+	string nb_jardiniers_str = ": " + to_string(nb_jardiniers) + " jardiniers";
+	string nb_fleurs_str = ": " + to_string(nb_fleurs) + " fleurs";
+
 	fenetre->draw_image(posX_icon - 15, HEIGHT_MENU + 70, nut_bag, mask_nutbag);
-	fenetre->draw_text(posX_icon - 15 + nut_bag.width(), HEIGHT_MENU + 65 + nut_bag.height()/2, ": graines", black, 0, 1, font_size, font_width);
+	fenetre->draw_text(posX_icon - 15 + nut_bag.width(), HEIGHT_MENU + 65 + nut_bag.height()/2, nb_grains.c_str(), black, 0, 1, font_size, font_width);
 
 	fenetre->draw_image(posX_icon, HEIGHT_MENU + nut_bag.height() + 140, gardener, mask_gardener);
-	fenetre->draw_text(posX_icon + gardener.width(), HEIGHT_MENU + nut_bag.height() + 145 + gardener.height()/2, ": jardiniers", black, 0, 1, font_size, font_width);
+	fenetre->draw_text(posX_icon + gardener.width(), HEIGHT_MENU + nut_bag.height() + 145 + gardener.height()/2, nb_jardiniers_str.c_str(), black, 0, 1, font_size, font_width);
 
 	fenetre->draw_image(posX_icon, HEIGHT_MENU + nut_bag.height() + gardener.height() + 210, plant, mask_plant);
-	fenetre->draw_text(posX_icon + plant.width(), HEIGHT_MENU + nut_bag.height() + gardener.height() + 210 + plant.height()/2, ": fleurs", black, 0, 1, font_size, font_width);
+	fenetre->draw_text(posX_icon + plant.width(), HEIGHT_MENU + nut_bag.height() + gardener.height() + 210 + plant.height()/2, nb_fleurs_str.c_str(), black, 0, 1, font_size, font_width);
 }
 
 void dessin_menu_shop(CImg<unsigned char> *fenetre) {
@@ -170,9 +176,7 @@ void dessin_jeu(CImg<unsigned char> *fenetre) {
 
 	if (CHOIX_MENU == 1) {
 		dessin_menu_sac(fenetre);
-	} else if (CHOIX_MENU == 2) {
-		dessin_menu_shop(fenetre);
 	} else {
-		
+		dessin_menu_shop(fenetre);
 	}
 }

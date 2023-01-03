@@ -1,22 +1,9 @@
 #include "seed_plants.h"
 
-Seed_plants::Seed_plants(int nb_grains_recoltables, const Variete &variete):
-Crops(Plants_types::SEED_PLANTS, variete) {
-  this->nb_grains_recoltables = nb_grains_recoltables;
-}
+Seed_plants::Seed_plants(const Variete &variete):
+Crops(Plants_types::SEED_PLANTS, variete) {}
 
 Seed_plants::Seed_plants() :
-Seed_plants(-1, Variete::UNKNOWN) {}
-
-int Seed_plants::get_nb_grains_recoltables() const {
-  return this->nb_grains_recoltables;
-}
-
-int Seed_plants::check_recolte_grains() const {
-  if (isRecoltable()) {
-    return this->nb_grains_recoltables;
-  } else {
-    // La plante n'est pas encore arrivé à maturié
-    return -1;
-  }
+Seed_plants(Variete::UNKNOWN) {
+  cout << "nb grains quand initialise avec rien" << endl;
 }

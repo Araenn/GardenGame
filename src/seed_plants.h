@@ -7,14 +7,10 @@
 
 class Seed_plants : public Crops {
     protected:
-        int nb_grains_recoltables;
       
     public:
         Seed_plants();
-        Seed_plants(int, const Variete &variete);
-        
-        int get_nb_grains_recoltables() const;
-        int check_recolte_grains() const;
+        Seed_plants(const Variete &variete);
 };
 
 #endif
