@@ -11,6 +11,8 @@ int main(int argc, char *argv[]) {
         Variete::TOURNESOL,
         
         Variete::RADIS,
+        Variete::ORANGE,
+        Variete::AVOCAT,
         Variete::HARICOT,
         Variete::TOMATE,
         Variete::MELON,
@@ -19,8 +21,6 @@ int main(int argc, char *argv[]) {
         Variete::ANANAS,
         Variete::FRAISE,
         Variete::PATATE,
-        Variete::ORANGE,
-        Variete::AVOCAT,
         
         Variete::BLE,
         Variete::RIZ,
@@ -159,57 +159,107 @@ int main(int argc, char *argv[]) {
               shopLegumeClicked = 0;
               jeu.wait();
               fleur.set_variete(listVariete[i]);
-              Coordonnees fleurCoord = {4, 8};
-              champs.placer_plante(fleurCoord, fleur);
-              cout << listVariete[i].get_name() << endl;
+              bool plantePlacee = false;
+              while (!plantePlacee) {
+                if ((POSX < jeu.mouse_x() && jeu.mouse_x() < WIDTH_C) && (POSY < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_C)) {
+                  if (jeu.button()) {
+                    Coordonnees fleurCoord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
+                    champs.placer_plante(fleurCoord, fleur);
+                    plantePlacee = true;
+                  }
+                }
+              }
             }
           
           } else {
             shopLegumeClicked = 1;
           }
-        } 
+        }
+        Plantes leg1(Plants_types::LEGUME, Variete::UNKNOWN);
         for (int i = 3; i < 6; i++) {
           if ((WIDTH_MENU + 40 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU + 40 + i * 60 + 16*4.5) && (HEIGHT_MENU + 50 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 50 + 16*4.5)) {
             if (shopLegumeClicked) {
               shopLegumeClicked = 0;
-              Plantes leg1(Plants_types::LEGUME, listVariete[i]);
-              cout << "legume " << i << " clique" << endl;
+              leg1.set_variete(listVariete[i]);
+              bool plantePlacee = false;
+              while (!plantePlacee) {
+                if ((POSX < jeu.mouse_x() && jeu.mouse_x() < WIDTH_C) && (POSY < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_C)) {
+                  if (jeu.button()) {
+                    Coordonnees leg1Coord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
+                    champs.placer_plante(leg1Coord, leg1);
+                    plantePlacee = true;
+                  }
+                }
+              }
             }
         
           } else {
             shopLegumeClicked = 1;
           }
         }
+
+        Plantes leg2(Plants_types::LEGUME, Variete::UNKNOWN);
         for (int i = 6; i < 13; i++) {
           if ((WIDTH_MENU/1.85 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < WIDTH_MENU/1.85 + i * 60 + 16*4.5) && (HEIGHT_MENU + 180 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 180 + 16*4.5)) {
             if (shopLegumeClicked) {
               shopLegumeClicked = 0;
-              Plantes leg2(Plants_types::LEGUME, listVariete[i]);
-              cout << "legume " << i << " clique" << endl;
+              leg2.set_variete(listVariete[i]);
+              bool plantePlacee = false;
+              while (!plantePlacee) {
+                if ((POSX < jeu.mouse_x() && jeu.mouse_x() < WIDTH_C) && (POSY < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_C)) {
+                  if (jeu.button()) {
+                    Coordonnees leg2Coord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
+                    champs.placer_plante(leg2Coord, leg2);
+                    plantePlacee = true;
+                  }
+                }
+              }
             }
         
           } else {
             shopLegumeClicked = 1;
           }
         }
+
+        Plantes leg3(Plants_types::LEGUME, Variete::UNKNOWN);
         for (int i = 13; i < 14; i++) {
           if ((-5 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < -5 + i * 60 + 16*4.5) && (HEIGHT_MENU + 330 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 330 + 16*4.5)) {
             if (shopLegumeClicked) {
               shopLegumeClicked = 0;
-              Plantes leg3(Plants_types::LEGUME, listVariete[i]);
-              cout << "legume " << i << " clique" << endl;
+              leg3.set_variete(listVariete[i]);
+              bool plantePlacee = false;
+              while (!plantePlacee) {
+                if ((POSX < jeu.mouse_x() && jeu.mouse_x() < WIDTH_C) && (POSY < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_C)) {
+                  if (jeu.button()) {
+                    Coordonnees leg3Coord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
+                    champs.placer_plante(leg3Coord, leg3);
+                    plantePlacee = true;
+                  }
+                }
+              }
             }
         
           } else {
             shopLegumeClicked = 1;
           }
         }
+
+        Plantes seed(Plants_types::SEED_PLANTS, Variete::UNKNOWN);
         for (int i = 14; i < 20+1; i++) {
           if ((-5 + i * 60 < jeu.mouse_x() && jeu.mouse_x() < -5 + i * 60 + 16*4.5) && (HEIGHT_MENU + 330 < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_MENU + 330 + 16*4.5)) {
             if (shopLegumeClicked) {
               shopLegumeClicked = 0;
-              Plantes seed(Plants_types::SEED_PLANTS, listVariete[i]);
-              cout << "seed " << i << " clique" << endl;
+              seed.set_variete(listVariete[i]);
+              bool plantePlacee = false;
+              while (!plantePlacee) {
+                if ((POSX < jeu.mouse_x() && jeu.mouse_x() < WIDTH_C) && (POSY < jeu.mouse_y() && jeu.mouse_y() < HEIGHT_C)) {
+                  if (jeu.button()) {
+                    Coordonnees seeCoord = {jeu.mouse_x()/48, jeu.mouse_y()/48};
+                    champs.placer_plante(seeCoord, seed);
+                    plantePlacee = true;
+                  }
+                }
+              }
             }
         
           } else {
